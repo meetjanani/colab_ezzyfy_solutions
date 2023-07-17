@@ -1,4 +1,4 @@
-package com.example.colab_ezzyfy_solutions
+package com.ezzyfy_solutions.colab
 
 import io.flutter.embedding.android.FlutterActivity
 

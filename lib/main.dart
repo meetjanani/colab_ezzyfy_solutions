@@ -14,9 +14,9 @@ import 'package:get_storage/get_storage.dart';
 void main() async {
   await Get.putAsync(() => GetStorage.init());
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
+  await Firebase.initializeApp();
 
-  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
 
   //await FirebaseApi().initNotification();
@@ -42,15 +42,15 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
 
-  //final NotificationServices notificationServices = NotificationServices();
+  final NotificationServices notificationServices = NotificationServices();
 
   @override
   void initState() {
     super.initState();
-    /*notificationServices.requestNotificationPermission();
+    notificationServices.requestNotificationPermission();
     notificationServices.firebaseInit(context);
     notificationServices.setupInteractMessage(context);
-    notificationServices.getDeviceToken().then((value) {
+    /*notificationServices.getDeviceToken().then((value) {
 
     });*/
   }

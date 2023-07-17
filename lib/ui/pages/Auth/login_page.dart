@@ -13,43 +13,58 @@ class LoginPage extends GetView<LoginController> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-         backgroundColor: Colors.white,
+        backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Column(
             children: [
               Container(
-                height: Get.height/3.8,width: Get.width,
+                height: Get.height / 3.8,
+                width: Get.width,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20),bottomRight: Radius.circular(20)),
-                  color: Colors.blue
-                ),
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(20),
+                        bottomRight: Radius.circular(20)),
+                    color: Colors.blue),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(height: Get.width/10,),
+                    SizedBox(
+                      height: Get.width / 10,
+                    ),
                     text('Colab', Colors.white, 35, FontWeight.w500),
-                    SizedBox(height: 20,),
+                    SizedBox(
+                      height: 20,
+                    ),
                     text('Welcome Back', Colors.white, 25, FontWeight.bold),
-                    SizedBox(height: 20,),
-                    text('Stay SIGN IN in with your account\nto make searching', Colors.white, 18, FontWeight.w500),
-                    SizedBox(height: 20,),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    text('Stay SIGN IN in with your account\nto make searching',
+                        Colors.white, 18, FontWeight.w500),
+                    SizedBox(
+                      height: 20,
+                    ),
                   ],
                 ),
               ),
-
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: [
                     inputField(
-                        hintText: 'Enter Mobile Number'
-                    ),
+                        hintText: 'Enter Mobile Number',
+                        controller: controller.mobileNumber,
+                      validation: (value) {
+                        if (value?.isEmpty == true) {
+                          return "Please valid mobile number";
+                        }
+                      },),
                     SizedBox(
                       height: 20,
                     ),
                     Obx(
-                          () => inputField(
-                          obscureText:  !controller.passwordVisibal.value,
+                      () => inputField(
+                          obscureText: !controller.passwordVisibal.value,
                           controller: controller.password,
                           validation: (value) {
                             if (value?.isEmpty == true) {
@@ -65,13 +80,13 @@ class LoginPage extends GetView<LoginController> {
                             ),
                             onTap: () {
                               controller.passwordVisibal.value =
-                              (!controller.passwordVisibal.value);
+                                  (!controller.passwordVisibal.value);
                             },
                           ),
                           hintText: 'Password'
-                        //inkWell: Icon(Icons.remove_red_eye),
+                          //inkWell: Icon(Icons.remove_red_eye),
 
-                      ),
+                          ),
                     ),
                     SizedBox(
                       height: 10,
@@ -79,7 +94,6 @@ class LoginPage extends GetView<LoginController> {
                     GestureDetector(
                         onTap: () {
                           // controller.clearFields();
-
                         },
                         child: Align(
                             alignment: Alignment.centerRight,
@@ -91,8 +105,8 @@ class LoginPage extends GetView<LoginController> {
                     SizedBox(
                       height: 30,
                     ),
-                    greenButton('Sign In', (){
-
+                    greenButton('Sign In', () {
+                      controller.signIn();
                     }),
                     SizedBox(
                       height: 30,
@@ -103,17 +117,15 @@ class LoginPage extends GetView<LoginController> {
                         text('New Member? ', Colors.black, 14, FontWeight.w400),
                         InkWell(
                             onTap: () {
-                               Get.toNamed(AppRoute.register);
+                              Get.toNamed(AppRoute.register);
                             },
                             child: text('Register Now', pinkButtonColor, 15,
                                 FontWeight.bold)),
                       ],
                     )
-
                   ],
                 ),
               )
-
             ],
           ),
         ),
