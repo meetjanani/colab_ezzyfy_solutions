@@ -53,7 +53,7 @@ class SplashController extends GetxController
     // Get.offNamed(_whereLogin ? AppRoute.home : AppRoute.login);
 
 
-    Get.toNamed(AppRoute.home);
+    Get.toNamed(AppRoute.login);
     // var userData = _getStorageRepository.getUserData();
     // if(userData?.token?.isNotEmpty == true) {
     //   Get.toNamed(AppRoute.home);
