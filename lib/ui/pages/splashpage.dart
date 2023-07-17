@@ -1,4 +1,3 @@
-
 import 'package:colab_ezzyfy_solutions/controller/splash_controller.dart';
 import 'package:colab_ezzyfy_solutions/ui/widget/all_widget.dart';
 import 'package:flutter/material.dart';
