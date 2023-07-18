@@ -23,8 +23,8 @@ class RegisterPage extends GetView<RegisterController> {
                 height: Get.height / 3.8,
                 width: Get.width,
                 decoration: BoxDecoration(
-                    image: DecorationImage(image: AssetImage(bg),fit: BoxFit.fill),
-
+                    image: DecorationImage(
+                        image: AssetImage(bg), fit: BoxFit.fill),
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(20),
                         bottomRight: Radius.circular(20)),
@@ -57,16 +57,25 @@ class RegisterPage extends GetView<RegisterController> {
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: [
-                    inputField(hintText: 'Enter Name'),
+                    inputField(
+                      hintText: 'Enter Name',
+                      controller: controller.nameController,
+                    ),
                     SizedBox(
                       height: 20,
                     ),
-                    inputField(hintText: 'Enter Mobile Number'),
-
+                    inputField(
+                        hintText: 'Enter Mobile Number',
+                        controller: controller.mobileNumberController),
                     SizedBox(
                       height: 20,
                     ),
-
+                    inputField(
+                        hintText: 'Enter Email Address',
+                        controller: controller.emailAddressController),
+                    SizedBox(
+                      height: 20,
+                    ),
                     SizedBox(
                       height: 10,
                     ),
@@ -145,20 +154,8 @@ class RegisterPage extends GetView<RegisterController> {
                       height: 30,
                     ),
                     greenButton('Sign Up', () {
-                      //controller.registerUser();
-                      showModalBottomSheet(
-                          isScrollControlled: true,
-                          useRootNavigator: true,
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(40),
-                              )),
-                          context: context,
-                          builder: (context) {
-                            return OtpPage(
-
-                            );
-                          });
+                      controller.registerUser();
+                      /**/
                     }),
                     SizedBox(
                       height: 30,

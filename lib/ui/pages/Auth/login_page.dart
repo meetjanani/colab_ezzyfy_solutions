@@ -69,20 +69,7 @@ class LoginPage extends GetView<LoginController> {
                       height: 30,
                     ),
                     greenButton('Sign In', () {
-                      //controller.signIn();
-                      showModalBottomSheet(
-                          isScrollControlled: true,
-                          useRootNavigator: true,
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(40),
-                              )),
-                          context: context,
-                          builder: (context) {
-                            return OtpPage(
-
-                            );
-                          });
+                      controller.signIn();
                     }),
                     SizedBox(
                       height: 30,
