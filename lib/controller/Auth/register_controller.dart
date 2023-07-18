@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:otp_text_field/otp_field.dart';
 
 class RegisterController extends GetxController {
   static RegisterController get to => Get.find();
@@ -12,6 +13,9 @@ class RegisterController extends GetxController {
   RxBool passwordVisibal = RxBool(false);
   RxBool passwordVisibal2 = RxBool(false);
   RxBool isSelect1 = RxBool(false);
+
+  OtpFieldController otpController = OtpFieldController();
+  RxString pin = '0'.obs;
 
   void registerUser() {
     var mobileNumber = "14142525363";

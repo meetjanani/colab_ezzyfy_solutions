@@ -1,7 +1,9 @@
 import 'package:colab_ezzyfy_solutions/controller/Auth/login_controller.dart';
 import 'package:colab_ezzyfy_solutions/resource/constant.dart';
 import 'package:colab_ezzyfy_solutions/resource/extensions.dart';
+import 'package:colab_ezzyfy_solutions/resource/image.dart';
 import 'package:colab_ezzyfy_solutions/route/route.dart';
+import 'package:colab_ezzyfy_solutions/ui/pages/Auth/otp_bottomsheet.dart';
 import 'package:colab_ezzyfy_solutions/ui/widget/all_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,6 +23,7 @@ class LoginPage extends GetView<LoginController> {
                 height: Get.height / 3.8,
                 width: Get.width,
                 decoration: BoxDecoration(
+                  image: DecorationImage(image: AssetImage(bg),fit: BoxFit.fill),
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(20),
                         bottomRight: Radius.circular(20)),
@@ -51,6 +54,7 @@ class LoginPage extends GetView<LoginController> {
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: [
+                    SizedBox(height: 20,),
                     inputField(
                         hintText: 'Enter Mobile Number',
                         controller: controller.mobileNumber,
@@ -59,54 +63,26 @@ class LoginPage extends GetView<LoginController> {
                           return "Please valid mobile number";
                         }
                       },),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Obx(
-                      () => inputField(
-                          obscureText: !controller.passwordVisibal.value,
-                          controller: controller.password,
-                          validation: (value) {
-                            if (value?.isEmpty == true) {
-                              return "Please enter Password";
-                            }
-                          },
-                          inkWell: InkWell(
-                            child: Icon(
-                              controller.passwordVisibal == true
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                              color: Colors.black,
-                            ),
-                            onTap: () {
-                              controller.passwordVisibal.value =
-                                  (!controller.passwordVisibal.value);
-                            },
-                          ),
-                          hintText: 'Password'
-                          //inkWell: Icon(Icons.remove_red_eye),
 
-                          ),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    GestureDetector(
-                        onTap: () {
-                          // controller.clearFields();
-                        },
-                        child: Align(
-                            alignment: Alignment.centerRight,
-                            child: Padding(
-                              padding: const EdgeInsets.only(right: 20),
-                              child: text('Forget Password?', Colors.black, 15,
-                                  FontWeight.w700),
-                            ))),
+
                     SizedBox(
                       height: 30,
                     ),
                     greenButton('Sign In', () {
-                      controller.signIn();
+                      //controller.signIn();
+                      showModalBottomSheet(
+                          isScrollControlled: true,
+                          useRootNavigator: true,
+                          shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(40),
+                              )),
+                          context: context,
+                          builder: (context) {
+                            return OtpPage(
+
+                            );
+                          });
                     }),
                     SizedBox(
                       height: 30,
