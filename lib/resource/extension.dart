@@ -14,12 +14,12 @@ extension VoidExtensions on void {
 
   showErrorSnackbar(String? message) {
     Get.snackbar("There was a problem", message!,
-        colorText: Colors.black, backgroundColor: Colors.white);
+        colorText: Colors.white, backgroundColor: Colors.red);
   }
 
   showSuccessSnackbar(String? message) {
     Get.snackbar("Success", message!,
-        colorText: Colors.black);
+        colorText: Colors.black, backgroundColor: Colors.greenAccent);
   }
 
   showSnackbar(String? title,String? message) {

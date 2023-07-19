@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:colab_ezzyfy_solutions/resource/extension.dart';
+import 'package:colab_ezzyfy_solutions/resource/firebase_dayabase_schema.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,7 +20,8 @@ class FirebaseController extends GetxController {
   }
 
   Future<void> firebaseAuthCheck(String phoneNumber) async {
-    FirebaseAuth.instance
+    firebasePhoneSignIn(phoneNumber);
+    /*FirebaseAuth.instance
         // .authStateChanges()
         .idTokenChanges()
         .listen((User? user) {
@@ -28,7 +31,7 @@ class FirebaseController extends GetxController {
       } else {
         print('User is signed in!');
       }
-    });
+    });*/
   }
 
   void firebasePhoneSignIn(String phoneNumber) async {
@@ -75,35 +78,39 @@ class FirebaseController extends GetxController {
       await FirebaseAuth.instance
           .signInWithCredential(credential)
           .then((value) {
-            if(!isLoginRequest) {
-              fbRegister();
-            }
-        print("LOGIN ${value?.user?.phoneNumber}");
+        if (!isLoginRequest) {
+          fbRegister();
+        } else {
+          // TODO: MEET Firebase Route have to update
+          Get.toNamed(AppRoute.splash);
+        }
+        Get.showSuccessSnackbar('Login successfully.');
       });
     } catch (e) {
       if (e is FirebaseAuthException && e.code == 'invalid-verification-code') {
         print("codeSent exception");
-        print("${e.code} ${e.message}");
+        Get.showErrorSnackbar('${e.code} - ${e.message}');
       } else {
-        print("codeSent else");
+        Get.showErrorSnackbar('Firebase error occured.');
       }
     }
   }
 
   void fbRegister() async {
-    var mobileNumber = userRegisterData['phoneNumber'];
-    CollectionReference users = FirebaseFirestore.instance.collection('users');
+    var mobileNumber = userRegisterData[FirebaseDatabaseSchema.phoneNumberCol];
+    CollectionReference users = FirebaseFirestore.instance.collection(FirebaseDatabaseSchema.usersTable);
     users
-        .where("phoneNumber", isEqualTo: mobileNumber)
+        .where(FirebaseDatabaseSchema.phoneNumberCol, isEqualTo: mobileNumber)
         .get()
         .then((QuerySnapshot querySnapshot) {
       if (querySnapshot.docs.isEmpty) {
         users.doc(mobileNumber).set(userRegisterData).then((value) {
-          print("User Added");
-          fbLogin(mobileNumber);
-        }).catchError((error) => print("Failed to add user: $error"));
+          Get.showSuccessSnackbar('New user successfully created.');
+          // TODO: MEET Firebase Route have to update
+          Get.toNamed(AppRoute.login);
+        }).catchError((error) => Get.showSuccessSnackbar('Failed to add user: $error'));
       } else {
-        print("User is already exists");
+        Get.showSuccessSnackbar('User is already exists');
       }
     });
   }
