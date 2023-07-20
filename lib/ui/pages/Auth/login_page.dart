@@ -23,7 +23,8 @@ class LoginPage extends GetView<LoginController> {
                 height: Get.height / 3.8,
                 width: Get.width,
                 decoration: BoxDecoration(
-                  image: DecorationImage(image: AssetImage(bg),fit: BoxFit.fill),
+                    image: DecorationImage(
+                        image: AssetImage(bg), fit: BoxFit.fill),
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(20),
                         bottomRight: Radius.circular(20)),
@@ -54,17 +55,20 @@ class LoginPage extends GetView<LoginController> {
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: [
-                    SizedBox(height: 20,),
-                    inputField(
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Form(
+                      key: controller.formKey,
+                      child: inputField(
                         hintText: 'Enter Mobile Number',
                         controller: controller.mobileNumber,
-                      validation: (value) {
-                        if (value?.isEmpty == true) {
-                          return "Please valid mobile number";
-                        }
-                      },),
-
-
+                        keyboardType: TextInputType.number,
+                        validation: (value) {
+                          return value?.validateMobile();
+                        },
+                      ),
+                    ),
                     SizedBox(
                       height: 30,
                     ),
@@ -80,7 +84,7 @@ class LoginPage extends GetView<LoginController> {
                         text('New Member? ', Colors.black, 14, FontWeight.w400),
                         InkWell(
                             onTap: () {
-                              Get.toNamed(AppRoute.register);
+                              Get.offNamed(AppRoute.register);
                             },
                             child: text('Register Now', pinkButtonColor, 15,
                                 FontWeight.bold)),

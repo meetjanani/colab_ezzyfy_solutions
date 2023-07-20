@@ -90,9 +90,9 @@ extension ValiationExtensions on String {
     return null;
   }
 
-  String? firstNameValidation() {
+  String? nameValidation() {
     if (isEmpty) {
-      return 'Please enter First Name';
+      return 'Please enter your Name';
     }
     return null;
   }

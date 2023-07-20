@@ -1,12 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:colab_ezzyfy_solutions/controller/Auth/firebase_controller.dart';
+import 'package:colab_ezzyfy_solutions/resource/extension.dart';
 import 'package:colab_ezzyfy_solutions/resource/firebase_dayabase_schema.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otp_text_field/otp_field.dart';
-
-import '../../ui/pages/Auth/otp_bottomsheet.dart';
 
 class RegisterController extends GetxController {
   static RegisterController get to => Get.find();
@@ -24,8 +22,13 @@ class RegisterController extends GetxController {
   String countryCode = '+91';
 
   void registerUser() {
-    if (!isSelect1.value) {
-      print("Please approve Terms & Condition and Privacy Policy");
+    if(!fieldValidation()) {
+      Get.showErrorSnackbar('Please enter valid details.');
+      return;
+    }
+    else if (!isSelect1.value) {
+      Get.showErrorSnackbar(
+          'Please approve Terms & Condition and Privacy Policy');
       return;
     }
     firebaseController.isLoginRequest = false;
@@ -38,5 +41,9 @@ class RegisterController extends GetxController {
     };
     firebaseController
         .fbLogin(countryCode + mobileNumberController.text.toString());
+  }
+
+  bool fieldValidation() {
+    return formKey.currentState?.validate() == true;
   }
 }

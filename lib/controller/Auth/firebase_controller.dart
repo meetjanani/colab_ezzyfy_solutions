@@ -82,7 +82,7 @@ class FirebaseController extends GetxController {
           fbRegister();
         } else {
           // TODO: MEET Firebase Route have to update
-          Get.toNamed(AppRoute.splash);
+          Get.offNamed(AppRoute.splash);
         }
         Get.showSuccessSnackbar('Login successfully.');
       });
@@ -107,10 +107,10 @@ class FirebaseController extends GetxController {
         users.doc(mobileNumber).set(userRegisterData).then((value) {
           Get.showSuccessSnackbar('New user successfully created.');
           // TODO: MEET Firebase Route have to update
-          Get.toNamed(AppRoute.login);
+          Get.offNamed(AppRoute.login);
         }).catchError((error) => Get.showSuccessSnackbar('Failed to add user: $error'));
       } else {
-        Get.showSuccessSnackbar('User is already exists');
+        Get.showErrorSnackbar('User is already exists');
       }
     });
   }
