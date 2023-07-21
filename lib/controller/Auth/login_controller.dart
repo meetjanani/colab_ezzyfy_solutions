@@ -11,7 +11,7 @@ class LoginController extends GetxController {
   static LoginController get to => Get.find();
   var formKey = GlobalKey<FormState>();
   TextEditingController mobileNumber = TextEditingController();
-  TextEditingController password = TextEditingController();
+  TextEditingController countryCodeController = TextEditingController();
   String countryCode = '+91';
   FirebaseController firebaseController = FirebaseController.to;
 

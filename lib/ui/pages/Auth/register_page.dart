@@ -69,13 +69,30 @@ class RegisterPage extends GetView<RegisterController> {
                       SizedBox(
                         height: 20,
                       ),
-                      inputField(
-                          hintText: 'Enter Mobile Number',
-                          controller: controller.mobileNumberController,
-                          keyboardType: TextInputType.number,
-                          validation: (value) {
-                            return value?.validateMobile();
-                          }),
+                      Row(
+                        children: [
+                          SizedBox(
+                            width:Get.width/5,
+                            child: inputField(
+                                hintText: '91',
+                                controller: controller.countyCodeController,
+                                keyboardType: TextInputType.number,
+                                validation: (value) {
+                                  return value?.validateMobile();
+                                }),
+                          ),
+                          Flexible(child:   inputField(
+                              hintText: 'Enter Mobile Number',
+                              controller: controller.mobileNumberController,
+                              keyboardType: TextInputType.number,
+                              validation: (value) {
+                                return value?.validateMobile();
+                              }), ),
+
+
+                        ],
+                      ),
+
                       SizedBox(
                         height: 20,
                       ),
