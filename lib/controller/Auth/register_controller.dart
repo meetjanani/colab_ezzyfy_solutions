@@ -10,6 +10,8 @@ class RegisterController extends GetxController {
   static RegisterController get to => Get.find();
   var formKey = GlobalKey<FormState>();
   TextEditingController mobileNumberController = TextEditingController();
+  TextEditingController countyCodeController = TextEditingController();
+
   TextEditingController nameController = TextEditingController();
   TextEditingController emailAddressController = TextEditingController();
   RxBool passwordVisibal = RxBool(false);

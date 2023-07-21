@@ -60,13 +60,28 @@ class LoginPage extends GetView<LoginController> {
                     ),
                     Form(
                       key: controller.formKey,
-                      child: inputField(
-                        hintText: 'Enter Mobile Number',
-                        controller: controller.mobileNumber,
-                        keyboardType: TextInputType.number,
-                        validation: (value) {
-                          return value?.validateMobile();
-                        },
+                      child:   Row(
+                        children: [
+                          SizedBox(
+                            width:Get.width/4,
+                            child: inputField(
+                                hintText: '91',
+                                controller: controller.countryCodeController,
+                                keyboardType: TextInputType.number,
+                                validation: (value) {
+                                  return value?.validateMobile();
+                                }),
+                          ),
+                          Flexible(child:   inputField(
+                              hintText: 'Enter Mobile Number',
+                              controller: controller.mobileNumber,
+                              keyboardType: TextInputType.number,
+                              validation: (value) {
+                                return value?.validateMobile();
+                              }), ),
+
+
+                        ],
                       ),
                     ),
                     SizedBox(
