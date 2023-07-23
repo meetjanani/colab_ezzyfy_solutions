@@ -13,6 +13,7 @@ class RegisterPage extends GetView<RegisterController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.countryCodeController.text = '+91';
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -74,12 +75,13 @@ class RegisterPage extends GetView<RegisterController> {
                           SizedBox(
                             width:Get.width/5,
                             child: inputField(
-                                hintText: '91',
-                                controller: controller.countyCodeController,
+                                hintText: '+91',
+                                controller: controller.countryCodeController,
                                 keyboardType: TextInputType.number,
-                                validation: (value) {
-                                  return value?.validateMobile();
-                                }),
+                                ),
+                          ),
+                          SizedBox(
+                            width: 10,
                           ),
                           Flexible(child:   inputField(
                               hintText: 'Enter Mobile Number',

@@ -1,6 +1,8 @@
+import 'package:colab_ezzyfy_solutions/controller/Auth/firebase_controller.dart';
 import 'package:colab_ezzyfy_solutions/resource/session_string.dart';
 import 'package:colab_ezzyfy_solutions/route/route.dart';
 import 'package:colab_ezzyfy_solutions/shared/get_storage_repository.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -30,35 +32,11 @@ class SplashController extends GetxController
   }
 
   _launchPage() async {
-    //   bool _whereLogin =  _getStorageRepository.hasData(isLoginSession);
     await Future.delayed(const Duration(seconds: 2), () {});
-    // //  Get.toNamed(AppRoute.onBoard);
-    //   bool _isLogin =
-    //   _getStorageRepository.hasData(isLoginSession);
-    //   bool _isRegister =
-    //   _getStorageRepository.hasData(isRegisterSession);
-    //   bool _isNumberAdd =
-    //   _getStorageRepository.hasData(isNumberAddSession);
-    //   bool _isOnBoarding =
-    //   _getStorageRepository.hasData(onBoarding);
-    //   if (_isLogin == false && _isOnBoarding == true) {
-    //     Get.offNamed(AppRoute.login);
-    //   }else if (_isLogin == true && _isOnBoarding == true) {
-    //     Get.offNamed(AppRoute.home);
-    //   }  else if(_isRegister == true){
-    //     Get.offNamed(AppRoute.login);
-    //   }else{
-    //     Get.offNamed(AppRoute.login);
-    //   }
-    // Get.offNamed(_whereLogin ? AppRoute.home : AppRoute.login);
-
-
-    Get.toNamed(AppRoute.login);
-    // var userData = _getStorageRepository.getUserData();
-    // if(userData?.token?.isNotEmpty == true) {
-    //   Get.toNamed(AppRoute.home);
-    // } else {
-    //   Get.offNamed(AppRoute.login);
-    // }
+    if (FirebaseAuth.instance.currentUser != null) {
+      Get.toNamed(AppRoute.home);
+    } else {
+      Get.toNamed(AppRoute.login);
+    }
   }
 }

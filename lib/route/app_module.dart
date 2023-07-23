@@ -3,10 +3,12 @@ import 'package:colab_ezzyfy_solutions/binding/Auth/register_binding.dart';
 import 'package:colab_ezzyfy_solutions/binding/splash_binding.dart';
 import 'package:colab_ezzyfy_solutions/ui/pages/Auth/login_page.dart';
 import 'package:colab_ezzyfy_solutions/ui/pages/Auth/register_page.dart';
+import 'package:colab_ezzyfy_solutions/ui/pages/home_dashboard/home_dashboard_page.dart';
 import 'package:colab_ezzyfy_solutions/ui/pages/splashpage.dart';
 import 'package:get/route_manager.dart';
 
 
+import '../binding/home_dashboard_bindiing.dart';
 import 'route.dart';
 
 class AppPage {
@@ -27,6 +29,10 @@ class AppPage {
         name: AppRoute.register,
         page: () => const RegisterPage(),
         binding: RegisterBinding()),
+    GetPage(
+        name: AppRoute.home,
+        page: () => const HomeDashboardPage(),
+        binding: HomeDashboardBinding()),
 
   ];
 }

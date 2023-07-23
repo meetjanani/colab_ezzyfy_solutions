@@ -7,12 +7,14 @@ import 'package:colab_ezzyfy_solutions/ui/pages/Auth/otp_bottomsheet.dart';
 import 'package:colab_ezzyfy_solutions/ui/widget/all_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class LoginPage extends GetView<LoginController> {
   const LoginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    controller.countryCodeController.text = '+91';
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -63,14 +65,15 @@ class LoginPage extends GetView<LoginController> {
                       child:   Row(
                         children: [
                           SizedBox(
-                            width:Get.width/4,
+                            width:Get.width/5,
                             child: inputField(
-                                hintText: '91',
+                                hintText: '+91',
                                 controller: controller.countryCodeController,
                                 keyboardType: TextInputType.number,
-                                validation: (value) {
-                                  return value?.validateMobile();
-                                }),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
                           ),
                           Flexible(child:   inputField(
                               hintText: 'Enter Mobile Number',

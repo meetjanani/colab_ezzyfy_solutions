@@ -70,7 +70,7 @@ class _MyAppState extends State<MyApp> {
           // ],
           initialRoute: AppRoute.splash,
           routes:  {
-            AppRoute.notification: (context) =>  SplashPage()
+            AppRoute.splash: (context) =>  SplashPage()
           },
           getPages: AppPage.routes)
 

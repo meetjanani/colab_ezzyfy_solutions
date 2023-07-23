@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:colab_ezzyfy_solutions/resource/extension.dart';
 import 'package:colab_ezzyfy_solutions/resource/firebase_dayabase_schema.dart';
+import 'package:colab_ezzyfy_solutions/shared/get_storage_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,34 +16,30 @@ class FirebaseController extends GetxController {
   var userRegisterData = null;
 
   void fbLogin(String phoneNumber) async {
-    await signOutUser();
-    await firebaseAuthCheck(phoneNumber);
+    await signOutUser().then((value) => firebaseAuthCheck(phoneNumber));
   }
 
   Future<void> firebaseAuthCheck(String phoneNumber) async {
-    firebasePhoneSignIn(phoneNumber);
-    /*FirebaseAuth.instance
-        // .authStateChanges()
-        .idTokenChanges()
-        .listen((User? user) {
-      if (user == null) {
-        print('User is currently signed out!');
-        firebasePhoneSignIn(phoneNumber);
-      } else {
-        print('User is signed in!');
-      }
-    });*/
+    var currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser != null) {
+      GetStorageRepository(Get.find()).write('fbUser', currentUser);
+    } else {
+      firebasePhoneSignIn(phoneNumber);
+    }
   }
 
   void firebasePhoneSignIn(String phoneNumber) async {
     try {
+      showProgress();
       await FirebaseAuth.instance.verifyPhoneNumber(
+        timeout: const Duration(seconds: 60),
         phoneNumber: phoneNumber,
         verificationCompleted: (PhoneAuthCredential credential) async {
           print("verificationCompleted");
         },
         verificationFailed: (FirebaseAuthException e) {},
         codeSent: (String verificationId, int? resendToken) {
+          hideProgressBar();
           // navigate to next screen
           navigateToOTPScreen(verificationId: verificationId);
         },
@@ -64,25 +61,33 @@ class FirebaseController extends GetxController {
         )),
         context: Get.context!!,
         builder: (context) {
-          return OtpPage(
-            verificationId: verificationId,
+          return Padding(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: OtpPage(
+              verificationId: verificationId,
+            ),
           );
         });
   }
 
   Future<void> verifyOtpForLoginUser(String verificationId, String otp) async {
     try {
+      showProgress();
       String smsCode = otp;
       PhoneAuthCredential credential = await PhoneAuthProvider.credential(
           verificationId: verificationId, smsCode: smsCode);
       await FirebaseAuth.instance
           .signInWithCredential(credential)
-          .then((value) {
+          .then((authResult) {
+        var getStorage = GetStorageRepository(Get.find());
+        getStorage.write('UserCredential', authResult);
+        getStorage.write('isAuthSignIn', true); // for use to Auto loading
+        hideProgressBar();
         if (!isLoginRequest) {
           fbRegister();
         } else {
-          // TODO: MEET Firebase Route have to update
-          Get.offNamed(AppRoute.splash);
+          Get.offNamed(AppRoute.home);
         }
         Get.showSuccessSnackbar('Login successfully.');
       });
@@ -97,8 +102,10 @@ class FirebaseController extends GetxController {
   }
 
   void fbRegister() async {
+    showProgress();
     var mobileNumber = userRegisterData[FirebaseDatabaseSchema.phoneNumberCol];
-    CollectionReference users = FirebaseFirestore.instance.collection(FirebaseDatabaseSchema.usersTable);
+    CollectionReference users = FirebaseFirestore.instance
+        .collection(FirebaseDatabaseSchema.usersTable);
     users
         .where(FirebaseDatabaseSchema.phoneNumberCol, isEqualTo: mobileNumber)
         .get()
@@ -106,9 +113,10 @@ class FirebaseController extends GetxController {
       if (querySnapshot.docs.isEmpty) {
         users.doc(mobileNumber).set(userRegisterData).then((value) {
           Get.showSuccessSnackbar('New user successfully created.');
-          // TODO: MEET Firebase Route have to update
+          hideProgressBar();
           Get.offNamed(AppRoute.login);
-        }).catchError((error) => Get.showSuccessSnackbar('Failed to add user: $error'));
+        }).catchError(
+            (error) => Get.showSuccessSnackbar('Failed to add user: $error'));
       } else {
         Get.showErrorSnackbar('User is already exists');
       }
