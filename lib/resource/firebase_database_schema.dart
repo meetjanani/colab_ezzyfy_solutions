@@ -1,3 +1,4 @@
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 
 class FirebaseDatabaseSchema extends GetxController {
@@ -8,6 +9,11 @@ class FirebaseDatabaseSchema extends GetxController {
   static const String emailAddressCol = "emailAddress";
   static const String nameCol = "name";
   static const String phoneNumberCol = "phoneNumber";
+
+  // Firebase Storage
+  static FirebaseStorage firebaseStorage = FirebaseStorage.instance;
+  static Reference firebaseStorageRef = firebaseStorage.ref();
+  static Reference teamRef = firebaseStorage.ref().child('teams');
 }
 
 
