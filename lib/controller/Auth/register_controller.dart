@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:colab_ezzyfy_solutions/controller/Auth/firebase_controller.dart';
+import 'package:colab_ezzyfy_solutions/binding/firebase/firebase_controller.dart';
 import 'package:colab_ezzyfy_solutions/resource/extension.dart';
-import 'package:colab_ezzyfy_solutions/resource/firebase_dayabase_schema.dart';
+import 'package:colab_ezzyfy_solutions/resource/firebase_database_schema.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:otp_text_field/otp_field.dart';
