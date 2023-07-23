@@ -3,6 +3,7 @@ import 'package:colab_ezzyfy_solutions/controller/home_dashboard_controller.dart
 import 'package:get/get.dart';
 
 import 'firebase/firebase_controller.dart';
+import 'firebase/firebase_storage_controller.dart';
 
 
 class HomeDashboardBinding extends Bindings {
@@ -10,6 +11,7 @@ class HomeDashboardBinding extends Bindings {
   void dependencies() {
     Get.lazyPut(() => HomeDashboardController());
     Get.lazyPut(() => FirebaseController());
+    Get.lazyPut(() => FirebaseStorageController());
   }
 
 }

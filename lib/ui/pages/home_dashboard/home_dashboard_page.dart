@@ -18,9 +18,17 @@ class HomeDashboardPage extends GetView<HomeDashboardController> {
                 alignment: Alignment.center,
                 child: Column(
                   children: [
-                    SizedBox(height: Get.width/5,),
-                    text('Create Project', Colors.black, 20, FontWeight.w700),
-                    SizedBox(height: 20,),
+                    SizedBox(
+                      height: Get.width / 5,
+                    ),
+                    InkWell(
+                      child: text(
+                          'Create Project', Colors.black, 20, FontWeight.w700),
+                      onTap: controller.uploadFile,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
                   ],
                 ),
               )
