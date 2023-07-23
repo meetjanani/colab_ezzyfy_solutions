@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:colab_ezzyfy_solutions/resource/extension.dart';
-import 'package:colab_ezzyfy_solutions/resource/firebase_dayabase_schema.dart';
+import 'package:colab_ezzyfy_solutions/resource/firebase_database_schema.dart';
 import 'package:colab_ezzyfy_solutions/shared/get_storage_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

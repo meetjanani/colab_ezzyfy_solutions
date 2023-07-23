@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:colab_ezzyfy_solutions/controller/Auth/firebase_controller.dart';
+import 'package:colab_ezzyfy_solutions/binding/firebase/firebase_controller.dart';
 import 'package:colab_ezzyfy_solutions/resource/extension.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
