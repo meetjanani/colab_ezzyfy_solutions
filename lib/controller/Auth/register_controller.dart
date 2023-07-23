@@ -10,7 +10,7 @@ class RegisterController extends GetxController {
   static RegisterController get to => Get.find();
   var formKey = GlobalKey<FormState>();
   TextEditingController mobileNumberController = TextEditingController();
-  TextEditingController countyCodeController = TextEditingController();
+  TextEditingController countryCodeController = TextEditingController();
 
   TextEditingController nameController = TextEditingController();
   TextEditingController emailAddressController = TextEditingController();
@@ -21,7 +21,6 @@ class RegisterController extends GetxController {
   OtpFieldController otpController = OtpFieldController();
   FirebaseController firebaseController = FirebaseController.to;
   RxString pin = '0'.obs;
-  String countryCode = '+91';
 
   void registerUser() {
     if(!fieldValidation()) {
@@ -42,7 +41,7 @@ class RegisterController extends GetxController {
           emailAddressController.text.toString(),
     };
     firebaseController
-        .fbLogin(countryCode + mobileNumberController.text.toString());
+        .fbLogin(countryCodeController.text.toString() + mobileNumberController.text.toString());
   }
 
   bool fieldValidation() {

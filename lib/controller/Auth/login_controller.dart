@@ -12,7 +12,6 @@ class LoginController extends GetxController {
   var formKey = GlobalKey<FormState>();
   TextEditingController mobileNumber = TextEditingController();
   TextEditingController countryCodeController = TextEditingController();
-  String countryCode = '+91';
   FirebaseController firebaseController = FirebaseController.to;
 
   RxBool passwordVisibal = RxBool(false);
@@ -20,7 +19,7 @@ class LoginController extends GetxController {
   void signIn() {
     if (fieldValidation()) {
       firebaseController.isLoginRequest = true;
-      firebaseController.fbLogin(countryCode + mobileNumber.text.toString());
+      firebaseController.fbLogin(countryCodeController.text.toString() + mobileNumber.text.toString());
     }
   }
 
