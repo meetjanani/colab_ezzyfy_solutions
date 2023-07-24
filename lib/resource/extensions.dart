@@ -430,5 +430,70 @@ extension WidgetExtensions on Widget {
       );
 }
 
+inputField5({
+  ValueChanged<String>? onChanged,
+  TextEditingController? controller,
+  double? height,
+  double? width,
+  int? maxLength,
+  TextInputType? keyboardType,
+  String? hintText,
+  String? labelText,
+  int maxLines = 1,
+  bool obscureText = false,
+  InkWell? inkWell,
+  FormFieldValidator<String>? validation,
+  bool? editable,
+  bool readonly = false,
+
+}) =>
+    Padding(
+      padding: const EdgeInsets.only(top:0,bottom: 0),
+      child: TextFormField(
+
+        readOnly: readonly,
+        controller: controller,
+        obscureText: obscureText,
+        keyboardType: keyboardType,
+        maxLength: maxLength,
+        // style: TextStyle(color: loginBox),
+        maxLines: maxLines,
+        onChanged: onChanged,
+        enabled: editable,
+        decoration: InputDecoration(
+          counterText: "",
+          border: InputBorder.none,
+          hintStyle: TextStyle(color: Colors.grey,fontFamily: "futur"),
+          filled: true,
+          focusedBorder: OutlineInputBorder(
+            borderSide:  BorderSide(color: Colors.grey.shade400),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          focusedErrorBorder: OutlineInputBorder(
+            borderSide:  BorderSide(color: Colors.grey.shade400),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          disabledBorder: OutlineInputBorder(
+            borderSide:  BorderSide(color: Colors.grey.shade400),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          enabledBorder:OutlineInputBorder(
+            borderSide:  BorderSide(color: Colors.grey.shade400),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderSide:  BorderSide(color: Colors.grey.shade400),
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          fillColor: Colors.white,
+          hintText: hintText,
+
+
+        ),
+        validator: validation,
+
+      ),
+    );
+
 var emailPattern = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
 var mobilePattern = r'(^[0-9]*$)';
