@@ -52,6 +52,7 @@ dependencies:
   firebase_auth:
   flutter_local_notifications:
   url_launcher:
+  json_annotation:
   cloud_firestore: ^4.8.3
   firebase_storage: ^11.2.5
 
@@ -64,6 +65,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
+  json_serializable:
+  build_runner:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

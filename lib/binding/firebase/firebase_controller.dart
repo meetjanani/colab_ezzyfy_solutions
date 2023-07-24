@@ -111,7 +111,7 @@ class FirebaseController extends GetxController {
         .get()
         .then((QuerySnapshot querySnapshot) {
       if (querySnapshot.docs.isEmpty) {
-        users.doc(mobileNumber).set(userRegisterData).then((value) {
+        users.add(userRegisterData).then((value) {
           Get.showSuccessSnackbar('New user successfully created.');
           hideProgressBar();
           Get.offNamed(AppRoute.login);
