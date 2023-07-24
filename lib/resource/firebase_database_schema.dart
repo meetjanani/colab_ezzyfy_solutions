@@ -9,6 +9,13 @@ class FirebaseDatabaseSchema extends GetxController {
   static const String emailAddressCol = "emailAddress";
   static const String nameCol = "name";
   static const String phoneNumberCol = "phoneNumber";
+  static const String createAtCol = "createAt";
+
+  static const String projectTable = "projects";
+  static const String projectNameCol = "projectName";
+  static const String projectMobileNumberCol = "projectMobileNumber";
+  static const String projectEmailAddressCol = "projectEmailAddress";
+  static const String projectThumbnailImageUrlCol = "projectThumbnailImageUrl";
 
   // Firebase Storage
   static FirebaseStorage firebaseStorage = FirebaseStorage.instance;

@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:colab_ezzyfy_solutions/binding/firebase/firebase_controller.dart';
+import 'package:colab_ezzyfy_solutions/firebase_operation/firebase_auth_controller.dart';
 import 'package:colab_ezzyfy_solutions/resource/extension.dart';
 import 'package:colab_ezzyfy_solutions/resource/firebase_database_schema.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +21,7 @@ class RegisterController extends GetxController {
   RxBool isSelect1 = RxBool(false);
 
   OtpFieldController otpController = OtpFieldController();
-  FirebaseController firebaseController = FirebaseController.to;
+  FirebaseAuthController firebaseController = FirebaseAuthController.to;
   RxString pin = '0'.obs;
 
   void registerUser() {
@@ -33,14 +33,15 @@ class RegisterController extends GetxController {
           'Please approve Terms & Condition and Privacy Policy');
       return;
     }
+    var mobileNumber = countryCodeController.text.toString() +
+        mobileNumberController.text.toString();
     firebaseController.isLoginRequest = false;
     firebaseController.userRegisterData = UserModel(
       name: nameController.text.toString(),
-      phoneNumber: mobileNumberController.text.toString(),
+      phoneNumber: mobileNumber,
       emailAddress: emailAddressController.text.toString(),
     ).toJson();
-    firebaseController.fbLogin(countryCodeController.text.toString() +
-        mobileNumberController.text.toString());
+    firebaseController.fbRegister();
   }
 
   bool fieldValidation() {

@@ -1,4 +1,4 @@
-import 'package:colab_ezzyfy_solutions/binding/firebase/firebase_controller.dart';
+import 'package:colab_ezzyfy_solutions/firebase_operation/firebase_auth_controller.dart';
 import 'package:colab_ezzyfy_solutions/resource/session_string.dart';
 import 'package:colab_ezzyfy_solutions/route/route.dart';
 import 'package:colab_ezzyfy_solutions/shared/get_storage_repository.dart';

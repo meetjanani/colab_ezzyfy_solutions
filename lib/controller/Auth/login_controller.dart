@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:colab_ezzyfy_solutions/binding/firebase/firebase_controller.dart';
+import 'package:colab_ezzyfy_solutions/firebase_operation/firebase_auth_controller.dart';
 import 'package:colab_ezzyfy_solutions/resource/extension.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +12,7 @@ class LoginController extends GetxController {
   var formKey = GlobalKey<FormState>();
   TextEditingController mobileNumber = TextEditingController();
   TextEditingController countryCodeController = TextEditingController();
-  FirebaseController firebaseController = FirebaseController.to;
+  FirebaseAuthController firebaseController = FirebaseAuthController.to;
 
   RxBool passwordVisibal = RxBool(false);
 
