@@ -1,5 +1,5 @@
-
 import 'package:json_annotation/json_annotation.dart';
+
 part 'user_model.g.dart';
 
 @JsonSerializable()
@@ -9,8 +9,14 @@ class UserModel {
   String emailAddress = "";
   String createAt = DateTime.now().toString();
 
-  UserModel({required this.name,required this.phoneNumber,required this.emailAddress,});
-  factory UserModel.fromJson(Map<String,dynamic> data) => _$UserModelFromJson(data);
+  UserModel({
+    required this.name,
+    required this.phoneNumber,
+    required this.emailAddress,
+  });
 
-  Map<String,dynamic> toJson() => _$UserModelToJson(this);
+  factory UserModel.fromJson(Map<String, dynamic> data) =>
+      _$UserModelFromJson(data);
+
+  Map<String, dynamic> toJson() => _$UserModelToJson(this);
 }

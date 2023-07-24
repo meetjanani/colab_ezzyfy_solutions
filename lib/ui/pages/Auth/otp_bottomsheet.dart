@@ -1,4 +1,4 @@
-import 'package:colab_ezzyfy_solutions/binding/firebase/firebase_controller.dart';
+import 'package:colab_ezzyfy_solutions/firebase_operation/firebase_auth_controller.dart';
 import 'package:colab_ezzyfy_solutions/controller/Auth/register_controller.dart';
 import 'package:colab_ezzyfy_solutions/resource/constant.dart';
 import 'package:colab_ezzyfy_solutions/route/route.dart';
@@ -10,8 +10,10 @@ import 'package:otp_text_field/otp_text_field.dart';
 import 'package:otp_text_field/style.dart';
 
 class OtpPage extends StatefulWidget {
-  OtpPage({required this.verificationId, Key? key}) : super(key: key);
+  OtpPage({required this.verificationId, required this.phoneNumber, Key? key})
+      : super(key: key);
   final String verificationId;
+  final String phoneNumber;
 
   @override
   State<OtpPage> createState() => _OtpPageState();
@@ -19,7 +21,7 @@ class OtpPage extends StatefulWidget {
 
 class _OtpPageState extends State<OtpPage> {
   RegisterController controller = RegisterController.to;
-  FirebaseController firebaseController = FirebaseController.to;
+  FirebaseAuthController firebaseController = FirebaseAuthController.to;
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +85,11 @@ class _OtpPageState extends State<OtpPage> {
                   const SizedBox(height: 20),
                   greenButton('Confirm', () {
                     // verify OTP function
-                    firebaseController.verifyOtpForLoginUser(widget.verificationId,controller.pin.value);
+                    firebaseController.verifyOtpForLoginUser(
+                      widget.verificationId,
+                      controller.pin.value,
+                      widget.phoneNumber,
+                    );
                   }),
                   const SizedBox(height: 20),
                   Row(

@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:colab_ezzyfy_solutions/resource/extension.dart';
 import 'package:colab_ezzyfy_solutions/resource/firebase_database_schema.dart';
@@ -6,17 +8,23 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../route/route.dart';
-import '../../ui/pages/Auth/otp_bottomsheet.dart';
+import '../route/route.dart';
+import '../ui/pages/Auth/otp_bottomsheet.dart';
 
-class FirebaseController extends GetxController {
-  static FirebaseController get to => Get.find();
+class FirebaseAuthController extends GetxController {
+  static FirebaseAuthController get to => Get.find();
 
   var isLoginRequest = true;
   var userRegisterData = null;
 
   void fbLogin(String phoneNumber) async {
-    await signOutUser().then((value) => firebaseAuthCheck(phoneNumber));
+    checkUserIsRegisteredOrNot(phoneNumber).then((isRegister) {
+      if (isRegister) {
+        signOutUser().then((value) => firebaseAuthCheck(phoneNumber));
+      } else {
+        Get.offNamed(AppRoute.register);
+      }
+    });
   }
 
   Future<void> firebaseAuthCheck(String phoneNumber) async {
@@ -41,7 +49,8 @@ class FirebaseController extends GetxController {
         codeSent: (String verificationId, int? resendToken) {
           hideProgressBar();
           // navigate to next screen
-          navigateToOTPScreen(verificationId: verificationId);
+          navigateToOTPScreen(
+              verificationId: verificationId, phoneNumber: phoneNumber);
         },
         codeAutoRetrievalTimeout: (String verificationId) {},
       );
@@ -50,7 +59,8 @@ class FirebaseController extends GetxController {
     }
   }
 
-  void navigateToOTPScreen({required String verificationId}) {
+  void navigateToOTPScreen(
+      {required String verificationId, required String phoneNumber}) {
     // verifyOtpForLoginUser(verificationId, "000000");
     showModalBottomSheet(
         isScrollControlled: true,
@@ -66,12 +76,14 @@ class FirebaseController extends GetxController {
                 bottom: MediaQuery.of(context).viewInsets.bottom),
             child: OtpPage(
               verificationId: verificationId,
+              phoneNumber: phoneNumber,
             ),
           );
         });
   }
 
-  Future<void> verifyOtpForLoginUser(String verificationId, String otp) async {
+  Future<void> verifyOtpForLoginUser(
+      String verificationId, String otp, String phoneNumber) async {
     try {
       showProgress();
       String smsCode = otp;
@@ -79,16 +91,13 @@ class FirebaseController extends GetxController {
           verificationId: verificationId, smsCode: smsCode);
       await FirebaseAuth.instance
           .signInWithCredential(credential)
-          .then((authResult) {
+          .then((authResult) async {
         var getStorage = GetStorageRepository(Get.find());
         getStorage.write('UserCredential', authResult);
         getStorage.write('isAuthSignIn', true); // for use to Auto loading
+        await getUserFromPhoneNumber(phoneNumber);
         hideProgressBar();
-        if (!isLoginRequest) {
-          fbRegister();
-        } else {
-          Get.offNamed(AppRoute.home);
-        }
+        Get.offNamed(AppRoute.home);
         Get.showSuccessSnackbar('Login successfully.');
       });
     } catch (e) {
@@ -101,24 +110,57 @@ class FirebaseController extends GetxController {
     }
   }
 
-  void fbRegister() async {
-    showProgress();
-    var mobileNumber = userRegisterData[FirebaseDatabaseSchema.phoneNumberCol];
+  Future<void> getUserFromPhoneNumber(String phoneNumber) async {
     CollectionReference users = FirebaseFirestore.instance
         .collection(FirebaseDatabaseSchema.usersTable);
     users
-        .where(FirebaseDatabaseSchema.phoneNumberCol, isEqualTo: mobileNumber)
+        .where(FirebaseDatabaseSchema.phoneNumberCol, isEqualTo: phoneNumber)
         .get()
         .then((QuerySnapshot querySnapshot) {
-      if (querySnapshot.docs.isEmpty) {
+      if (querySnapshot.docs.isNotEmpty) {
+        GetStorageRepository(Get.find())
+            .write('loggedInUser', querySnapshot.docs.first);
+      } else {
+        Get.showErrorSnackbar('User is Fail to identify');
+      }
+    });
+  }
+
+  void fbRegister() async {
+    showProgress();
+    var mobileNumber = userRegisterData[FirebaseDatabaseSchema.phoneNumberCol];
+    checkUserIsRegisteredOrNot(mobileNumber).then((isRegister) {
+      if (isRegister) {
+        Get.showErrorSnackbar('User is already exists');
+        fbLogin(mobileNumber);
+      } else {
+        CollectionReference users = FirebaseFirestore.instance
+            .collection(FirebaseDatabaseSchema.usersTable);
         users.add(userRegisterData).then((value) {
           Get.showSuccessSnackbar('New user successfully created.');
           hideProgressBar();
-          Get.offNamed(AppRoute.login);
+          fbLogin(mobileNumber);
         }).catchError(
             (error) => Get.showSuccessSnackbar('Failed to add user: $error'));
+      }
+    });
+    isLoginRequest = false;
+  }
+
+  Future<bool> checkUserIsRegisteredOrNot(String phoneNumber) async {
+    showProgress();
+    CollectionReference users = FirebaseFirestore.instance
+        .collection(FirebaseDatabaseSchema.usersTable);
+    return await users
+        .where(FirebaseDatabaseSchema.phoneNumberCol, isEqualTo: phoneNumber)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      if (querySnapshot.docs.isNotEmpty) {
+        // Login user
+        return true;
       } else {
-        Get.showErrorSnackbar('User is already exists');
+        // Create New user
+        return false;
       }
     });
   }
