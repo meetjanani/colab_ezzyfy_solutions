@@ -38,7 +38,7 @@ class RegisterController extends GetxController {
     firebaseController.isLoginRequest = false;
     firebaseController.userRegisterData = UserModel(
       name: nameController.text.toString(),
-      phoneNumber: mobileNumber,
+      mobileNumber: mobileNumber,
       emailAddress: emailAddressController.text.toString(),
     ).toJson();
     firebaseController.fbRegister();

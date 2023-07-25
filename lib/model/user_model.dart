@@ -5,13 +5,13 @@ part 'user_model.g.dart';
 @JsonSerializable()
 class UserModel {
   String name = "";
-  String phoneNumber = "";
+  String mobileNumber = "";
   String emailAddress = "";
   String createAt = DateTime.now().toString();
 
   UserModel({
     required this.name,
-    required this.phoneNumber,
+    required this.mobileNumber,
     required this.emailAddress,
   });
 

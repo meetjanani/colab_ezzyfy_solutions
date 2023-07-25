@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../firebase_operation/supabase_setup_controller.dart';
 import '../../route/route.dart';
 
 class LoginController extends GetxController {

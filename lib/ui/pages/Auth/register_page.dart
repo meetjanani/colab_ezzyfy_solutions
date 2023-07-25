@@ -14,6 +14,9 @@ class RegisterPage extends GetView<RegisterController> {
   @override
   Widget build(BuildContext context) {
     controller.countryCodeController.text = '+91';
+    controller.nameController.text = 'Meet Janani';
+    controller.emailAddressController.text = 'dd@yopmail.com';
+    controller.mobileNumberController.text = '9510443624';
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
