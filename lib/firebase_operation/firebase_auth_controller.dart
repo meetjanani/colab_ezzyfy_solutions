@@ -7,6 +7,7 @@ import 'package:colab_ezzyfy_solutions/shared/get_storage_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../route/route.dart';
 import '../ui/pages/Auth/otp_bottomsheet.dart';
@@ -111,10 +112,16 @@ class FirebaseAuthController extends GetxController {
   }
 
   Future<void> getUserFromPhoneNumber(String phoneNumber) async {
+    final data = await Supabase.instance.client
+        .from('users')
+        .select('*').eq('mobileNumber', phoneNumber).limit(1);
+    GetStorageRepository(Get.find())
+        .write('supabaseUser', data);
+
     CollectionReference users = FirebaseFirestore.instance
         .collection(FirebaseDatabaseSchema.usersTable);
     users
-        .where(FirebaseDatabaseSchema.phoneNumberCol, isEqualTo: phoneNumber)
+        .where(FirebaseDatabaseSchema.mobileNumberCol, isEqualTo: phoneNumber)
         .get()
         .then((QuerySnapshot querySnapshot) {
       if (querySnapshot.docs.isNotEmpty) {
@@ -128,17 +135,23 @@ class FirebaseAuthController extends GetxController {
 
   void fbRegister() async {
     showProgress();
-    var mobileNumber = userRegisterData[FirebaseDatabaseSchema.phoneNumberCol];
-    checkUserIsRegisteredOrNot(mobileNumber).then((isRegister) {
+    var mobileNumber = userRegisterData[FirebaseDatabaseSchema.mobileNumberCol];
+    checkUserIsRegisteredOrNot(mobileNumber).then((isRegister) async {
       if (isRegister) {
         Get.showErrorSnackbar('User is already exists');
         fbLogin(mobileNumber);
       } else {
+        // insert
+        final data = await Supabase.instance.client
+            .from('users')
+            .insert([userRegisterData]).select();
+        if(data != null) {
+          Get.showSuccessSnackbar('New user successfully created.');
+          hideProgressBar();
+        }
         CollectionReference users = FirebaseFirestore.instance
             .collection(FirebaseDatabaseSchema.usersTable);
         users.add(userRegisterData).then((value) {
-          Get.showSuccessSnackbar('New user successfully created.');
-          hideProgressBar();
           fbLogin(mobileNumber);
         }).catchError(
             (error) => Get.showSuccessSnackbar('Failed to add user: $error'));
@@ -152,7 +165,7 @@ class FirebaseAuthController extends GetxController {
     CollectionReference users = FirebaseFirestore.instance
         .collection(FirebaseDatabaseSchema.usersTable);
     return await users
-        .where(FirebaseDatabaseSchema.phoneNumberCol, isEqualTo: phoneNumber)
+        .where(FirebaseDatabaseSchema.mobileNumberCol, isEqualTo: phoneNumber)
         .get()
         .then((QuerySnapshot querySnapshot) {
       if (querySnapshot.docs.isNotEmpty) {

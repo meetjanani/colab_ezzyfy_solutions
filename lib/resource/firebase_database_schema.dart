@@ -8,7 +8,7 @@ class FirebaseDatabaseSchema extends GetxController {
   static const String usersTable = "users";
   static const String emailAddressCol = "emailAddress";
   static const String nameCol = "name";
-  static const String phoneNumberCol = "phoneNumber";
+  static const String mobileNumberCol = "mobileNumber";
   static const String createAtCol = "createAt";
 
   static const String projectTable = "projects";
