@@ -1,4 +1,5 @@
 import 'package:colab_ezzyfy_solutions/controller/home_dashboard_controller.dart';
+import 'package:colab_ezzyfy_solutions/route/route.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -24,7 +25,7 @@ class HomeDashboardPage extends GetView<HomeDashboardController> {
                     ),
                     InkWell(
                       child: text(
-                          'Create Project', Colors.black, 20, FontWeight.w700),
+                          'Add file', Colors.black, 20, FontWeight.w700),
                       onTap: controller.uploadFile,
                       onLongPress: () {
                         controller.firebaseAuthController.signOutUser(navigateUser: true);
@@ -32,6 +33,13 @@ class HomeDashboardPage extends GetView<HomeDashboardController> {
                     ),
                     SizedBox(
                       height: 20,
+                    ),
+                    InkWell(
+                      child: text(
+                          'Create Project', Colors.black, 20, FontWeight.w700),
+                      onTap: (){
+                        Get.toNamed(AppRoute.createProject);
+                      },
                     ),
                   ],
                 ),
