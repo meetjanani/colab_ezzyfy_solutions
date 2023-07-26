@@ -55,6 +55,7 @@ dependencies:
   json_annotation:
   cloud_firestore: ^4.8.3
   firebase_storage: ^11.2.5
+  dotted_border:
   supabase_flutter: ^1.10.10
 
 dev_dependencies:
