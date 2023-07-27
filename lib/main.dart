@@ -10,8 +10,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-
-
 void main() async {
   await Get.putAsync(() => GetStorage.init());
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,25 +17,21 @@ void main() async {
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-
   await Supabase.initialize(
     url: 'https://uaxgebwzcekkitqquxhh.supabase.co',
-    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVheGdlYnd6Y2Vra2l0cXF1eGhoIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTAzMDIyODQsImV4cCI6MjAwNTg3ODI4NH0.g_qKvYcrNwpExqJfk2JuQ6g2S_xkEb5UbTMo8x0W2yA',
+    anonKey:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVheGdlYnd6Y2Vra2l0cXF1eGhoIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTY5MDMwMjI4NCwiZXhwIjoyMDA1ODc4Mjg0fQ.jNfLJKhGjRm4KYaZAltHKW16ydZfuqaTVTpBHJTKZ1I',
   );
 
   //await FirebaseApi().initNotification();
   DependencyInjection.init();
-  runApp(const MyApp(
-
-
-  ));
+  runApp(const MyApp());
 }
 
 @pragma('vm:entry-point')
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
 }
-
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -47,7 +41,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   final NotificationServices notificationServices = NotificationServices();
 
   @override
@@ -63,9 +56,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) => SimpleBuilder(
-
-
-
       builder: (_) => GetMaterialApp(
           key: UniqueKey(),
           debugShowCheckedModeBanner: false,
@@ -75,12 +65,6 @@ class _MyAppState extends State<MyApp> {
           //   flc.CountryLocalizations.delegate,
           // ],
           initialRoute: AppRoute.splash,
-          routes:  {
-            AppRoute.splash: (context) =>  SplashPage()
-          },
-          getPages: AppPage.routes)
-
-  );
+          routes: {AppRoute.splash: (context) => SplashPage()},
+          getPages: AppPage.routes));
 }
-
-
