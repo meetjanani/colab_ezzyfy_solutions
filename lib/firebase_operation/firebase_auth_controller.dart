@@ -113,7 +113,7 @@ class FirebaseAuthController extends GetxController {
     await Supabase.instance.client
         .from(DatabaseSchema.usersTable)
         .select('*')
-        .eq('mobileNumber', phoneNumber)
+        .eq(DatabaseSchema.projectMobileNumber, phoneNumber)
         .limit(1)
         .then((data) {
       GetStorageRepository(Get.find())

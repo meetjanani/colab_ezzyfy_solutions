@@ -16,26 +16,23 @@ class HomeDashboardController extends GetxController {
   static HomeDashboardController get to => Get.find();
   FirebaseStorageController firebaseStorageController =
       FirebaseStorageController.to;
-  FirebaseAuthController firebaseAuthController =
-      FirebaseAuthController.to;
-  SupabaseSetupController supabaseSetupController =
-      SupabaseSetupController.to;
+  FirebaseAuthController firebaseAuthController = FirebaseAuthController.to;
+  SupabaseSetupController supabaseSetupController = SupabaseSetupController.to;
 
   void uploadFile() async {
     var user = GetStorageRepository(Get.find()).read('supabaseUser');
     var signInUser = UserModelSupabase.fromJson(user);
-    showProgress();
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      allowMultiple: true,
-      type: FileType.custom,
-      allowedExtensions: ['jpg', 'png', 'jpeg'],
-    );
-    if (result != null) {
-      List<File> files = result.paths.map((path) => File(path ?? '')).toList();
-      files.first.rename('project_file_1');
-      firebaseStorageController
-          .uploadFile(files.first, 'file_name.png')
-          .then((thumbnailImageUrl) {
+    supabaseSetupController
+        .checkForDuplicateProject('Project Name2')
+        .then((isDuplicate) async {
+      if (!isDuplicate) {
+        FilePickerResult? selectedPhoto = await selectPhoto();
+        if (selectedPhoto != null) {
+          List<File> files =
+              selectedPhoto.paths.map((path) => File(path ?? '')).toList();
+          firebaseStorageController
+              .uploadFile(files.first, 'Project Name2.png')
+              .then((thumbnailImageUrl) {
             hideProgressBar();
             var project = ProjectCreateModel(
               name: 'Project Name',
@@ -44,10 +41,21 @@ class HomeDashboardController extends GetxController {
               thumbnailImageUrl: thumbnailImageUrl,
               createdByUser: signInUser.id,
             );
-        supabaseSetupController.createNewProject(project);
-      });
-    } else {
-      // User canceled the picker
-    }
+            supabaseSetupController.createNewProject(project);
+          });
+        } else {
+          // User canceled the picker
+        }
+      }
+    });
+  }
+
+  Future<FilePickerResult?> selectPhoto() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      allowMultiple: true,
+      type: FileType.custom,
+      allowedExtensions: ['jpg', 'png', 'jpeg'],
+    );
+    return result;
   }
 }
