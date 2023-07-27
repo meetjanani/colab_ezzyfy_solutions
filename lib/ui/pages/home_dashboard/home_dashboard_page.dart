@@ -25,7 +25,10 @@ class HomeDashboardPage extends GetView<HomeDashboardController> {
                     InkWell(
                       child: text(
                           'Create Project', Colors.black, 20, FontWeight.w700),
-                      onTap: SupabaseSetupController().getData,
+                      onTap: controller.uploadFile,
+                      onLongPress: () {
+                        controller.firebaseAuthController.signOutUser(navigateUser: true);
+                      },
                     ),
                     SizedBox(
                       height: 20,

@@ -1,21 +1,29 @@
+import 'dart:convert';
 import 'dart:io';
 
-import 'package:colab_ezzyfy_solutions/firebase_operation/firebase_project_controller.dart';
 import 'package:colab_ezzyfy_solutions/resource/extension.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
 
+import '../firebase_operation/firebase_auth_controller.dart';
 import '../firebase_operation/firebase_storage_controller.dart';
+import '../firebase_operation/supabase_setup_controller.dart';
 import '../model/project_create_model.dart';
+import '../model/user_model_supabase.dart';
+import '../shared/get_storage_repository.dart';
 
 class HomeDashboardController extends GetxController {
   static HomeDashboardController get to => Get.find();
   FirebaseStorageController firebaseStorageController =
       FirebaseStorageController.to;
-  FirebaseProjectController firebaseProjectController =
-      FirebaseProjectController.to;
+  FirebaseAuthController firebaseAuthController =
+      FirebaseAuthController.to;
+  SupabaseSetupController supabaseSetupController =
+      SupabaseSetupController.to;
 
   void uploadFile() async {
+    var user = GetStorageRepository(Get.find()).read('supabaseUser');
+    var signInUser = UserModelSupabase.fromJson(user);
     showProgress();
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       allowMultiple: true,
@@ -29,13 +37,14 @@ class HomeDashboardController extends GetxController {
           .uploadFile(files.first, 'file_name.png')
           .then((thumbnailImageUrl) {
             hideProgressBar();
-        firebaseProjectController.createNewProject(ProjectCreateModel(
-          projectName: 'Project Name',
-          projectMobileNumber: '1011',
-          projectEmailAddress: 'Rajkot Gujarat is project address',
-          createdByUser: 'meet',
-          projectThumbnailImageUrl: thumbnailImageUrl,
-        ));
+            var project = ProjectCreateModel(
+              name: 'Project Name',
+              mobileNumber: '1011',
+              address: 'Rajkot Gujarat is project address',
+              thumbnailImageUrl: thumbnailImageUrl,
+              createdByUser: signInUser.id,
+            );
+        supabaseSetupController.createNewProject(project);
       });
     } else {
       // User canceled the picker
