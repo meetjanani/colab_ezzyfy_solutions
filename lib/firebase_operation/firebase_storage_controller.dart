@@ -8,7 +8,7 @@ class FirebaseStorageController extends GetxController {
   static FirebaseStorageController get to => Get.find();
 
   Future<String> uploadFile(File file, String fileName) async {
-    var fileRef = DatabaseSchema.teamRef.child(fileName);
+    var fileRef = DatabaseSchema.projectRef.child(fileName);
     await fileRef.putFile(file);
     return await fileRef.getDownloadURL();
   }

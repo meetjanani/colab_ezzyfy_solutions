@@ -10,7 +10,7 @@ class LoginBinding extends Bindings {
   void dependencies() {
     Get.lazyPut(() => LoginController());
     Get.lazyPut(() => RegisterController());
-    Get.lazyPut(() => FirebaseAuthController());
+    Get.lazyPut(() => FirebaseAuthController(Get.find()));
   }
 
 }

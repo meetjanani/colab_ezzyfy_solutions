@@ -11,7 +11,7 @@ class SplashBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => SplashController(Get.find()));
-    Get.lazyPut(() => FirebaseAuthController());
+    Get.lazyPut(() => FirebaseAuthController(Get.find()));
     Get.lazyPut(() => DatabaseSchema());
 
   }

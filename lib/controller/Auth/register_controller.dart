@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:colab_ezzyfy_solutions/firebase_operation/firebase_auth_controller.dart';
 import 'package:colab_ezzyfy_solutions/resource/extension.dart';
@@ -7,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:otp_text_field/otp_field.dart';
 
 import '../../model/user_model.dart';
+import '../../route/route.dart';
 
 class RegisterController extends GetxController {
   static RegisterController get to => Get.find();
@@ -23,6 +26,8 @@ class RegisterController extends GetxController {
   OtpFieldController otpController = OtpFieldController();
   FirebaseAuthController firebaseController = FirebaseAuthController.to;
   RxString pin = '0'.obs;
+  RxInt seconds = 60.obs;
+  Timer? timer;
 
   void registerUser() {
     if (!fieldValidation()) {
@@ -46,5 +51,20 @@ class RegisterController extends GetxController {
 
   bool fieldValidation() {
     return formKey.currentState?.validate() == true;
+  }
+
+  void resend() {
+    Get.back();
+    Get.toNamed(AppRoute.login);
+  }
+
+  void startTimer() {
+    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (seconds > 0) {
+        seconds.value--;
+      } else {
+        timer.cancel();
+      }
+    });
   }
 }

@@ -3,12 +3,14 @@ Developer: Lakhani kamlesh
 Create Date: 20-11-21 3:41
 */
 
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 import '../resource/session_string.dart';
 import 'get_storage_provider.dart';
 
 class GetStorageRepository implements GetStorageProvider {
+  static GetStorageRepository get  to => Get.find();
 
   static const token = "token";
 

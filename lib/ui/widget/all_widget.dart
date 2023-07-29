@@ -14,7 +14,7 @@ Widget imageWidget(String image) {
 
 Widget text(String text,Color color,double fontsize,FontWeight fontWeight){
   return Text(text,
-    style: GoogleFonts.raleway(
+    style: GoogleFonts.inter(
       textStyle: TextStyle(
         color: color,
         fontSize: fontsize,
@@ -26,7 +26,7 @@ Widget text(String text,Color color,double fontsize,FontWeight fontWeight){
 
 Widget textMore(String text,Color color,double fontsize,FontWeight fontWeight,int maxLines){
   return Text(text,
-    style: GoogleFonts.raleway(
+    style: GoogleFonts.inter(
       textStyle: TextStyle(
         color: color,
         fontSize: fontsize,
