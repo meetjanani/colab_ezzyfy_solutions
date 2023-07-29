@@ -15,6 +15,8 @@ import '../route/route.dart';
 import '../ui/pages/Auth/otp_bottomsheet.dart';
 
 class FirebaseAuthController extends GetxController {
+  final GetStorageRepository getStorageRepository;
+  FirebaseAuthController(this.getStorageRepository);
   static FirebaseAuthController get to => Get.find();
 
   var isLoginRequest = true;
@@ -33,7 +35,7 @@ class FirebaseAuthController extends GetxController {
   Future<void> firebaseAuthCheck(String phoneNumber) async {
     var currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null) {
-      GetStorageRepository(Get.find()).write('fbUser', currentUser);
+      getStorageRepository.write('fbUser', currentUser);
     } else {
       firebasePhoneSignIn(phoneNumber);
     }
@@ -94,9 +96,8 @@ class FirebaseAuthController extends GetxController {
       await FirebaseAuth.instance
           .signInWithCredential(credential)
           .then((authResult) async {
-        var getStorage = GetStorageRepository(Get.find());
-        getStorage.write('UserCredential', authResult);
-        getStorage.write('isAuthSignIn', true); // for use to Auto loading
+        getStorageRepository.write('UserCredential', authResult);
+        getStorageRepository.write('isAuthSignIn', true); // for use to Auto loading
         await getUserFromPhoneNumber(phoneNumber);
       });
     } catch (e) {
@@ -116,8 +117,8 @@ class FirebaseAuthController extends GetxController {
         .eq(DatabaseSchema.projectMobileNumber, phoneNumber)
         .limit(1)
         .then((data) {
-      GetStorageRepository(Get.find())
-          .write('supabaseUser', UserModelSupabase.fromJson(data[0]).toJson());
+      getStorageRepository.write(
+          'supabaseUser', UserModelSupabase.fromJson(data[0]).toJson());
       hideProgressBar();
       Get.offNamed(AppRoute.home);
       Get.showSuccessSnackbar('Login successfully.');

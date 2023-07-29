@@ -11,7 +11,7 @@ class HomeDashboardBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => HomeDashboardController());
-    Get.lazyPut(() => FirebaseAuthController());
+    Get.lazyPut(() => FirebaseAuthController(Get.find()));
     Get.lazyPut(() => FirebaseStorageController());
     Get.lazyPut(() => SupabaseSetupController());
   }

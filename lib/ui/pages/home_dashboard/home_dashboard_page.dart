@@ -25,10 +25,9 @@ class HomeDashboardPage extends GetView<HomeDashboardController> {
                     ),
                     InkWell(
                       child: text(
-                          'Add file', Colors.black, 20, FontWeight.w700),
-                      onTap: controller.uploadFile,
-                      onLongPress: () {
-                        controller.firebaseAuthController.signOutUser(navigateUser: true);
+                          'Create Project', Colors.black, 20, FontWeight.w700),
+                      onTap: (){
+                        Get.toNamed(AppRoute.createProject);
                       },
                     ),
                     SizedBox(
@@ -36,9 +35,9 @@ class HomeDashboardPage extends GetView<HomeDashboardController> {
                     ),
                     InkWell(
                       child: text(
-                          'Create Project', Colors.black, 20, FontWeight.w700),
+                          'Logout', Colors.black, 20, FontWeight.w700),
                       onTap: (){
-                        Get.toNamed(AppRoute.createProject);
+                        controller.firebaseAuthController.signOutUser(navigateUser: true);
                       },
                     ),
                   ],

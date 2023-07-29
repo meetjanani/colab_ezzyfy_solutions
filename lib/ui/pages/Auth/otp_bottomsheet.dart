@@ -24,6 +24,12 @@ class _OtpPageState extends State<OtpPage> {
   FirebaseAuthController firebaseController = FirebaseAuthController.to;
 
   @override
+  void initState() {
+    super.initState();
+    controller.startTimer();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
@@ -97,12 +103,16 @@ class _OtpPageState extends State<OtpPage> {
                     children: [
                       text('Don\'t receive OTP ? ', Colors.black, 15,
                           FontWeight.w700),
-                      InkWell(
-                          onTap: () {
-                            Get.toNamed(AppRoute.login);
-                          },
-                          child: text(
-                              'Resend', pinkButtonColor, 15, FontWeight.bold)),
+                      Obx(
+                        () => controller.seconds.value == 0 ?
+                            InkWell(
+                            onTap: () {
+                              controller.resend();
+                            },
+                            child: text(
+                                'Resend', pinkButtonColor, 15, FontWeight.bold)) :
+                        Text('Resend OTP in ${controller.seconds} secs.'),
+                      ),
                     ],
                   ),
                   SizedBox(height: Get.width / 20),

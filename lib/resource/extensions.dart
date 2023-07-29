@@ -55,37 +55,9 @@ extension ValiationExtensions on String {
     return null;
   }
 
-  String? birthdayValidation() {
-    if (isEmpty) {
-      return 'Please enter Date';
-    }
-    return null;
-  }
-
   String? addressValidation() {
     if (isEmpty) {
       return 'Please enter Address';
-    }
-    return null;
-  }
-
-  String? eductionValidation() {
-    if (isEmpty) {
-      return 'Please enter eduction';
-    }
-    return null;
-  }
-
-  String? instaValidation() {
-    if (isEmpty) {
-      return 'Please enter Instagram';
-    }
-    return null;
-  }
-
-  String? faceboookValidation() {
-    if (isEmpty) {
-      return 'Please enter Facebook';
     }
     return null;
   }
@@ -97,9 +69,9 @@ extension ValiationExtensions on String {
     return null;
   }
 
-  String? lastNameValidation() {
+  String? projectNameValidation() {
     if (isEmpty) {
-      return 'Please enter Last Name';
+      return 'Please enter Project Name';
     }
     return null;
   }
@@ -109,20 +81,6 @@ extension ValiationExtensions on String {
       return 'Pin code is required';
     } else if (length < 6) {
       return 'Pin code must be 6 characters';
-    }
-    return null;
-  }
-
-  String? emergencyName1Validation() {
-    if (isEmpty) {
-      return 'Please enter  Name';
-    }
-    return null;
-  }
-
-  String? emergencyNumber1Validation() {
-    if (isEmpty) {
-      return 'Please enter  Number';
     }
     return null;
   }

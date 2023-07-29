@@ -23,7 +23,7 @@ class DatabaseSchema extends GetxController {
   // Firebase Storage
   static FirebaseStorage firebaseStorage = FirebaseStorage.instance;
   static Reference firebaseStorageRef = firebaseStorage.ref();
-  static Reference teamRef = firebaseStorage.ref().child('teams');
+  static Reference projectRef = firebaseStorage.ref().child('projects');
 }
 
 
