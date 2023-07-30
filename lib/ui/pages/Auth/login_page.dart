@@ -66,7 +66,7 @@ class LoginPage extends GetView<LoginController> {
                         children: [
                           SizedBox(
                             width:Get.width/6,
-                            child: inputField5(
+                            child: inputFieldCountryCode(
                                 hintText: '+91',
                                 controller: controller.countryCodeController,
                                 keyboardType: TextInputType.number,

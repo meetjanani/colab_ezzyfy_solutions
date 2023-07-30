@@ -5,7 +5,6 @@ part 'project_create_model.g.dart';
 @JsonSerializable()
 class ProjectCreateModel {
   String name = "";
-  String mobileNumber = "";
   String address = "";
   String thumbnailImageUrl = "";
   int createdByUser = 0;
@@ -13,7 +12,6 @@ class ProjectCreateModel {
 
   ProjectCreateModel({
     required this.name,
-    required this.mobileNumber,
     required this.address,
     required this.thumbnailImageUrl,
     required this.createdByUser,

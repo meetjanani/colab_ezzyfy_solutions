@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:colab_ezzyfy_solutions/resource/extension.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../firebase_operation/firebase_auth_controller.dart';
 import '../firebase_operation/firebase_storage_controller.dart';
@@ -17,65 +17,63 @@ class CreateProjectController extends GetxController {
   static CreateProjectController get to => Get.find();
   final GetStorageRepository getStorageRepository;
 
-  CreateProjectController(this.getStorageRepository);
+  CreateProjectController(this.getStorageRepository) {
+    initController();
+  }
 
   FirebaseStorageController firebaseStorageController =
       FirebaseStorageController.to;
   FirebaseAuthController firebaseAuthController = FirebaseAuthController.to;
   SupabaseSetupController supabaseSetupController = SupabaseSetupController.to;
+  Rx<String> userName = "Ronaldo".obs;
 
   var formKey = GlobalKey<FormState>();
   TextEditingController projectName = TextEditingController();
-  RxList<File> selectedPhotoList = RxList();
-  TextEditingController mobileNumber = TextEditingController();
+  RxList<File> selectedPhoto = RxList();
   TextEditingController address = TextEditingController();
+  var thumbnailImageUrl = "https://firebasestorage.googleapis.com/v0/b/colab-sample.appspot.com/o/projects%2Fdefault_project_image.png?alt=media&token=dde38226-2557-40da-b313-ddb0cbd77658";
+
+  void initController() {
+    userName.value = getStorageRepository.read('userName');
+  }
 
   bool fieldValidation() {
-    return (formKey.currentState?.validate() == true) &&
-        (selectedPhotoList.firstOrNull != null);
+    return formKey.currentState?.validate() == true;
   }
 
   void createProject() async {
     if (!fieldValidation()) {
       return;
     }
-    Get.showSuccessSnackbar(
-        getStorageRepository.read('supabaseUser').toString());
     var user = getStorageRepository.read('supabaseUser');
     var signInUser = UserModelSupabase.fromJson(user);
     supabaseSetupController
         .checkForDuplicateProject(projectName.text)
         .then((isDuplicate) async {
       if (!isDuplicate) {
-        if (selectedPhotoList.firstOrNull != null) {
-          List<File> files = selectedPhotoList
-                  ?.map((files) => File(files.path ?? ''))
-                  .toList() ??
-              [];
-          firebaseStorageController
-              .uploadFile(files.first,
-                  'thumbnail_projet_${projectName.text.toString().replaceAll(' ', '').trim()}.png')
-              .then((thumbnailImageUrl) {
-            hideProgressBar();
-            var project = ProjectCreateModel(
-              name: projectName.text.toString(),
-              mobileNumber: mobileNumber.text.toString(),
-              address: address.text.toString(),
-              thumbnailImageUrl: thumbnailImageUrl,
-              createdByUser: signInUser.id,
-            );
-            supabaseSetupController.createNewProject(project);
-          });
-        } else {
-          // User canceled the picker
+        if(selectedPhoto.value.firstOrNull != null) {
+          File fileToUpload = File(selectedPhoto.value.firstOrNull?.path ?? '');
+          var projectNameTrim =
+          projectName.text.toString().replaceAll(' ', '').trim();
+          thumbnailImageUrl = await firebaseStorageController
+              .uploadFile(fileToUpload, 'thumbnail_projet_${projectNameTrim}.png',
+              projectNameTrim);
         }
+        hideProgressBar();
+        var project = ProjectCreateModel(
+          name: projectName.text.toString(),
+          address: address.text.toString(),
+          thumbnailImageUrl: thumbnailImageUrl,
+          createdByUser: signInUser.id,
+        );
+        supabaseSetupController.createNewProject(project);
       }
     });
   }
 
   void selectPhoto() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
-      allowMultiple: true,
+      allowMultiple: false,
       type: FileType.custom,
       allowedExtensions: [
         'jpg',
@@ -84,13 +82,14 @@ class CreateProjectController extends GetxController {
       ],
     );
     if (result != null) {
-      List<File> filetemp =
+      List<File> fileTemp =
           result.paths.map((path) => File(path ?? '')).toList();
-      for (int i = 0; i < filetemp.length; i++) {
-        int sizeInBytes = filetemp[i].lengthSync();
+      for (int i = 0; i < fileTemp.length; i++) {
+        int sizeInBytes = fileTemp[i].lengthSync();
         double sizeInMb = sizeInBytes / (1024 * 1024);
         if (sizeInMb < 30) {
-          selectedPhotoList.add(filetemp[i]);
+          selectedPhoto.clear();
+          selectedPhoto.add(fileTemp[i]);
         } else {
           Get.showErrorSnackbar('File size is more then 30 MB');
         }
