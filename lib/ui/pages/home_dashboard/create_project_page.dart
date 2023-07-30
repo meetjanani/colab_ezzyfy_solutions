@@ -55,7 +55,7 @@ class CreateProjectPage extends GetView<CreateProjectController> {
                         SizedBox(
                           width: 5,
                         ),
-                        text('Ronaldo', Colors.white, 14, FontWeight.bold),
+                        text(controller.userName.value.toString(), Colors.white, 14, FontWeight.bold),
                       ],
                     ),
                     SizedBox(
@@ -93,9 +93,9 @@ class CreateProjectPage extends GetView<CreateProjectController> {
                           child: Column(
                             children: [
                               if (controller
-                                      .selectedPhotoList?.firstOrNull?.path !=
+                                      .selectedPhoto?.value?.firstOrNull?.path !=
                                   null)
-                                Image.file(File(controller.selectedPhotoList.firstOrNull?.path ??
+                                Image.file(File(controller.selectedPhoto?.value?.firstOrNull?.path ??
                                     ""),
                                 height: 200,
                                 width: Get.width,
@@ -126,19 +126,6 @@ class CreateProjectPage extends GetView<CreateProjectController> {
                     keyboardType: TextInputType.name,
                     validation: (value) {
                       return value?.projectNameValidation();
-                    }),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                child: inputField(
-                    hintText: 'Enter Mobile Number',
-                    controller: controller.mobileNumber,
-                    keyboardType: TextInputType.number,
-                    validation: (value) {
-                      return value?.validateMobile();
                     }),
               ),
               SizedBox(

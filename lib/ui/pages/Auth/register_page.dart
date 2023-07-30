@@ -13,10 +13,6 @@ class RegisterPage extends GetView<RegisterController> {
 
   @override
   Widget build(BuildContext context) {
-    controller.countryCodeController.text = '+91';
-    controller.nameController.text = 'Meet Janani';
-    controller.emailAddressController.text = 'dd@yopmail.com';
-    controller.mobileNumberController.text = '9510443624';
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -77,7 +73,7 @@ class RegisterPage extends GetView<RegisterController> {
                         children: [
                           SizedBox(
                             width:Get.width/5,
-                            child: inputField(
+                            child: inputFieldCountryCode(
                                 hintText: '+91',
                                 controller: controller.countryCodeController,
                                 keyboardType: TextInputType.number,

@@ -119,6 +119,8 @@ class FirebaseAuthController extends GetxController {
         .then((data) {
       getStorageRepository.write(
           'supabaseUser', UserModelSupabase.fromJson(data[0]).toJson());
+      getStorageRepository.write(
+          'userName', UserModelSupabase.fromJson(data[0]).name);
       hideProgressBar();
       Get.offNamed(AppRoute.home);
       Get.showSuccessSnackbar('Login successfully.');

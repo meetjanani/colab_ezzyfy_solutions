@@ -27,12 +27,10 @@ class SupabaseSetupController {
 
   void createNewProject(ProjectCreateModel projectCreateModel) async {
     showProgress();
-    final List<Map<String, dynamic>> project = await Supabase.instance.client
-        .from(DatabaseSchema.projectTable)
-        .upsert([
+    await Supabase.instance.client.from(DatabaseSchema.projectTable).upsert([
       projectCreateModel.toJson(),
-    ]).select();
+    ]);
     hideProgressBar();
-    Get.showSuccessSnackbar('New Project Creates successfully.');
+    Get.showSuccessSnackbar('New Project Created successfully.');
   }
 }
