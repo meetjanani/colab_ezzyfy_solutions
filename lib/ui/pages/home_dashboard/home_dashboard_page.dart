@@ -3,7 +3,6 @@ import 'package:colab_ezzyfy_solutions/route/route.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../firebase_operation/supabase_setup_controller.dart';
 import '../../widget/all_widget.dart';
 
 class HomeDashboardPage extends GetView<HomeDashboardController> {

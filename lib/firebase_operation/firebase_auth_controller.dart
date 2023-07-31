@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:colab_ezzyfy_solutions/resource/extension.dart';
 import 'package:colab_ezzyfy_solutions/resource/database_schema.dart';
@@ -73,7 +70,7 @@ class FirebaseAuthController extends GetxController {
             borderRadius: BorderRadius.vertical(
           top: Radius.circular(40),
         )),
-        context: Get.context!!,
+        context: Get.context!,
         builder: (context) {
           return Padding(
             padding: EdgeInsets.only(
@@ -114,7 +111,7 @@ class FirebaseAuthController extends GetxController {
     await Supabase.instance.client
         .from(DatabaseSchema.usersTable)
         .select('*')
-        .eq(DatabaseSchema.projectMobileNumber, phoneNumber)
+        .eq(DatabaseSchema.userMobileNumber, phoneNumber)
         .limit(1)
         .then((data) {
       getStorageRepository.write(
@@ -136,7 +133,7 @@ class FirebaseAuthController extends GetxController {
         fbLogin(mobileNumber);
       } else {
         // insert into Supabase
-        final data = await Supabase.instance.client
+        await Supabase.instance.client
             .from(DatabaseSchema.usersTable)
             .insert([userRegisterData]).select();
         // insert into Firebase

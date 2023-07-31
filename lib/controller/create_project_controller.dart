@@ -4,11 +4,10 @@ import 'package:colab_ezzyfy_solutions/resource/extension.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 import '../firebase_operation/firebase_auth_controller.dart';
 import '../firebase_operation/firebase_storage_controller.dart';
-import '../firebase_operation/supabase_setup_controller.dart';
+import '../firebase_operation/project_controller_supabase.dart';
 import '../model/project_create_model.dart';
 import '../model/user_model_supabase.dart';
 import '../shared/get_storage_repository.dart';
@@ -24,7 +23,7 @@ class CreateProjectController extends GetxController {
   FirebaseStorageController firebaseStorageController =
       FirebaseStorageController.to;
   FirebaseAuthController firebaseAuthController = FirebaseAuthController.to;
-  SupabaseSetupController supabaseSetupController = SupabaseSetupController.to;
+  ProjectControllerSupabase supabaseSetupController = ProjectControllerSupabase.to;
   Rx<String> userName = "Ronaldo".obs;
 
   var formKey = GlobalKey<FormState>();
@@ -34,7 +33,7 @@ class CreateProjectController extends GetxController {
   var thumbnailImageUrl = "https://firebasestorage.googleapis.com/v0/b/colab-sample.appspot.com/o/projects%2Fdefault_project_image.png?alt=media&token=dde38226-2557-40da-b313-ddb0cbd77658";
 
   void initController() {
-    userName.value = getStorageRepository.read('userName');
+    userName.value = getStorageRepository.read('userName') ?? userName.value ;
   }
 
   bool fieldValidation() {
