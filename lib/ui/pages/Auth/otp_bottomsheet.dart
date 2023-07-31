@@ -1,11 +1,9 @@
 import 'package:colab_ezzyfy_solutions/firebase_operation/firebase_auth_controller.dart';
 import 'package:colab_ezzyfy_solutions/controller/Auth/register_controller.dart';
 import 'package:colab_ezzyfy_solutions/resource/constant.dart';
-import 'package:colab_ezzyfy_solutions/route/route.dart';
 import 'package:colab_ezzyfy_solutions/ui/widget/all_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:otp_text_field/otp_text_field.dart';
 import 'package:otp_text_field/style.dart';
 

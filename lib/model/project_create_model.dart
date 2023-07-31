@@ -17,6 +17,14 @@ class ProjectCreateModel {
     required this.createdByUser,
   });
 
+  static List<ProjectCreateModel> fromJsonList(List<dynamic> dataList) {
+    List<ProjectCreateModel> record = [];
+    for (var e in dataList) {
+      record.add(_$ProjectCreateModelFromJson(e));
+    }
+    return record;
+  }
+
   factory ProjectCreateModel.fromJson(Map<String, dynamic> data) =>
       _$ProjectCreateModelFromJson(data);
 

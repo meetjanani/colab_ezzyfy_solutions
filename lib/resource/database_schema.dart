@@ -15,9 +15,9 @@ class DatabaseSchema extends GetxController {
   static const String projectTable = "projects";
   static const String projectId = "id";
   static const String projectName = "name";
-  static const String projectMobileNumber = "mobileNumber";
   static const String projectMobileNumberCol = "address";
   static const String projectThumbnailImageUrl = "thumbnailImageUrl";
+  static const String projectCreatedByUser = "createdByUser";
   static const String projectCreateAt = "createAt";
 
   // Firebase Storage
