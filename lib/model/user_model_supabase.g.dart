@@ -12,7 +12,10 @@ UserModelSupabase _$UserModelSupabaseFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
       mobileNumber: json['mobileNumber'] as String,
       emailAddress: json['emailAddress'] as String,
-    )..createAt = json['createAt'] as String;
+    )
+      ..createAt = json['createAt'] as String
+      ..isAdmin = json['isAdmin'] as bool
+      ..profilePictureUrl = json['profilePictureUrl'] as String;
 
 Map<String, dynamic> _$UserModelSupabaseToJson(UserModelSupabase instance) =>
     <String, dynamic>{
@@ -21,4 +24,6 @@ Map<String, dynamic> _$UserModelSupabaseToJson(UserModelSupabase instance) =>
       'mobileNumber': instance.mobileNumber,
       'emailAddress': instance.emailAddress,
       'createAt': instance.createAt,
+      'isAdmin': instance.isAdmin,
+      'profilePictureUrl': instance.profilePictureUrl,
     };
