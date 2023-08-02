@@ -12,7 +12,9 @@ ProjectCreateModel _$ProjectCreateModelFromJson(Map<String, dynamic> json) =>
       address: json['address'] as String,
       thumbnailImageUrl: json['thumbnailImageUrl'] as String,
       createdByUser: json['createdByUser'] as int,
-    )..createAt = json['createAt'] as String;
+    )
+      ..createAt = json['createAt'] as String
+      ..assignedUser = json['assignedUser'] as String;
 
 Map<String, dynamic> _$ProjectCreateModelToJson(ProjectCreateModel instance) =>
     <String, dynamic>{
@@ -21,4 +23,5 @@ Map<String, dynamic> _$ProjectCreateModelToJson(ProjectCreateModel instance) =>
       'thumbnailImageUrl': instance.thumbnailImageUrl,
       'createdByUser': instance.createdByUser,
       'createAt': instance.createAt,
+      'assignedUser': instance.assignedUser,
     };

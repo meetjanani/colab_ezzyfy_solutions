@@ -9,6 +9,7 @@ class ProjectCreateModel {
   String thumbnailImageUrl = "";
   int createdByUser = 0;
   String createAt = DateTime.now().toString();
+  String assignedUser = "";
 
   ProjectCreateModel({
     required this.name,

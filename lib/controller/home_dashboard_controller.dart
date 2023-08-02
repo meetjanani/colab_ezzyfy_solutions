@@ -13,6 +13,6 @@ class HomeDashboardController extends GetxController {
 
   void fetchProject() async {
     projectList
-        .addAll(await projectControllerSupabase.getAllProjectByLoginUser(8));
+        .addAll(await projectControllerSupabase.getProjectsByUserId(14));
   }
 }

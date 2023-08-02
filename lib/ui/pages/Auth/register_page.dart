@@ -12,6 +12,7 @@ class RegisterPage extends GetView<RegisterController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.countryCodeController.text = '+91';
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
