@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../firebase_operation/firebase_auth_controller.dart';
@@ -6,6 +7,8 @@ import '../model/project_create_model.dart';
 
 class HomeDashboardController extends GetxController {
   static HomeDashboardController get to => Get.find();
+  var formKey = GlobalKey<FormState>();
+
   FirebaseAuthController firebaseAuthController = FirebaseAuthController.to;
   ProjectControllerSupabase projectControllerSupabase =
       ProjectControllerSupabase.to;

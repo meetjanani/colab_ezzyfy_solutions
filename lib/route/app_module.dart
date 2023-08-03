@@ -7,6 +7,7 @@ import 'package:colab_ezzyfy_solutions/ui/pages/Auth/register_page.dart';
 import 'package:colab_ezzyfy_solutions/ui/pages/home_dashboard/create_project_page.dart';
 import 'package:colab_ezzyfy_solutions/ui/pages/home_dashboard/home_dashboard_page.dart';
 import 'package:colab_ezzyfy_solutions/ui/pages/splashpage.dart';
+import 'package:colab_ezzyfy_solutions/ui/widget/bottom_navigation_bar.dart';
 import 'package:get/route_manager.dart';
 
 
@@ -33,7 +34,7 @@ class AppPage {
         binding: RegisterBinding()),
     GetPage(
         name: AppRoute.home,
-        page: () => const HomeDashboardPage(),
+        page: () => BottomNavigationPage(currentIndex: 0),
         binding: HomeDashboardBinding()),
 
     // Home

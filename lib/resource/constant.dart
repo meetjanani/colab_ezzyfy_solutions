@@ -4,7 +4,7 @@ import 'hex_colors.dart';
 Color pinkButtonColor = HexColor("0385FE");
 Color darkVioletColor = HexColor("161A37");
 Color uploadImageDottedBorderColor = HexColor("E0E0E0");
-
+Color textVioletColor = HexColor("2E3D93");
 
 
 
