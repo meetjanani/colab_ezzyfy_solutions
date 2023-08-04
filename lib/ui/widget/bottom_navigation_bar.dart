@@ -1,3 +1,4 @@
+import 'package:colab_ezzyfy_solutions/resource/image.dart';
 import 'package:colab_ezzyfy_solutions/ui/pages/home_dashboard/home_dashboard_page.dart';
 import 'package:colab_ezzyfy_solutions/ui/widget/all_widget.dart';
 import 'package:flutter/material.dart';
@@ -54,10 +55,10 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
           ),
           items: [
             BottomBarItem(
-              icon:  Icon(
-                Icons.house_outlined,
+              icon:  SvgPicture.asset(
+                home
               ),
-              selectedIcon:  Icon(Icons.house_rounded,color: Colors.blue,size: 20,),
+              selectedIcon:  SvgPicture.asset(home,color: Colors.blue,),
               selectedColor: Colors.blue,
               unSelectedColor: Colors.grey.shade400,
               backgroundColor: Colors.blue.shade200,
@@ -67,23 +68,23 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
               // showBadge: true,
             ),
             BottomBarItem(
-              icon: const Icon(
-                Icons.house_outlined,
+              icon:  SvgPicture.asset(
+                Document
               ),
-              selectedIcon: const Icon(Icons.house_rounded,color: Colors.blue,),
+              selectedIcon:  SvgPicture.asset(Document,color: Colors.blue,),
               selectedColor: Colors.blue,
               unSelectedColor: Colors.grey.shade400,
               backgroundColor: Colors.blue.shade200,
               //badgeRadius: BorderRadius.circular(50),
-              title: const Text('Home',style: TextStyle(color: Colors.blue),),
+              title: const Text('Documents',style: TextStyle(color: Colors.blue),),
               //badge:  Text('9+'),
               // showBadge: true,
             ),
             BottomBarItem(
-              icon: const Icon(
-                Icons.house_outlined,color: Colors.white,
+              icon:  SvgPicture.asset(
+                bottomimage,color: Colors.white,
               ),
-              selectedIcon: const Icon(Icons.house_rounded,color: Colors.white,),
+              selectedIcon:  SvgPicture.asset(bottomimage,color: Colors.white,),
               //selectedColor: Colors.blue,
               // unSelectedColor: Colors.grey.shade400,
               backgroundColor: Colors.white,
@@ -93,28 +94,28 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
               // showBadge: true,
             ),
             BottomBarItem(
-              icon: const Icon(
-                Icons.house_outlined,
+              icon:  SvgPicture.asset(
+                bottomimage
               ),
-              selectedIcon: const Icon(Icons.house_rounded,color: Colors.blue,),
+              selectedIcon:  SvgPicture.asset(bottomimage,color: Colors.blue,),
               selectedColor: Colors.blue,
               unSelectedColor: Colors.grey.shade400,
               backgroundColor: Colors.blue.shade200,
               //badgeRadius: BorderRadius.circular(50),
-              title: const Text('Home',style: TextStyle(color: Colors.blue),),
+              title: const Text('Images',style: TextStyle(color: Colors.blue),),
               //badge:  Text('9+'),
               // showBadge: true,
             ),
             BottomBarItem(
-              icon: const Icon(
-                Icons.house_outlined,
+              icon:  SvgPicture.asset(
+                Chat
               ),
-              selectedIcon: const Icon(Icons.house_rounded,color: Colors.blue,),
+              selectedIcon: SvgPicture.asset(Chat,color: Colors.blue,),
               selectedColor: Colors.blue,
               unSelectedColor: Colors.grey.shade400,
               backgroundColor: Colors.blue.shade200,
               //badgeRadius: BorderRadius.circular(50),
-              title: const Text('Home',style: TextStyle(color: Colors.blue),),
+              title: const Text('Chat',style: TextStyle(color: Colors.blue),),
               //badge:  Text('9+'),
               // showBadge: true,
             ),

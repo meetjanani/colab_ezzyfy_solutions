@@ -63,6 +63,88 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                   ],
                 ),
               ),
+              SizedBox(height: 20,),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(
+                    children: [
+                      Card(
+                        elevation: 10,
+                        child: Container(
+                          height: 50,width: 55,
+                            decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius: BorderRadius.circular(5)
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SvgPicture.asset(plus,),
+                            ),),
+                      ),
+                      text('Create\nProject', Colors.black, 12, FontWeight.w500)
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Card(
+                        elevation: 10,
+                        child: Container(
+                          height: 50,width: 55,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(5)
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SvgPicture.asset(team,color: Colors.blue,),
+                          ),),
+                      ),
+                      text('Team', Colors.black, 12, FontWeight.w500)
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Card(
+                        elevation: 10,
+                        child: Container(
+                          height: 50,width: 55,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(5)
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SvgPicture.asset(up,color: Colors.blue,),
+                          ),),
+                      ),
+                      text('Upload', Colors.black, 12, FontWeight.w500),
+                      text('Documents', Colors.black, 12, FontWeight.w500)
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Card(
+                        elevation: 10,
+                        child: Container(
+                          height: 50,width: 55,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(5)
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: SvgPicture.asset(scan,color: Colors.blue,),
+                          ),),
+                      ),
+                      text('Scan', Colors.black, 12, FontWeight.w500),
+                      text('Documents', Colors.black, 12, FontWeight.w500)
+                    ],
+                  ),
+                ],
+              ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                 child: Row(
