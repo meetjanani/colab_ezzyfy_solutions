@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import '../firebase_operation/firebase_auth_controller.dart';
 import '../firebase_operation/firebase_storage_controller.dart';
 import '../firebase_operation/project_controller_supabase.dart';
-import '../model/project_create_model.dart';
+import '../model/create_project_request_model.dart';
 import '../model/user_model_supabase.dart';
 import '../shared/get_storage_repository.dart';
 
@@ -50,8 +50,8 @@ class CreateProjectController extends GetxController {
         .checkForDuplicateProject(projectName.text)
         .then((isDuplicate) async {
       if (!isDuplicate) {
-        if(selectedPhoto.value?.first != null) {
-          File fileToUpload = File(selectedPhoto.value?.first?.path ?? '');
+        if(selectedPhoto.value?.firstOrNull != null) {
+          File fileToUpload = File(selectedPhoto.value?.firstOrNull?.path ?? '');
           var projectNameTrim =
           projectName.text.toString().replaceAll(' ', '').trim();
           thumbnailImageUrl = await firebaseStorageController
@@ -59,7 +59,7 @@ class CreateProjectController extends GetxController {
               projectNameTrim);
         }
         hideProgressBar();
-        var project = ProjectCreateModel(
+        var project = CreateProjectRequestModel(
           name: projectName.text.toString(),
           address: address.text.toString(),
           thumbnailImageUrl: thumbnailImageUrl,

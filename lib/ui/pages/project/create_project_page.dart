@@ -36,7 +36,7 @@ class CreateProjectPage extends GetView<CreateProjectController> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(
-                      height: 36,
+                      height: 44,
                     ),
                     text('Colab', Colors.white, 25, FontWeight.w500),
                     SizedBox(
@@ -93,9 +93,9 @@ class CreateProjectPage extends GetView<CreateProjectController> {
                           child: Column(
                             children: [
                               if (controller
-                                      .selectedPhoto.value?.first?.path !=
+                                      .selectedPhoto.value?.firstOrNull?.path !=
                                   null)
-                                Image.file(File(controller.selectedPhoto.value?.first?.path ??
+                                Image.file(File(controller.selectedPhoto.value?.firstOrNull?.path ??
                                     ""),
                                 height: 200,
                                 width: Get.width,

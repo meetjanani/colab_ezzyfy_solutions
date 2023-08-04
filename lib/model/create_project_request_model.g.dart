@@ -1,13 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'project_create_model.dart';
+part of 'create_project_request_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ProjectCreateModel _$ProjectCreateModelFromJson(Map<String, dynamic> json) =>
-    ProjectCreateModel(
+CreateProjectRequestModel _$CreateProjectRequestModelFromJson(
+        Map<String, dynamic> json) =>
+    CreateProjectRequestModel(
       name: json['name'] as String,
       address: json['address'] as String,
       thumbnailImageUrl: json['thumbnailImageUrl'] as String,
@@ -16,7 +17,8 @@ ProjectCreateModel _$ProjectCreateModelFromJson(Map<String, dynamic> json) =>
       ..createAt = json['createAt'] as String
       ..assignedUser = json['assignedUser'] as String;
 
-Map<String, dynamic> _$ProjectCreateModelToJson(ProjectCreateModel instance) =>
+Map<String, dynamic> _$CreateProjectRequestModelToJson(
+        CreateProjectRequestModel instance) =>
     <String, dynamic>{
       'name': instance.name,
       'address': instance.address,

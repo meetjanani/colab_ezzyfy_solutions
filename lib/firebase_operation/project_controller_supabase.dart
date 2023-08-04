@@ -4,20 +4,23 @@ import 'package:colab_ezzyfy_solutions/resource/extension.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../model/project_create_model.dart';
+import '../model/create_project_request_model.dart';
+import '../model/create_project_response_model.dart';
+import '../model/project_attchments_request_model.dart';
+import '../model/project_attchments_response_model.dart';
 import '../resource/database_schema.dart';
 
 class ProjectControllerSupabase {
   static ProjectControllerSupabase get to => Get.find();
 
-  Future<List<ProjectCreateModel>> getProjectsByUserId(int userId) async {
+  Future<List<CreateProjectResponseModel>> getProjectsByUserId(int userId) async {
     showProgress();
     final response = await Supabase.instance.client
         .from(DatabaseSchema.projectTable)
         .select('*')
         .eq(DatabaseSchema.projectCreatedByUser, userId);
 
-    var projectList = ProjectCreateModel.fromJsonList(response);
+    var projectList = CreateProjectResponseModel.fromJsonList(response);
     hideProgressBar();
     return projectList;
   }
@@ -37,7 +40,7 @@ class ProjectControllerSupabase {
     return duplicateProject.length > 0;
   }
 
-  void createNewProject(ProjectCreateModel projectCreateModel) async {
+  void createNewProject(CreateProjectRequestModel projectCreateModel) async {
     showProgress();
     await Supabase.instance.client.from(DatabaseSchema.projectTable).upsert([
       projectCreateModel.toJson(),
@@ -46,7 +49,7 @@ class ProjectControllerSupabase {
     Get.showSuccessSnackbar('New Project Created successfully.');
   }
 
-  Future<ProjectCreateModel> getProjectById(int projectId) async {
+  Future<CreateProjectResponseModel> getProjectById(int projectId) async {
     showProgress();
     var projectResponse = await Supabase.instance.client
         .from(DatabaseSchema.projectTable)
@@ -54,7 +57,7 @@ class ProjectControllerSupabase {
         .eq(DatabaseSchema.projectId, projectId)
         .limit(1);
     hideProgressBar();
-    return ProjectCreateModel.fromJsonList(projectResponse)[0];
+    return CreateProjectResponseModel.fromJsonList(projectResponse)[0];
   }
 
   void addOrRemoveUserFromProject(int userId, int projectId) async {
@@ -85,5 +88,15 @@ class ProjectControllerSupabase {
         .select('*')
         .in_(DatabaseSchema.usersId, projectById.assignedUser.split(','));
     hideProgressBar();
+  }
+
+  void createProjectAttachment(
+      List<ProjectAttachmentsRequestModel> projectAttachment) async {
+    showProgress();
+    await Supabase.instance.client
+        .from(DatabaseSchema.projectAttachmentsTable)
+        .insert(ProjectAttachmentsRequestModel.toJsonListProject(projectAttachment));
+    hideProgressBar();
+    Get.showSuccessSnackbar('New Project Created successfully.');
   }
 }
