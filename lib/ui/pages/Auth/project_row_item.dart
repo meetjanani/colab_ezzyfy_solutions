@@ -41,14 +41,15 @@ class ProjectRowItem extends StatelessWidget {
                       mainAxisAlignment:
                       MainAxisAlignment.spaceBetween,
                       children: [
-                        text(
-                            projectCreateModel.name,
-                            Colors.black,
-                            14,
-                            FontWeight.w600),
-                        SizedBox(
-                          width: Get.width / 4.5,
+                        Container(
+                          width: Get.width/2.5,
+                          child: textMore(
+                              projectCreateModel.name,
+                              Colors.black,
+                              14,
+                              FontWeight.w600,3),
                         ),
+
                         Container(
                           decoration: BoxDecoration(
                               borderRadius:
