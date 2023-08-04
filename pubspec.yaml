@@ -58,6 +58,7 @@ dependencies:
   dotted_border:
   supabase_flutter: ^1.10.10
   stylish_bottom_bar:
+  cached_network_image: ^3.2.3
 
 dev_dependencies:
   flutter_test:

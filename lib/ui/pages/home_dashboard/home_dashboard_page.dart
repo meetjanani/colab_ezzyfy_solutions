@@ -36,70 +36,104 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: Get.width,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(bg), fit: BoxFit.fill),
-                    borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(20)),
-                    color: Colors.blue),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: Get.width / 5,
+              Column(
+                children: [
+                  Container(
+                    width: Get.width,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage(bg), fit: BoxFit.fill),
+                        borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(20),
+                            bottomRight: Radius.circular(20)),
+                        color: Colors.blue),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: 44,
+                        ),
+                        text('Colab', Colors.white, 25, FontWeight.w500),
+                        SizedBox(
+                          height: 6,
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: 20,
+                            ),
+                            CircleAvatar(),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            text('Hello,', Colors.white, 14, FontWeight.normal),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            text(controller.userName.value.toString(),
+                                Colors.white, 14, FontWeight.bold),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                      ],
                     ),
-                    InkWell(
-                      child: text(
-                          'Create Project', Colors.white, 20, FontWeight.w700),
-                      onTap: () {
-                        Get.toNamed(AppRoute.createProject);
-                      },
-                    ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Column(
-                    children: [
-                      Card(
-                        elevation: 10,
-                        child: Container(
-                          height: 50,width: 55,
+                  InkWell(
+                    child: Column(
+                      children: [
+                        Card(
+                          elevation: 10,
+                          child: Container(
+                            height: 50,
+                            width: 55,
                             decoration: BoxDecoration(
-                              color: Colors.blue,
-                              borderRadius: BorderRadius.circular(5)
-                            ),
+                                color: Colors.blue,
+                                borderRadius: BorderRadius.circular(5)),
                             child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: SvgPicture.asset(plus,),
-                            ),),
-                      ),
-                      text('Create\nProject', Colors.black, 12, FontWeight.w500)
-                    ],
+                              padding: const EdgeInsets.all(12.0),
+                              child: SvgPicture.asset(
+                                plus,
+                              ),
+                            ),
+                          ),
+                        ),
+                        text('Create\nProject', Colors.black, 12,
+                            FontWeight.w500)
+                      ],
+                    ),
+                    onTap: () {
+                      Get.toNamed(AppRoute.createProject);
+                    },
                   ),
                   Column(
                     children: [
                       Card(
                         elevation: 10,
                         child: Container(
-                          height: 50,width: 55,
+                          height: 50,
+                          width: 55,
                           decoration: BoxDecoration(
                               color: Colors.white,
-                              borderRadius: BorderRadius.circular(5)
-                          ),
+                              borderRadius: BorderRadius.circular(5)),
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: SvgPicture.asset(team,color: Colors.blue,),
-                          ),),
+                            padding: const EdgeInsets.all(12.0),
+                            child: SvgPicture.asset(
+                              team,
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ),
                       ),
                       text('Team', Colors.black, 12, FontWeight.w500)
                     ],
@@ -109,15 +143,19 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                       Card(
                         elevation: 10,
                         child: Container(
-                          height: 50,width: 55,
+                          height: 50,
+                          width: 55,
                           decoration: BoxDecoration(
                               color: Colors.white,
-                              borderRadius: BorderRadius.circular(5)
-                          ),
+                              borderRadius: BorderRadius.circular(5)),
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: SvgPicture.asset(up,color: Colors.blue,),
-                          ),),
+                            padding: const EdgeInsets.all(12.0),
+                            child: SvgPicture.asset(
+                              up,
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ),
                       ),
                       text('Upload', Colors.black, 12, FontWeight.w500),
                       text('Documents', Colors.black, 12, FontWeight.w500)
@@ -129,15 +167,19 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                       Card(
                         elevation: 10,
                         child: Container(
-                          height: 50,width: 55,
+                          height: 50,
+                          width: 55,
                           decoration: BoxDecoration(
                               color: Colors.white,
-                              borderRadius: BorderRadius.circular(5)
-                          ),
+                              borderRadius: BorderRadius.circular(5)),
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: SvgPicture.asset(scan,color: Colors.blue,),
-                          ),),
+                            padding: const EdgeInsets.all(12.0),
+                            child: SvgPicture.asset(
+                              scan,
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ),
                       ),
                       text('Scan', Colors.black, 12, FontWeight.w500),
                       text('Documents', Colors.black, 12, FontWeight.w500)
@@ -149,13 +191,18 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                 padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                 child: Row(
                   children: [
-                    text('Projects', Colors.black, 18, FontWeight.w600),
+                    InkWell(
+                        child:
+                            text('Projects', Colors.black, 18, FontWeight.w600),
+                        onTap: () {
+                          controller.fetchProject();
+                        }),
                     Spacer(),
                     InkWell(
                       child: text(
                           'View all', textVioletColor, 16, FontWeight.w500),
                       onTap: () {
-                        controller.fetchProject();
+                        Get.toNamed(AppRoute.projectList);
                       },
                     ),
                   ],
@@ -163,13 +210,20 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
               ),
               Obx(
                 () => Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: ListView.builder(
                       itemCount: controller.projectList.value.length,
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
-                        return ProjectRowItem(controller.projectList.value[index]);
+                        return ProjectRowItem(
+                          projectCreateModel:
+                              controller.projectList.value[index],
+                          onAddImageClick: () {
+                            controller
+                                .addImage(controller.projectList.value[index]);
+                          },
+                        );
                       }),
                 ),
               ),
@@ -179,7 +233,13 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                   children: [
                     text('Feed', Colors.black, 18, FontWeight.w600),
                     Spacer(),
-                    text('View all', textVioletColor, 16, FontWeight.w500),
+                    InkWell(
+                      child: text(
+                          'View all', textVioletColor, 16, FontWeight.w500),
+                      onTap: () {
+                        controller.firebaseAuthController.signOutUser();
+                      },
+                    ),
                   ],
                 ),
               ),
