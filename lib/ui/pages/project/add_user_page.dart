@@ -2,10 +2,11 @@ import 'package:colab_ezzyfy_solutions/controller/add_user_controller.dart';
 import 'package:colab_ezzyfy_solutions/resource/constant.dart';
 import 'package:colab_ezzyfy_solutions/resource/image.dart';
 import 'package:colab_ezzyfy_solutions/ui/widget/all_widget.dart';
+import 'package:colab_ezzyfy_solutions/ui/widget/colab_catched_image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
+import '../../../model/create_project_response_model.dart';
 
 class AddUserPage extends StatefulWidget {
   const AddUserPage({Key? key}) : super(key: key);
@@ -15,171 +16,188 @@ class AddUserPage extends StatefulWidget {
 }
 
 class _AddUserPageState extends State<AddUserPage> {
+  AddUserController controller = AddUserController.to;
 
-  AddUserController addUserController = AddUserController.to;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    controller.projectResponseModel =
+        Get.arguments as CreateProjectResponseModel;
+    Future.delayed(const Duration(seconds: 2)).then((value) {
+      controller.fetAllSystemUsers();
+      // hideProgressBar();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         physics: ScrollPhysics(),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              width: Get.width,
-              decoration: BoxDecoration(
-                  image: DecorationImage(image: AssetImage(bg), fit: BoxFit.fill),
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20)),
-                  color: Colors.blue),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 44,
-                  ),
-                  Row(
-                    // mainAxisAlignment: MainAxisAlignment.spaceAround,
+        child: Obx (
+            () => Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: Get.width,
+                  decoration: BoxDecoration(
+                      image:
+                      DecorationImage(image: AssetImage(bg), fit: BoxFit.fill),
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(20),
+                          bottomRight: Radius.circular(20)),
+                      color: Colors.blue),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(width: 20,),
-                      InkWell(
-                        onTap: (){
-                          Get.back();
-                        },
-                        child: Container(
-                          height: Get.width/12,width: Get.width/12,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(Get.width/12),
-                          ),
-                          child: Center(
-                            child: Icon(Icons.arrow_back_ios_new),
-                          ),
-                        ),
+                      SizedBox(
+                        height: 44,
                       ),
-                      SizedBox(width: Get.width/4,),
-                      text('Add User', Colors.white, 18, FontWeight.w500),
+                      Row(
+                        // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          SizedBox(
+                            width: 20,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Container(
+                              height: Get.width / 12,
+                              width: Get.width / 12,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(Get.width / 12),
+                              ),
+                              child: Center(
+                                child: Icon(Icons.arrow_back_ios_new),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: Get.width / 4,
+                          ),
+                          text('Add User', Colors.white, 18, FontWeight.w500),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
                     ],
                   ),
-
-                  SizedBox(
-                    height: 20,
-                  ),
-                ],
-              ),
-            ),
-
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.grey.shade400)
-                    ),
-                    child: Row(
-                      children: [
-                        SizedBox(width: 20,),
-                        Flexible(
-                          child: inputField2(
-                            hintText: 'Search User....'
-                          ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(color: Colors.grey.shade400)),
+                        child: Row(
+                          children: [
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Flexible(
+                              child: inputField2(hintText: 'Search User....'),
+                            ),
+                            Icon(Icons.search),
+                            SizedBox(
+                              width: 20,
+                            ),
+                          ],
                         ),
-
-                        Icon(Icons.search),
-                        SizedBox(width: 20,),
-                      ],
-                    ),
-                  ),
-
-                  SizedBox(
-                    height: 10,
-                  ),
-                  ListView.builder(
-                      itemCount: 10,
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (context,index){
-                        return Padding(
-                          padding: const EdgeInsets.fromLTRB(0,0,0,10),
-                          child: Row(
-                            children: [
-
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(50),
-                                  child: Image.asset(bg,height: 50,width: 50,fit: BoxFit.cover,),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              text('Name,', Colors.black, 16, FontWeight.w500),
-                              Spacer(),
-                              InkWell(
-                                onTap: (){
-
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      border: Border.all(color: textVioletColor),
-                                      color: Colors.white),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Icon(
-                                          Icons.add_circle_outline_sharp,
-                                          color: textVioletColor,
-                                          size: 20,
-                                        ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        text('Add', textVioletColor, 14,
-                                            FontWeight.w500),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-
-                                      ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      ListView.builder(
+                          itemCount: controller.allSystemUsers.value.length,
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            var thisUser = controller.allSystemUsers.value[index];
+                            var isUserAdded = controller.projectAssignedUserList.value.where((element) => element.id == thisUser.id).length > 0;
+                            return Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(50),
+                                      child: ColabCatchedImageWidget(
+                                          imageUrl: controller.allSystemUsers
+                                              .value[index].profilePictureUrl,
+                                          height: 50,
+                                          width: 50),
                                     ),
                                   ),
-                                ),
-
-                              )
-
-                            ],
-                          ),
-                        );
-                      }),
-                  SizedBox(
-                    height: 20,
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  text(controller.allSystemUsers.value[index].name,
+                                      Colors.black, 16, FontWeight.w500),
+                                  Spacer(),
+                                  InkWell(
+                                    onTap: () {
+                                      controller.addOrRemoveUserFromProject(controller.allSystemUsers.value[index].id);
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(5),
+                                          border:
+                                          Border.all(color: textVioletColor),
+                                          color: Colors.white),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Row(
+                                          children: [
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            Icon(
+                                              Icons.add_circle_outline_sharp,
+                                              color: textVioletColor,
+                                              size: 20,
+                                            ),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            text(isUserAdded ? 'Remove': 'Add', textVioletColor, 14,
+                                                FontWeight.w500),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                          }),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      greenButton('Invite New user', () {}),
+                      SizedBox(
+                        height: 10,
+                      ),
+                    ],
                   ),
-                  greenButton('Invite New user', (){}),
-                  SizedBox(
-                    height: 10,
-                  ),
-
-
-                ],
-              ),
-            ),
-
-
-          ],
+                ),
+              ],
+            )
         ),
       ),
     );
@@ -203,24 +221,25 @@ inputField2({
   bool readonly = false,
   Widget? prefix,
   Icon? icon,
-
 }) =>
     Padding(
-      padding: const EdgeInsets.only(top:5,bottom: 2,),
+      padding: const EdgeInsets.only(
+        top: 5,
+        bottom: 2,
+      ),
       child: Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            color: Colors.white
-        ),
+            borderRadius: BorderRadius.circular(15), color: Colors.white),
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(4,4,4,4),
+          padding: const EdgeInsets.fromLTRB(4, 4, 4, 4),
           child: Row(
             children: [
               SizedBox(child: icon),
-              SizedBox(width: 5,),
+              SizedBox(
+                width: 5,
+              ),
               Expanded(
                 child: TextFormField(
-
                   readOnly: readonly,
                   controller: controller,
                   obscureText: obscureText,
@@ -233,7 +252,9 @@ inputField2({
                   decoration: InputDecoration(
                     counterText: "",
                     border: InputBorder.none,
-                    hintStyle: TextStyle(color: Colors.black,),
+                    hintStyle: TextStyle(
+                      color: Colors.black,
+                    ),
                     filled: true,
                     // focusedBorder: OutlineInputBorder(
                     //   borderSide:  BorderSide(color: bluebuttonColor),
@@ -263,11 +284,9 @@ inputField2({
                     ),
                     prefix: prefix,
 
-
                     // prefixIconColor: Colors.grey
                   ),
                   validator: validation,
-
                 ),
               ),
             ],

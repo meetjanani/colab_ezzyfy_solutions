@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../model/project_attchments_response_model.dart';
-import '../../widget/catched_image_widget.dart';
+import '../../widget/colab_catched_image_widget.dart';
 
 class ImageListGridRow extends StatelessWidget {
   final ProjectAttachmentsResponseModel imageAttachment;
@@ -17,7 +17,7 @@ class ImageListGridRow extends StatelessWidget {
           children: [
             Divider(height: 2, color: Colors.black,),
             SizedBox(height: 10,),
-            CatchedImageWidget(
+            ColabCatchedImageWidget(
               imageUrl: imageAttachment.projectAttachmentUrl,
               width: 220,
               height: 200,
