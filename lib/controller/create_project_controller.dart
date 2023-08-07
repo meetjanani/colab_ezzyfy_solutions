@@ -50,8 +50,8 @@ class CreateProjectController extends GetxController {
         .checkForDuplicateProject(projectName.text)
         .then((isDuplicate) async {
       if (!isDuplicate) {
-        if(selectedPhoto.value?.firstOrNull != null) {
-          File fileToUpload = File(selectedPhoto.value?.firstOrNull?.path ?? '');
+        if(selectedPhoto.value?.first != null) {
+          File fileToUpload = File(selectedPhoto.value?.first?.path ?? '');
           var projectNameTrim =
           projectName.text.toString().replaceAll(' ', '').trim();
           thumbnailImageUrl = await firebaseStorageController
