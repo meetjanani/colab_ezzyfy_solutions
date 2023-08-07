@@ -5,8 +5,8 @@ import '../../resource/image.dart';
 
 class CatchedImageWidget extends StatefulWidget {
   final String? imageUrl;
-  final int? width;
-  final int? height;
+  final double? width;
+  final double? height;
 
   const CatchedImageWidget({
     super.key,
@@ -23,8 +23,8 @@ class _CatchedImageWidgetState extends State<CatchedImageWidget> {
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
-      width: 100,
-      height: 100,
+      width: widget.width,
+      height: widget.height,
       fit: BoxFit.fill,
       imageUrl: widget.imageUrl ?? projectDefaultImageUrl,
       placeholder: (context, url) => const CircularProgressIndicator(),

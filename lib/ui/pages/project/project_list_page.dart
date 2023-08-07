@@ -5,7 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import '../../../controller/project_list_controller.dart';
 import '../../../resource/image.dart';
 import '../../widget/all_widget.dart';
-import '../Auth/project_row_item.dart';
+import '../home_dashboard/project_row_item.dart';
 
 class ProjectListPage extends StatefulWidget {
   const ProjectListPage({super.key});
@@ -79,6 +79,8 @@ class _ProjectListPageState extends State<ProjectListPage> {
                       return ProjectRowItem(projectCreateModel: controller.projectList.value[index],
                         onAddImageClick: (){
                           controller.addImage(controller.projectList.value[index].createdByUser);
+                        },onProjectClick: (){
+
                         },);
                     }),
               ),

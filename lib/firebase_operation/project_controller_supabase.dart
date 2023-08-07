@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:colab_ezzyfy_solutions/resource/extension.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -97,6 +95,17 @@ class ProjectControllerSupabase {
         .from(DatabaseSchema.projectAttachmentsTable)
         .insert(ProjectAttachmentsRequestModel.toJsonListProject(projectAttachment));
     hideProgressBar();
-    Get.showSuccessSnackbar('New Project Created successfully.');
+    Get.showSuccessSnackbar('Image uploaded successfully.');
+  }
+
+  Future<List<ProjectAttachmentsResponseModel>> getProjectAttachments(int projectId) async {
+    showProgress();
+    final response = await Supabase.instance.client
+        .from(DatabaseSchema.projectAttachmentsTable)
+        .select('*')
+        .eq(DatabaseSchema.projectAttachmentsProjectId, projectId);
+    var projectList = ProjectAttachmentsResponseModel.fromJsonList(response);
+    hideProgressBar();
+    return projectList;
   }
 }
