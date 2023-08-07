@@ -1,9 +1,11 @@
 import 'package:colab_ezzyfy_solutions/binding/Auth/login_bindiing.dart';
 import 'package:colab_ezzyfy_solutions/binding/Auth/register_binding.dart';
+import 'package:colab_ezzyfy_solutions/binding/add_user_binding.dart';
 import 'package:colab_ezzyfy_solutions/binding/create_project_binding.dart';
 import 'package:colab_ezzyfy_solutions/binding/splash_binding.dart';
 import 'package:colab_ezzyfy_solutions/ui/pages/Auth/login_page.dart';
 import 'package:colab_ezzyfy_solutions/ui/pages/Auth/register_page.dart';
+import 'package:colab_ezzyfy_solutions/ui/pages/project/add_user_page.dart';
 import 'package:colab_ezzyfy_solutions/ui/pages/project/project_list_page.dart';
 import 'package:colab_ezzyfy_solutions/ui/pages/splashpage.dart';
 import 'package:colab_ezzyfy_solutions/ui/widget/bottom_navigation_bar.dart';
@@ -54,7 +56,11 @@ class AppPage {
     GetPage(
       name: AppRoute.projectDetails,
       page: () => const ProjectDetailsPage(),
-      binding: ProjectDetailsBinding(),
-    ),
+      binding: ProjectDetailsBinding(),),
+
+    GetPage(
+        name: AppRoute.addUser,
+        page: () => const AddUserPage(),
+        binding: AddUserBinding()),
   ];
 }
