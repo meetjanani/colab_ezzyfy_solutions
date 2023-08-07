@@ -8,10 +8,8 @@ import 'package:get/get.dart';
 import '../firebase_operation/firebase_auth_controller.dart';
 import '../firebase_operation/firebase_storage_controller.dart';
 import '../firebase_operation/project_controller_supabase.dart';
-import '../model/create_project_request_model.dart';
 import '../model/create_project_response_model.dart';
 import '../model/project_attchments_request_model.dart';
-import '../model/project_attchments_response_model.dart';
 
 class HomeDashboardController extends GetxController {
   static HomeDashboardController get to => Get.find();

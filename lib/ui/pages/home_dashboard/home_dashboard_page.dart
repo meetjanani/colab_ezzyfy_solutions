@@ -1,6 +1,6 @@
 import 'package:colab_ezzyfy_solutions/controller/home_dashboard_controller.dart';
 import 'package:colab_ezzyfy_solutions/route/route.dart';
-import 'package:colab_ezzyfy_solutions/ui/pages/Auth/project_row_item.dart';
+import 'package:colab_ezzyfy_solutions/ui/pages/home_dashboard/project_row_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -222,6 +222,9 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                           onAddImageClick: () {
                             controller
                                 .addImage(controller.projectList.value[index]);
+                          },
+                          onProjectClick: (){
+                            Get.toNamed(AppRoute.projectDetails, arguments: controller.projectList.value[index]);
                           },
                         );
                       }),

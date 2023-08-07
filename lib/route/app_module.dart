@@ -11,8 +11,10 @@ import 'package:get/route_manager.dart';
 
 
 import '../binding/home_dashboard_bindiing.dart';
+import '../binding/project_details_binding.dart';
 import '../binding/project_list_binding.dart';
 import '../ui/pages/project/create_project_page.dart';
+import '../ui/pages/project/project_details_page.dart';
 import 'route.dart';
 
 class AppPage {
@@ -49,5 +51,10 @@ class AppPage {
         page: () => const ProjectListPage(),
         binding: ProjectListBinding()),
 
+    GetPage(
+      name: AppRoute.projectDetails,
+      page: () => const ProjectDetailsPage(),
+      binding: ProjectDetailsBinding(),
+    ),
   ];
 }

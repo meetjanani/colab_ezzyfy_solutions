@@ -1,6 +1,5 @@
 import 'package:colab_ezzyfy_solutions/resource/image.dart';
 import 'package:colab_ezzyfy_solutions/ui/pages/home_dashboard/home_dashboard_page.dart';
-import 'package:colab_ezzyfy_solutions/ui/widget/all_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
