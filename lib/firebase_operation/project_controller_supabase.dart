@@ -1,3 +1,4 @@
+import 'package:colab_ezzyfy_solutions/model/user_model_supabase.dart';
 import 'package:colab_ezzyfy_solutions/resource/extension.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -58,10 +59,10 @@ class ProjectControllerSupabase {
     return CreateProjectResponseModel.fromJsonList(projectResponse)[0];
   }
 
-  void addOrRemoveUserFromProject(int userId, int projectId) async {
+  Future<List<UserModelSupabase>> addOrRemoveUserFromProject(int userId, int projectId) async {
     showProgress();
     var projectById = await getProjectById(projectId);
-    var assignedUserList = projectById.assignedUser.toString().split(',');
+    var assignedUserList = projectById.assignedUser.toString().split(',').where((element) => element.length > 0).toList();
     if (!assignedUserList.contains(userId.toString())) {
       assignedUserList.add(userId.toString());
     } else {
@@ -74,18 +75,27 @@ class ProjectControllerSupabase {
         .eq(DatabaseSchema.projectId, projectId)
         .select();
     hideProgressBar();
-    getAssignedUserByProject(projectId);
+    return await getAssignedUserByProject(projectId);
   }
 
-  void getAssignedUserByProject(int projectId) async {
+  Future<List<UserModelSupabase>> fetAllSystemUsers() async {
+    showProgress();
+    var userResponse = await Supabase.instance.client
+        .from(DatabaseSchema.usersTable)
+        .select('*');
+    hideProgressBar();
+    return UserModelSupabase.fromJsonList(userResponse);
+  }
+
+  Future<List<UserModelSupabase>> getAssignedUserByProject(int projectId) async {
     showProgress();
     var projectById = await getProjectById(projectId);
-    projectById.assignedUser.split(',');
     var userResponse = await Supabase.instance.client
         .from(DatabaseSchema.usersTable)
         .select('*')
         .in_(DatabaseSchema.usersId, projectById.assignedUser.split(','));
     hideProgressBar();
+    return UserModelSupabase.fromJsonList(userResponse);
   }
 
   void createProjectAttachment(

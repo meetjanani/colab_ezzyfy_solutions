@@ -4,7 +4,7 @@ import 'package:get/get_core/src/get_main.dart';
 import '../../../model/create_project_response_model.dart';
 import '../../../resource/constant.dart';
 import '../../widget/all_widget.dart';
-import '../../widget/catched_image_widget.dart';
+import '../../widget/colab_catched_image_widget.dart';
 
 class ProjectRowItem extends StatelessWidget {
   final CreateProjectResponseModel projectCreateModel;
@@ -34,7 +34,7 @@ class ProjectRowItem extends StatelessWidget {
                 padding: const EdgeInsets.all(10.0),
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: CatchedImageWidget(
+                    child: ColabCatchedImageWidget(
                       imageUrl: projectCreateModel.thumbnailImageUrl,
                     )),
               ),

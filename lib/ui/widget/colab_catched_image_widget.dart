@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 
 import '../../resource/image.dart';
 
-class CatchedImageWidget extends StatefulWidget {
+class ColabCatchedImageWidget extends StatefulWidget {
   final String? imageUrl;
   final double? width;
   final double? height;
 
-  const CatchedImageWidget({
+  const ColabCatchedImageWidget({
     super.key,
     this.imageUrl,
     this.height = 100,
@@ -16,10 +16,10 @@ class CatchedImageWidget extends StatefulWidget {
   });
 
   @override
-  State<CatchedImageWidget> createState() => _CatchedImageWidgetState();
+  State<ColabCatchedImageWidget> createState() => _ColabCatchedImageWidgetState();
 }
 
-class _CatchedImageWidgetState extends State<CatchedImageWidget> {
+class _ColabCatchedImageWidgetState extends State<ColabCatchedImageWidget> {
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(

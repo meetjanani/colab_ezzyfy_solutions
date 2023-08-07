@@ -20,6 +20,14 @@ class UserModelSupabase {
     required this.emailAddress,
   });
 
+  static List<UserModelSupabase> fromJsonList(List<dynamic> dataList) {
+    List<UserModelSupabase> record = [];
+    for (var e in dataList) {
+      record.add(_$UserModelSupabaseFromJson(e));
+    }
+    return record;
+  }
+
   factory UserModelSupabase.fromJson(Map<String, dynamic> data) =>
       _$UserModelSupabaseFromJson(data);
 

@@ -1,9 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:colab_ezzyfy_solutions/model/create_project_response_model.dart';
 import 'package:colab_ezzyfy_solutions/resource/constant.dart';
+import 'package:colab_ezzyfy_solutions/resource/extension.dart';
 import 'package:colab_ezzyfy_solutions/route/route.dart';
 import 'package:colab_ezzyfy_solutions/ui/pages/project/image_list_grid_row.dart';
-import 'package:colab_ezzyfy_solutions/ui/widget/catched_image_widget.dart';
+import 'package:colab_ezzyfy_solutions/ui/widget/colab_catched_image_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -28,89 +28,101 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
     super.initState();
     controller.projectResponseModel =
         Get.arguments as CreateProjectResponseModel;
-    controller.fetchProjectAttachments();
+    // showProgress();
+    Future.delayed(Duration(seconds: 2)).then((value) {
+      controller
+        ..fetchProjectAttachments()
+        ..getAssignedUserByProject();
+      // hideProgressBar();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: Get.width,
-            decoration: BoxDecoration(
-                image: DecorationImage(image: AssetImage(bg), fit: BoxFit.fill),
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20)),
-                color: Colors.blue),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 44,
-                ),
-                Row(
-                 // mainAxisAlignment: MainAxisAlignment.spaceAround,
+      body: Obx(() => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                width: Get.width,
+                decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage(bg), fit: BoxFit.fill),
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(20),
+                        bottomRight: Radius.circular(20)),
+                    color: Colors.blue),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(width: 20,),
-                    InkWell(
-                      onTap: (){
-                        Get.back();
-                      },
-                      child: Container(
-                        height: Get.width/12,width: Get.width/12,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(Get.width/12),
-                        ),
-                        child: Center(
-                          child: Icon(Icons.arrow_back_ios_new),
-                        ),
-                      ),
+                    SizedBox(
+                      height: 44,
                     ),
-                    SizedBox(width: Get.width/7,),
-                    text('Project Details', Colors.white, 25, FontWeight.w500),
+                    Row(
+                      // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        SizedBox(
+                          width: 20,
+                        ),
+                        InkWell(
+                          onTap: () {
+                            Get.back();
+                          },
+                          child: Container(
+                            height: Get.width / 12,
+                            width: Get.width / 12,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  BorderRadius.circular(Get.width / 12),
+                            ),
+                            child: Center(
+                              child: Icon(Icons.arrow_back_ios_new),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: Get.width / 7,
+                        ),
+                        text('Project Details', Colors.white, 25,
+                            FontWeight.w500),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
                   ],
                 ),
-
-                SizedBox(
-                  height: 20,
-                ),
-              ],
-            ),
-          ),
-
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                text('Orchard Bungalows', Colors.black, 18, FontWeight.w700),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Icon(
-                      Icons.location_on,
-                      color: textVioletColor,
+                    text(controller.projectResponseModel.name, Colors.black, 18,
+                        FontWeight.w700),
+                    SizedBox(
+                      height: 10,
                     ),
-                    SizedBox(width: 10,),
-                    text(
-                        'M-191 Westheimer Rd.',
-                        Colors.grey.shade700,
-                        12,
-                        FontWeight.w600),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.location_on,
+                          color: textVioletColor,
+                        ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        text(controller.projectResponseModel.address,
+                            Colors.grey.shade700, 12, FontWeight.w600),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    // Hinding Phone number view
+                    /*Row(
 
                   children: [
                     Icon(
@@ -124,109 +136,123 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                         12,
                         FontWeight.w600),
                   ],
-                ),
-                SizedBox(height: 20,),
-                text('Description', Colors.black, 14, FontWeight.w700),
-                SizedBox(height: 10,),
-                text('Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled Read More. . .', Colors.grey.shade400, 12, FontWeight.w700),
-                SizedBox(height: 20,),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    text('Assign User', Colors.black, 18, FontWeight.w600),
-                    Spacer(),
-                    InkWell(
-                      onTap: (){
-                        Get.toNamed(AppRoute.addUser);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(color: textVioletColor),
-                            color: Colors.white),
-                        child: Padding(
-                          padding: const EdgeInsets.all(4.0),
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 5,
+                ),*/
+                    SizedBox(
+                      height: 20,
+                    ),
+                    text('Description', Colors.black, 14, FontWeight.w700),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    text(
+                        'Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled Read More. . .',
+                        Colors.grey.shade400,
+                        12,
+                        FontWeight.w700),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        text('Assign User', Colors.black, 18, FontWeight.w600),
+                        Spacer(),
+                        InkWell(
+                          onTap: () {
+                            Get.toNamed(AppRoute.addUser, arguments: controller.projectResponseModel);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                border: Border.all(color: textVioletColor),
+                                color: Colors.white),
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Icon(
+                                    Icons.add_circle_outline_sharp,
+                                    color: textVioletColor,
+                                    size: 20,
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  text('Add User', textVioletColor, 14,
+                                      FontWeight.w500),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                ],
                               ),
-                              Icon(
-                                Icons.add_circle_outline_sharp,
-                                color: textVioletColor,
-                                size: 20,
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              text('Add User', textVioletColor, 14,
-                                  FontWeight.w500),
-                              SizedBox(
-                                width: 5,
-                              ),
-
-                            ],
+                            ),
                           ),
-                        ),
-                      ),
-
-                    )
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 14,
+                    ),
+                    Container(
+                      height: 80,
+                      child: ListView.builder(
+                          itemCount:
+                              controller.projectAssignedUserList.value.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return Row(
+                              children: [
+                                Card(
+                                  elevation: 10,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(40)),
+                                  child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(60),
+                                      child: ColabCatchedImageWidget(
+                                        imageUrl: controller
+                                            .projectAssignedUserList
+                                            .value[index]
+                                            .profilePictureUrl,
+                                        height: 80,
+                                        width: 80,
+                                      )),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                              ],
+                            );
+                          }),
+                    ),
                   ],
                 ),
-                SizedBox(height: 20,),
-                Container(
-                  height: Get.width / 6,
-                  child: ListView.builder(
-                      itemCount: 8,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return Row(
-                          children: [
-                            Card(
-                              elevation: 10,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(50)),
-                              child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(50),
-                                  child: Image.asset(ex)),
-                            ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                          ],
-                        );
-                      }),
-                ),
-              ],
-            ),
-          ),
-
-          Expanded(
-            child:  Obx( () =>
-               Padding(
+              ),
+              Expanded(
+                child: Padding(
                   padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                   child: GridView.builder(
-                      gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 200,
-                          childAspectRatio: 0.70,
-                          crossAxisSpacing: 20,
-                          mainAxisSpacing: 20),
-                      itemCount:
-                          controller.projectAttachmentsResponseModel.value.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: 200,
+                              childAspectRatio: 0.70,
+                              crossAxisSpacing: 20,
+                              mainAxisSpacing: 20),
+                      itemCount: controller.projectAttachmentsList.value.length,
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
                         return ImageListGridRow(
-                          imageAttachment: controller
-                              .projectAttachmentsResponseModel.value[index],
+                          imageAttachment:
+                              controller.projectAttachmentsList.value[index],
                         );
                       }),
-
+                ),
               ),
-            ),
-          ),
-        ],
-      ),
+            ],
+          )),
     );
   }
 }

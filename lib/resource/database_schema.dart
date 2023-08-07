@@ -10,6 +10,7 @@ class DatabaseSchema extends GetxController {
   static const String userName = "name";
   static const String userEmailAddress = "emailAddress";
   static const String userMobileNumber = "mobileNumber";
+  static const String userIsAdmin = "isAdmin";
   static const String userCreateAt = "createAt";
 
   static const String projectTable = "projects";
