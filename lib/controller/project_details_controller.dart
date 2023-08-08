@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -18,6 +20,14 @@ class ProjectDetailsController extends GetxController {
   RxList<ProjectAttachmentsResponseModel> projectAttachmentsList = RxList();
   RxList<UserModelSupabase> projectAssignedUserList = RxList();
   late CreateProjectResponseModel projectResponseModel;
+
+  String? getImageFromIndex(int index) {
+    try {
+      return projectAttachmentsList.value[index]?.projectAttachmentUrl;
+    } catch (e) {
+      return null;
+    }
+  }
 
   void fetchProjectAttachments() async {
     projectAttachmentsList
