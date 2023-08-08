@@ -113,12 +113,13 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                               borderRadius: BorderRadius.circular(10),
 
                               child: (controller.projectAttachmentsList.value.
-                          firstOrNull?.projectAttachmentUrl != null) ?
-                                ColabCatchedImageWidget(imageUrl: controller.projectAttachmentsList.value.
-                                firstOrNull?.projectAttachmentUrl,
+                              firstOrNull?.projectAttachmentUrl != null) ?
+                              ColabCatchedImageWidget(imageUrl: controller.projectAttachmentsList.value.
+                              firstOrNull?.projectAttachmentUrl,
                                 boxFit: BoxFit.cover,
                                 width: Get.width,
                                 height: Get.width * 0.50,) : Image.asset(bg),
+
                           ),
                           Positioned(
                             child: Container(
