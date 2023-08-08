@@ -5,6 +5,7 @@ import 'package:colab_ezzyfy_solutions/route/route.dart';
 import 'package:colab_ezzyfy_solutions/ui/pages/project/image_list_grid_row.dart';
 import 'package:colab_ezzyfy_solutions/ui/widget/colab_catched_image_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
@@ -90,7 +91,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                       ],
                     ),
                     SizedBox(
-                      height: 20,
+                      height: Get.width/10,
                     ),
                   ],
                 ),
@@ -100,6 +101,96 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Container(
+                      height: Get.width/1.7,width: Get.width,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Stack(
+                        children: [
+                          ClipRRect(
+
+                              child: Image.asset(bg),
+                               borderRadius: BorderRadius.circular(10),
+                          ),
+                          Positioned(
+                            child: Container(
+                              height: 32,width: 32,
+                              decoration: BoxDecoration(
+                                  borderRadius:
+                                  BorderRadius.circular(50),
+                                  color: Colors.white),
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: SvgPicture.asset(
+                                  heart,
+                                  color: Colors.red,
+                                  height: 20,
+                                  width: 20,
+                                ),
+                              ),
+                            ),
+                            top: Get.width/20,
+                            right: Get.width/20,
+                          )
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 10,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          height: Get.width/5,width: Get.width/4.2,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: ClipRRect(
+
+                            child: Image.asset(bg,fit: BoxFit.cover,),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+
+                        Container(
+                          height: Get.width/5,width: Get.width/4.2,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: ClipRRect(
+
+                            child: Image.asset(bg,fit: BoxFit.cover,),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+
+                        Stack(
+                          children: [
+                            Container(
+                              height: Get.width/5,width: Get.width/4.2,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: ClipRRect(
+
+                                child: Image.asset(bg,fit: BoxFit.cover,opacity: const AlwaysStoppedAnimation(.5),),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            Positioned.fill(
+
+                                child: Align(
+                                    alignment: Alignment.center,
+                                    child: text( '${controller.projectAttachmentsList.value.length - 3}+', Colors.white, 24, FontWeight.w600)),
+
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: Get.width/12,
+                    ),
                     text(controller.projectResponseModel.name, Colors.black, 18,
                         FontWeight.w700),
                     SizedBox(

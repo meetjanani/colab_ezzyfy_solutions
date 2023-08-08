@@ -135,6 +135,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                           ),
                         ),
                       ),
+                      text('Create', Colors.black, 12, FontWeight.w500),
                       text('Team', Colors.black, 12, FontWeight.w500)
                     ],
                   ),
@@ -215,6 +216,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                       itemCount: controller.projectList.value.length,
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
                         return ProjectRowItem(
                           projectCreateModel:
@@ -326,7 +328,8 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                                             12,
                                             FontWeight.w600),
                                       ],
-                                    )
+                                    ),
+                                    //SizedBox(height: 10,)
                                   ],
                                 ),
                               ),
