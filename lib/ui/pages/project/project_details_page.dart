@@ -112,10 +112,8 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
 
                               borderRadius: BorderRadius.circular(10),
 
-                              child: (controller.projectAttachmentsList.value.
-                              firstOrNull?.projectAttachmentUrl != null) ?
-                              ColabCatchedImageWidget(imageUrl: controller.projectAttachmentsList.value.
-                              firstOrNull?.projectAttachmentUrl,
+                              child: (controller.getImageFromIndex(0) != null) ?
+                              ColabCatchedImageWidget(imageUrl: controller.getImageFromIndex(0),
                                 boxFit: BoxFit.cover,
                                 width: Get.width,
                                 height: Get.width * 0.50,) : Image.asset(bg),
@@ -155,7 +153,11 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                           ),
                           child: ClipRRect(
 
-                            child: Image.asset(bg,fit: BoxFit.cover,),
+                            child: (controller.getImageFromIndex(1) != null) ?
+                            ColabCatchedImageWidget(imageUrl: controller.getImageFromIndex(1),
+                              boxFit: BoxFit.cover,
+                              width: Get.width,
+                              height: Get.width * 0.50,) : Image.asset(bg),
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
@@ -167,7 +169,11 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                           ),
                           child: ClipRRect(
 
-                            child: Image.asset(bg,fit: BoxFit.cover,),
+                            child: (controller.getImageFromIndex(2) != null) ?
+                            ColabCatchedImageWidget(imageUrl: controller.getImageFromIndex(2),
+                              boxFit: BoxFit.cover,
+                              width: Get.width,
+                              height: Get.width * 0.50,) : Image.asset(bg),
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
@@ -181,7 +187,11 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                               ),
                               child: ClipRRect(
 
-                                child: Image.asset(bg,fit: BoxFit.cover,opacity: const AlwaysStoppedAnimation(.5),),
+                                child: (controller.getImageFromIndex(3) != null) ?
+                                ColabCatchedImageWidget(imageUrl: controller.getImageFromIndex(3),
+                                  boxFit: BoxFit.cover,
+                                  width: Get.width,
+                                  height: Get.width * 0.50,) : Image.asset(bg,fit: BoxFit.cover,opacity: const AlwaysStoppedAnimation(.5),),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
