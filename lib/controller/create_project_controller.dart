@@ -10,6 +10,7 @@ import '../firebase_operation/firebase_storage_controller.dart';
 import '../firebase_operation/project_controller_supabase.dart';
 import '../model/create_project_request_model.dart';
 import '../model/user_model_supabase.dart';
+import '../resource/session_string.dart';
 import '../shared/get_storage_repository.dart';
 
 class CreateProjectController extends GetxController {
@@ -32,8 +33,8 @@ class CreateProjectController extends GetxController {
   TextEditingController address = TextEditingController();
   var thumbnailImageUrl = "https://firebasestorage.googleapis.com/v0/b/colab-sample.appspot.com/o/default_placeholder%2Fdefault_project_image.png?alt=media&token=95134897-5068-4064-b3e2-0c0b565a8ef7";
 
-  void initController() {
-    userName.value = getStorageRepository.read('userName') ?? userName.value ;
+  void initController() async {
+    userName.value = await getStorageRepository.read('userName') ?? userName.value ;
   }
 
   bool fieldValidation() {
@@ -44,14 +45,16 @@ class CreateProjectController extends GetxController {
     if (!fieldValidation()) {
       return;
     }
-    var user = getStorageRepository.read('supabaseUser');
+    var user = getStorageRepository.read(supabaseUserSessionStorage);
+    var userName = getStorageRepository.read(userNameSessionStorage);
+    print(" $userName, $user");
     var signInUser = UserModelSupabase.fromJson(user);
     supabaseSetupController
         .checkForDuplicateProject(projectName.text)
         .then((isDuplicate) async {
       if (!isDuplicate) {
-        if(selectedPhoto.value?.first != null) {
-          File fileToUpload = File(selectedPhoto.value?.first?.path ?? '');
+        if(selectedPhoto.value?.firstOrNull != null) {
+          File fileToUpload = File(selectedPhoto.value?.firstOrNull?.path ?? '');
           var projectNameTrim =
           projectName.text.toString().replaceAll(' ', '').trim();
           thumbnailImageUrl = await firebaseStorageController

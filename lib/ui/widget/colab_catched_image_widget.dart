@@ -7,12 +7,14 @@ class ColabCatchedImageWidget extends StatefulWidget {
   final String? imageUrl;
   final double? width;
   final double? height;
+  final BoxFit? boxFit;
 
   const ColabCatchedImageWidget({
     super.key,
     this.imageUrl,
     this.height = 100,
     this.width = 100,
+    this.boxFit = BoxFit.fill,
   });
 
   @override
@@ -20,12 +22,14 @@ class ColabCatchedImageWidget extends StatefulWidget {
 }
 
 class _ColabCatchedImageWidgetState extends State<ColabCatchedImageWidget> {
+  get boxfit => null;
+
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
       width: widget.width,
       height: widget.height,
-      fit: BoxFit.fill,
+      fit: boxfit,
       imageUrl: widget.imageUrl ?? projectDefaultImageUrl,
       placeholder: (context, url) => const CircularProgressIndicator(),
       errorWidget: (context, url, error) => const Icon(Icons.error),
