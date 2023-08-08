@@ -15,7 +15,7 @@ import 'package:get_storage/get_storage.dart';
 
 class DependencyInjection {
   static void init() {
-    Get.lazyPut<GetStorage>(() => GetStorage(), fenix: true);
+    Get.lazyPut<GetStorage>(() => GetStorage("myData"), fenix: true);
     Get.lazyPut<GetStorageRepository>(() => GetStorageRepository(Get.find()), fenix: true);
 
     //DIO BINDIN

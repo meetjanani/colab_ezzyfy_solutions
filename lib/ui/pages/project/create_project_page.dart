@@ -93,9 +93,9 @@ class CreateProjectPage extends GetView<CreateProjectController> {
                           child: Column(
                             children: [
                               if (controller
-                                      .selectedPhoto.value?.first?.path !=
+                                      .selectedPhoto.value?.firstOrNull?.path !=
                                   null)
-                                Image.file(File(controller.selectedPhoto.value?.first?.path ??
+                                Image.file(File(controller.selectedPhoto.value?.firstOrNull?.path ??
                                     ""),
                                 height: 200,
                                 width: Get.width,

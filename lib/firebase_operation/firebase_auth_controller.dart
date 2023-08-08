@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../model/user_model_supabase.dart';
+import '../resource/session_string.dart';
 import '../route/route.dart';
 import '../ui/pages/Auth/otp_bottomsheet.dart';
 
@@ -115,9 +116,9 @@ class FirebaseAuthController extends GetxController {
         .limit(1)
         .then((data) {
       getStorageRepository.write(
-          'supabaseUser', UserModelSupabase.fromJson(data[0]).toJson());
+          supabaseUserSessionStorage, UserModelSupabase.fromJson(data[0]).toJson());
       getStorageRepository.write(
-          'userName', UserModelSupabase.fromJson(data[0]).name);
+          userNameSessionStorage, UserModelSupabase.fromJson(data[0]).name);
       hideProgressBar();
       Get.offNamed(AppRoute.home);
       Get.showSuccessSnackbar('Login successfully.');

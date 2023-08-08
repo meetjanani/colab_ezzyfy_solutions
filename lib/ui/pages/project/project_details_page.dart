@@ -110,8 +110,15 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                         children: [
                           ClipRRect(
 
-                              child: Image.asset(bg),
-                               borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(10),
+
+                              child: (controller.projectAttachmentsList.value.
+                          firstOrNull?.projectAttachmentUrl != null) ?
+                                ColabCatchedImageWidget(imageUrl: controller.projectAttachmentsList.value.
+                                firstOrNull?.projectAttachmentUrl,
+                                boxFit: BoxFit.cover,
+                                width: Get.width,
+                                height: Get.width * 0.50,) : Image.asset(bg),
                           ),
                           Positioned(
                             child: Container(
@@ -141,7 +148,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          height: Get.width/5,width: Get.width/4.2,
+                          height: Get.width * .25,width: Get.width * .25,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -153,7 +160,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                         ),
 
                         Container(
-                          height: Get.width/5,width: Get.width/4.2,
+                          height: Get.width * .25,width: Get.width * .25,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -167,7 +174,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                         Stack(
                           children: [
                             Container(
-                              height: Get.width/5,width: Get.width/4.2,
+                              height: Get.width * .25,width: Get.width * .25,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -307,8 +314,8 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                                             .projectAssignedUserList
                                             .value[index]
                                             .profilePictureUrl,
-                                        height: 80,
-                                        width: 80,
+                                        height: 54,
+                                        width: 54,
                                       )),
                                 ),
                                 SizedBox(
@@ -320,28 +327,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                     ),
                   ],
                 ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  child: GridView.builder(
-                      gridDelegate:
-                          const SliverGridDelegateWithMaxCrossAxisExtent(
-                              maxCrossAxisExtent: 200,
-                              childAspectRatio: 0.70,
-                              crossAxisSpacing: 20,
-                              mainAxisSpacing: 20),
-                      itemCount: controller.projectAttachmentsList.value.length,
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return ImageListGridRow(
-                          imageAttachment:
-                              controller.projectAttachmentsList.value[index],
-                        );
-                      }),
-                ),
-              ),
+              )
             ],
           )),
     );
