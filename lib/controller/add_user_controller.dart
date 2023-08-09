@@ -14,6 +14,7 @@ class AddUserController extends GetxController {
   RxList<UserModelSupabase> allSystemUsers = RxList();
   RxList<UserModelSupabase> projectAssignedUserList = RxList();
   late CreateProjectResponseModel projectResponseModel;
+  RxBool loader = false.obs;
 
   Future<void> getAssignedUserByProject() async {
     projectAssignedUserList
@@ -23,14 +24,17 @@ class AddUserController extends GetxController {
   }
 
   void fetAllSystemUsers() async {
+    loader.value = true;
     await getAssignedUserByProject();
     allSystemUsers
       ..clear()
       ..addAll(await projectControllerSupabase
           .fetAllSystemUsers());
+    loader.value = false;
   }
 
   void addOrRemoveUserFromProject(int userId) async {
+    loader.value = true;
     await projectControllerSupabase.addOrRemoveUserFromProject(userId, projectResponseModel.id);
     fetAllSystemUsers();
   }

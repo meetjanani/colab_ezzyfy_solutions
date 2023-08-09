@@ -10,6 +10,7 @@ import '../firebase_operation/firebase_storage_controller.dart';
 import '../firebase_operation/project_controller_supabase.dart';
 import '../model/create_project_response_model.dart';
 import '../model/project_attchments_request_model.dart';
+import '../shared/colab_shared_preference.dart';
 
 class HomeDashboardController extends GetxController {
   static HomeDashboardController get to => Get.find();
@@ -26,6 +27,12 @@ class HomeDashboardController extends GetxController {
   RxList<ProjectAttachmentsRequestModel> projectAttachmentsListSupabase =
       RxList();
   RxBool projectLoader = false.obs;
+
+  HomeDashboardController() {
+    getColabUserName().then((value){
+      userName.value = value;
+    });
+  }
 
   void fetchProject() async {
     projectLoader.value = true;
