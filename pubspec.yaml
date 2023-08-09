@@ -59,6 +59,7 @@ dependencies:
   supabase_flutter: ^1.10.10
   stylish_bottom_bar:
   cached_network_image: ^3.2.3
+  shared_preferences: ^2.2.0
 
 dev_dependencies:
   flutter_test:

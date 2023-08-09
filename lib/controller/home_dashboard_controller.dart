@@ -25,12 +25,15 @@ class HomeDashboardController extends GetxController {
   RxList<File> projectAttachmentRequestModel = RxList();
   RxList<ProjectAttachmentsRequestModel> projectAttachmentsListSupabase =
       RxList();
+  RxBool projectLoader = false.obs;
 
   void fetchProject() async {
+    projectLoader.value = true;
     await Future.delayed(Duration(seconds: 2));
     projectList
       ..clear()
       ..addAll(await projectControllerSupabase.getProjectsByUserId(14));
+    projectLoader.value = false;
   }
 
   void addImage(CreateProjectResponseModel project) async {

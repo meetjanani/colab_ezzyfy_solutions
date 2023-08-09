@@ -5,6 +5,7 @@ import 'package:colab_ezzyfy_solutions/shared/get_storage_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../model/user_model_supabase.dart';
@@ -115,10 +116,16 @@ class FirebaseAuthController extends GetxController {
         .eq(DatabaseSchema.userMobileNumber, phoneNumber)
         .limit(1)
         .then((data) {
-      getStorageRepository.write(
+      /*getStorageRepository.write(
           supabaseUserSessionStorage, UserModelSupabase.fromJson(data[0]).toJson());
       getStorageRepository.write(
-          userNameSessionStorage, UserModelSupabase.fromJson(data[0]).name);
+          userIdSessionStorage, UserModelSupabase.fromJson(data[0]).id);*/
+      SharedPreferences.getInstance().then((value) {
+        value.setString(userNameSessionStorage,
+            UserModelSupabase.fromJson(data[0]).name);
+        value.setInt(
+            userIdSessionStorage, UserModelSupabase.fromJson(data[0]).id);
+      });
       hideProgressBar();
       Get.offNamed(AppRoute.home);
       Get.showSuccessSnackbar('Login successfully.');
@@ -168,5 +175,14 @@ class FirebaseAuthController extends GetxController {
   Future<void> signOutUser({navigateUser = false}) async {
     FirebaseAuth.instance.signOut();
     if (navigateUser) Get.offNamed(AppRoute.login);
+  }
+
+  Future<UserModelSupabase> getUserById(int userId) async {
+    var response = await Supabase.instance.client
+        .from(DatabaseSchema.usersTable)
+        .select('*')
+        .eq(DatabaseSchema.usersId, userId)
+        .limit(1);
+    return UserModelSupabase.fromJson(response[0]);
   }
 }

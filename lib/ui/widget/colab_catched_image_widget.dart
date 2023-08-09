@@ -31,7 +31,7 @@ class _ColabCatchedImageWidgetState extends State<ColabCatchedImageWidget> {
       height: widget.height,
       fit: boxfit,
       imageUrl: widget.imageUrl ?? projectDefaultImageUrl,
-      placeholder: (context, url) => const CircularProgressIndicator(),
+      placeholder: (context, url) => Center(child: CircularProgressIndicator()),
       errorWidget: (context, url, error) => const Icon(Icons.error),
     );
   }
