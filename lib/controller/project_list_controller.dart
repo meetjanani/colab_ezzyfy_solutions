@@ -11,15 +11,18 @@ class ProjectListController extends GetxController {
       ProjectControllerSupabase.to;
   RxList<CreateProjectResponseModel> projectList = RxList();
   Rx<String> userName = "Ronaldo".obs;
+  RxBool projectLoader = false.obs;
 
   ProjectListController() {
     fetchProject();
   }
   void fetchProject() async {
+    projectLoader.value = true;
     await Future.delayed(Duration(seconds: 2));
     projectList
       ..clear()
-      ..addAll(await projectControllerSupabase.getProjectsByUserId(14));
+      ..addAll(await projectControllerSupabase.getAllProjects());
+    projectLoader.value = false;
   }
 
   void addImage(int createdByUser){

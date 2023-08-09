@@ -23,11 +23,11 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
   void initState() {
     super.initState();
     Future.delayed(Duration(seconds: 2));
-    controller.fetchProject();
   }
 
   @override
   Widget build(BuildContext context) {
+    controller.fetchProject();
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -210,27 +210,33 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                 ),
               ),
               Obx(
-                () => Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: ListView.builder(
-                      itemCount: controller.projectList.value.length,
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return ProjectRowItem(
-                          projectCreateModel:
-                              controller.projectList.value[index],
-                          onAddImageClick: () {
-                            controller
-                                .addImage(controller.projectList.value[index]);
-                          },
-                          onProjectClick: (){
-                            Get.toNamed(AppRoute.projectDetails, arguments: controller.projectList.value[index]);
-                          },
-                        );
-                      }),
-                ),
+                () => controller.projectLoader.value == true
+                    ? const Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: ListView.builder(
+                            itemCount: controller.projectList.value.length,
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return ProjectRowItem(
+                                projectCreateModel:
+                                    controller.projectList.value[index],
+                                onAddImageClick: () {
+                                  controller.addImage(
+                                      controller.projectList.value[index]);
+                                },
+                                onProjectClick: () {
+                                  Get.toNamed(AppRoute.projectDetails,
+                                      arguments:
+                                          controller.projectList.value[index]);
+                                },
+                              );
+                            }),
+                      ),
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),

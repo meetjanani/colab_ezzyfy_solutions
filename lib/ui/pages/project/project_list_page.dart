@@ -68,23 +68,32 @@ class _ProjectListPageState extends State<ProjectListPage> {
             height: 20,
           ),
           Obx(
-                () => Padding(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-              child: Expanded(
-                child: ListView.builder(
-                    itemCount: controller.projectList.value.length,
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return ProjectRowItem(projectCreateModel: controller.projectList.value[index],
-                        onAddImageClick: (){
-                          controller.addImage(controller.projectList.value[index].createdByUser);
-                        },onProjectClick: (){
-
-                        },);
-                    }),
-              ),
-            ),
+            () => controller.projectLoader.value == true
+                ? Expanded(
+                  child: const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                )
+                : Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                    child: Expanded(
+                      child: ListView.builder(
+                          itemCount: controller.projectList.value.length,
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return ProjectRowItem(
+                              projectCreateModel:
+                                  controller.projectList.value[index],
+                              onAddImageClick: () {
+                                controller.addImage(controller
+                                    .projectList.value[index].createdByUser);
+                              },
+                              onProjectClick: () {},
+                            );
+                          }),
+                    ),
+                  ),
           ),
         ],
       ),

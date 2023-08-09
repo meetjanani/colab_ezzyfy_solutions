@@ -144,12 +144,16 @@ class CreateProjectPage extends GetView<CreateProjectController> {
               SizedBox(
                 height: 20,
               ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                child: greenButton('Create Project', () {
-                  controller.createProject();
-                }),
-              ),
+              controller.projectLoader.value == true
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                      child: greenButton('Create Project', () {
+                        controller.createProject();
+                      }),
+                    ),
               SizedBox(
                 height: 20,
               ),

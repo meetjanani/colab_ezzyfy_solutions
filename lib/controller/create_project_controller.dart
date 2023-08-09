@@ -4,6 +4,7 @@ import 'package:colab_ezzyfy_solutions/resource/extension.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../firebase_operation/firebase_auth_controller.dart';
 import '../firebase_operation/firebase_storage_controller.dart';
@@ -26,6 +27,7 @@ class CreateProjectController extends GetxController {
   FirebaseAuthController firebaseAuthController = FirebaseAuthController.to;
   ProjectControllerSupabase supabaseSetupController = ProjectControllerSupabase.to;
   Rx<String> userName = "Ronaldo".obs;
+  RxBool projectLoader = false.obs;
 
   var formKey = GlobalKey<FormState>();
   TextEditingController projectName = TextEditingController();
@@ -34,7 +36,9 @@ class CreateProjectController extends GetxController {
   var thumbnailImageUrl = "https://firebasestorage.googleapis.com/v0/b/colab-sample.appspot.com/o/default_placeholder%2Fdefault_project_image.png?alt=media&token=95134897-5068-4064-b3e2-0c0b565a8ef7";
 
   void initController() async {
-    userName.value = await getStorageRepository.read('userName') ?? userName.value ;
+    SharedPreferences.getInstance().then((value)async {
+      userName.value = value.getString('userName') ?? userName.value;
+    });
   }
 
   bool fieldValidation() {
@@ -42,13 +46,15 @@ class CreateProjectController extends GetxController {
   }
 
   void createProject() async {
+    projectLoader.value = true;
     if (!fieldValidation()) {
+      projectLoader.value = false;
       return;
     }
-    var user = getStorageRepository.read(supabaseUserSessionStorage);
-    var userName = getStorageRepository.read(userNameSessionStorage);
-    print(" $userName, $user");
-    var signInUser = UserModelSupabase.fromJson(user);
+    var sharedPreference = await SharedPreferences.getInstance();
+    var userId = sharedPreference.getInt(userIdSessionStorage) ?? 0;
+    var signInUser = await firebaseAuthController.getUserById(userId);
+    print(" $userName, $signInUser");
     supabaseSetupController
         .checkForDuplicateProject(projectName.text)
         .then((isDuplicate) async {
@@ -61,7 +67,6 @@ class CreateProjectController extends GetxController {
               .uploadFile(fileToUpload, 'thumbnail_projet_${projectNameTrim}.png',
               projectNameTrim);
         }
-        hideProgressBar();
         var project = CreateProjectRequestModel(
           name: projectName.text.toString(),
           address: address.text.toString(),
@@ -69,7 +74,10 @@ class CreateProjectController extends GetxController {
           createdByUser: signInUser.id,
         );
         supabaseSetupController.createNewProject(project);
+        projectLoader.value = false;
+        Get.back();
       }
+      projectLoader.value = false;
     });
   }
 

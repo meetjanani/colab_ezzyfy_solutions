@@ -12,15 +12,21 @@ import '../resource/database_schema.dart';
 class ProjectControllerSupabase {
   static ProjectControllerSupabase get to => Get.find();
 
+  Future<List<CreateProjectResponseModel>> getAllProjects() async {
+    final response = await Supabase.instance.client
+        .from(DatabaseSchema.projectTable)
+        .select('*');
+    var projectList = CreateProjectResponseModel.fromJsonList(response);
+    return projectList;
+  }
+
   Future<List<CreateProjectResponseModel>> getProjectsByUserId(int userId) async {
-    showProgress();
     final response = await Supabase.instance.client
         .from(DatabaseSchema.projectTable)
         .select('*')
         .eq(DatabaseSchema.projectCreatedByUser, userId);
 
     var projectList = CreateProjectResponseModel.fromJsonList(response);
-    hideProgressBar();
     return projectList;
   }
 
@@ -40,11 +46,9 @@ class ProjectControllerSupabase {
   }
 
   void createNewProject(CreateProjectRequestModel projectCreateModel) async {
-    showProgress();
     await Supabase.instance.client.from(DatabaseSchema.projectTable).upsert([
       projectCreateModel.toJson(),
     ]);
-    hideProgressBar();
     Get.showSuccessSnackbar('New Project Created successfully.');
   }
 
