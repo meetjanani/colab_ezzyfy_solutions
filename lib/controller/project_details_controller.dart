@@ -20,6 +20,8 @@ class ProjectDetailsController extends GetxController {
   RxList<ProjectAttachmentsResponseModel> projectAttachmentsList = RxList();
   RxList<UserModelSupabase> projectAssignedUserList = RxList();
   late CreateProjectResponseModel projectResponseModel;
+  RxBool projectAttachmentsLoader = false.obs;
+  RxBool projectAssignedUserLoader = false.obs;
 
   String? getImageFromIndex(int index) {
     try {
@@ -30,16 +32,20 @@ class ProjectDetailsController extends GetxController {
   }
 
   void fetchProjectAttachments() async {
+    projectAttachmentsLoader.value = true;
     projectAttachmentsList
       ..clear()
       ..addAll(await projectControllerSupabase
           .getProjectAttachments(projectResponseModel.id));
+    projectAttachmentsLoader.value = false;
   }
 
   void getAssignedUserByProject() async {
+    projectAssignedUserLoader.value = true;
     projectAssignedUserList
       ..clear()
       ..addAll(await projectControllerSupabase
           .getAssignedUserByProject(projectResponseModel.id));
+    projectAssignedUserLoader.value = false;
   }
 }

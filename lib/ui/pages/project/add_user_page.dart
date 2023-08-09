@@ -3,6 +3,7 @@ import 'package:colab_ezzyfy_solutions/resource/constant.dart';
 import 'package:colab_ezzyfy_solutions/resource/image.dart';
 import 'package:colab_ezzyfy_solutions/ui/widget/all_widget.dart';
 import 'package:colab_ezzyfy_solutions/ui/widget/colab_catched_image_widget.dart';
+import 'package:colab_ezzyfy_solutions/ui/widget/colab_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -116,76 +117,79 @@ class _AddUserPageState extends State<AddUserPage> {
                       SizedBox(
                         height: 10,
                       ),
-                      ListView.builder(
-                          itemCount: controller.allSystemUsers.value.length,
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            var thisUser = controller.allSystemUsers.value[index];
-                            var isUserAdded = controller.projectAssignedUserList.value.where((element) => element.id == thisUser.id).length > 0;
-                            return Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                    ),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(50),
-                                      child: ColabCatchedImageWidget(
-                                          imageUrl: controller.allSystemUsers
-                                              .value[index].profilePictureUrl,
-                                          height: 50,
-                                          width: 50),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  text(controller.allSystemUsers.value[index].name,
-                                      Colors.black, 16, FontWeight.w500),
-                                  Spacer(),
-                                  InkWell(
-                                    onTap: () {
-                                      controller.addOrRemoveUserFromProject(controller.allSystemUsers.value[index].id);
-                                    },
-                                    child: Container(
+                      ColabLoaderWidget(
+                        loading: controller.loader.value,
+                        child: ListView.builder(
+                            itemCount: controller.allSystemUsers.value.length,
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              var thisUser = controller.allSystemUsers.value[index];
+                              var isUserAdded = controller.projectAssignedUserList.value.where((element) => element.id == thisUser.id).length > 0;
+                              return Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                child: Row(
+                                  children: [
+                                    Container(
                                       decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(5),
-                                          border:
-                                          Border.all(color: textVioletColor),
-                                          color: Colors.white),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(4.0),
-                                        child: Row(
-                                          children: [
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            Icon(
-                                              Icons.add_circle_outline_sharp,
-                                              color: textVioletColor,
-                                              size: 20,
-                                            ),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            text(isUserAdded ? 'Remove': 'Add', textVioletColor, 14,
-                                                FontWeight.w500),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                          ],
-                                        ),
+                                        borderRadius: BorderRadius.circular(50),
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(50),
+                                        child: ColabCatchedImageWidget(
+                                            imageUrl: controller.allSystemUsers
+                                                .value[index].profilePictureUrl,
+                                            height: 50,
+                                            width: 50),
                                       ),
                                     ),
-                                  )
-                                ],
-                              ),
-                            );
-                          }),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    text(controller.allSystemUsers.value[index].name,
+                                        Colors.black, 16, FontWeight.w500),
+                                    Spacer(),
+                                    InkWell(
+                                      onTap: () {
+                                        controller.addOrRemoveUserFromProject(controller.allSystemUsers.value[index].id);
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(5),
+                                            border:
+                                            Border.all(color: textVioletColor),
+                                            color: Colors.white),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(4.0),
+                                          child: Row(
+                                            children: [
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              Icon(
+                                                Icons.add_circle_outline_sharp,
+                                                color: textVioletColor,
+                                                size: 20,
+                                              ),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              text(isUserAdded ? 'Remove': 'Add', textVioletColor, 14,
+                                                  FontWeight.w500),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              );
+                            }),
+                      ),
                       SizedBox(
                         height: 20,
                       ),

@@ -32,13 +32,11 @@ class ProjectControllerSupabase {
 
   // Get a reference your Supabase client
   Future<bool> checkForDuplicateProject(String projectName) async {
-    showProgress();
     final duplicateProject = await Supabase.instance.client
         .from(DatabaseSchema.projectTable)
         .select('*')
         .eq(DatabaseSchema.projectName, projectName)
         .limit(1);
-    hideProgressBar();
     if (duplicateProject.length > 0) {
       Get.showErrorSnackbar("Duplicate Project");
     }
@@ -53,18 +51,15 @@ class ProjectControllerSupabase {
   }
 
   Future<CreateProjectResponseModel> getProjectById(int projectId) async {
-    showProgress();
     var projectResponse = await Supabase.instance.client
         .from(DatabaseSchema.projectTable)
         .select('*')
         .eq(DatabaseSchema.projectId, projectId)
         .limit(1);
-    hideProgressBar();
     return CreateProjectResponseModel.fromJsonList(projectResponse)[0];
   }
 
   Future<List<UserModelSupabase>> addOrRemoveUserFromProject(int userId, int projectId) async {
-    showProgress();
     var projectById = await getProjectById(projectId);
     var assignedUserList = projectById.assignedUser.toString().split(',').where((element) => element.length > 0).toList();
     if (!assignedUserList.contains(userId.toString())) {
@@ -78,27 +73,22 @@ class ProjectControllerSupabase {
             {DatabaseSchema.projectAssignedUser: assignedUserList.join(',')})
         .eq(DatabaseSchema.projectId, projectId)
         .select();
-    hideProgressBar();
     return await getAssignedUserByProject(projectId);
   }
 
   Future<List<UserModelSupabase>> fetAllSystemUsers() async {
-    showProgress();
     var userResponse = await Supabase.instance.client
         .from(DatabaseSchema.usersTable)
         .select('*');
-    hideProgressBar();
     return UserModelSupabase.fromJsonList(userResponse);
   }
 
   Future<List<UserModelSupabase>> getAssignedUserByProject(int projectId) async {
-    showProgress();
     var projectById = await getProjectById(projectId);
     var userResponse = await Supabase.instance.client
         .from(DatabaseSchema.usersTable)
         .select('*')
         .in_(DatabaseSchema.usersId, projectById.assignedUser.split(','));
-    hideProgressBar();
     return UserModelSupabase.fromJsonList(userResponse);
   }
 
@@ -113,13 +103,11 @@ class ProjectControllerSupabase {
   }
 
   Future<List<ProjectAttachmentsResponseModel>> getProjectAttachments(int projectId) async {
-    showProgress();
     final response = await Supabase.instance.client
         .from(DatabaseSchema.projectAttachmentsTable)
         .select('*')
         .eq(DatabaseSchema.projectAttachmentsProjectId, projectId);
     var projectList = ProjectAttachmentsResponseModel.fromJsonList(response);
-    hideProgressBar();
     return projectList;
   }
 }
