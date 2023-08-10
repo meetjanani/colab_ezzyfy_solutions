@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:colab_ezzyfy_solutions/resource/extension.dart';
 import 'package:colab_ezzyfy_solutions/resource/database_schema.dart';
+import 'package:colab_ezzyfy_solutions/shared/colab_shared_preference.dart';
 import 'package:colab_ezzyfy_solutions/shared/get_storage_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -120,12 +121,7 @@ class FirebaseAuthController extends GetxController {
           supabaseUserSessionStorage, UserModelSupabase.fromJson(data[0]).toJson());
       getStorageRepository.write(
           userIdSessionStorage, UserModelSupabase.fromJson(data[0]).id);*/
-      SharedPreferences.getInstance().then((value) {
-        value.setString(userNameSessionStorage,
-            UserModelSupabase.fromJson(data[0]).name);
-        value.setInt(
-            userIdSessionStorage, UserModelSupabase.fromJson(data[0]).id);
-      });
+      setUserModel(UserModelSupabase.fromJson(data[0]));
       hideProgressBar();
       Get.offNamed(AppRoute.home);
       Get.showSuccessSnackbar('Login successfully.');
@@ -183,6 +179,7 @@ class FirebaseAuthController extends GetxController {
         .select('*')
         .eq(DatabaseSchema.usersId, userId)
         .limit(1);
+    setUserModel(UserModelSupabase.fromJson(response[0]));
     return UserModelSupabase.fromJson(response[0]);
   }
 }

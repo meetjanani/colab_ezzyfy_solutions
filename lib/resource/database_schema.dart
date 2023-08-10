@@ -12,6 +12,7 @@ class DatabaseSchema extends GetxController {
   static const String userMobileNumber = "mobileNumber";
   static const String userIsAdmin = "isAdmin";
   static const String userCreateAt = "createAt";
+  static const String userProfilePictureUrl = "profilePictureUrl";
 
   static const String projectTable = "projects";
   static const String projectId = "id";
@@ -33,6 +34,7 @@ class DatabaseSchema extends GetxController {
   static FirebaseStorage firebaseStorage = FirebaseStorage.instance;
   static Reference firebaseStorageRef = firebaseStorage.ref();
   static Reference projectRef = firebaseStorage.ref().child('projects');
+  static Reference userProfileRef = firebaseStorage.ref().child('userProfiles');
 }
 
 

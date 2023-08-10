@@ -4,7 +4,7 @@ class ColabLoaderWidget extends StatelessWidget {
   final bool loading;
   final Widget child;
 
-  const ColabLoaderWidget(
+  ColabLoaderWidget(
       {required this.child, required this.loading, super.key});
 
   @override

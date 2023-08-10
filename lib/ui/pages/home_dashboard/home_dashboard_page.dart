@@ -1,6 +1,8 @@
 import 'package:colab_ezzyfy_solutions/controller/home_dashboard_controller.dart';
 import 'package:colab_ezzyfy_solutions/route/route.dart';
 import 'package:colab_ezzyfy_solutions/ui/pages/home_dashboard/project_row_item.dart';
+import 'package:colab_ezzyfy_solutions/ui/widget/colab_catched_image_widget.dart';
+import 'package:colab_ezzyfy_solutions/ui/widget/colab_loader_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -22,12 +24,11 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 2));
   }
 
   @override
   Widget build(BuildContext context) {
-    controller.fetchProject();
+    controller.init();
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -63,7 +64,17 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                               SizedBox(
                                 width: 20,
                               ),
-                              CircleAvatar(),
+                              InkWell(
+                                child: ColabLoaderWidget(
+                                  loading: controller.projectLoader.value,
+                                  child: CircleAvatar(
+                                    child: ColabCatchedImageWidget(imageUrl: controller.userModelSupabase?.profilePictureUrl ?? ''),
+                                  ),
+                                ),
+                                onTap: (){
+                                  controller.changeProfilePicture();
+                                },
+                              ),
                               SizedBox(
                                 width: 10,
                               ),
@@ -94,13 +105,14 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                       child: Column(
                         children: [
                           Card(
-                            elevation: 10,
+                            elevation: 6,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                             child: Container(
                               height: 50,
                               width: 55,
                               decoration: BoxDecoration(
                                   color: Colors.blue,
-                                  borderRadius: BorderRadius.circular(5)),
+                                  borderRadius: BorderRadius.circular(10)),
                               child: Padding(
                                 padding: const EdgeInsets.all(12.0),
                                 child: SvgPicture.asset(
@@ -109,6 +121,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                               ),
                             ),
                           ),
+                          SizedBox(height: 6,),
                           text('Create\nProject', Colors.black, 12,
                               FontWeight.w500)
                         ],
@@ -120,13 +133,14 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                     Column(
                       children: [
                         Card(
-                          elevation: 10,
+                          elevation: 6,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                           child: Container(
                             height: 50,
                             width: 55,
                             decoration: BoxDecoration(
                                 color: Colors.white,
-                                borderRadius: BorderRadius.circular(5)),
+                                borderRadius: BorderRadius.circular(10)),
                             child: Padding(
                               padding: const EdgeInsets.all(12.0),
                               child: SvgPicture.asset(
@@ -136,6 +150,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                             ),
                           ),
                         ),
+                        SizedBox(height: 6,),
                         text('Create', Colors.black, 12, FontWeight.w500),
                         text('Team', Colors.black, 12, FontWeight.w500)
                       ],
@@ -143,13 +158,14 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                     Column(
                       children: [
                         Card(
-                          elevation: 10,
+                          elevation: 4,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                           child: Container(
                             height: 50,
                             width: 55,
                             decoration: BoxDecoration(
                                 color: Colors.white,
-                                borderRadius: BorderRadius.circular(5)),
+                                borderRadius: BorderRadius.circular(10)),
                             child: Padding(
                               padding: const EdgeInsets.all(12.0),
                               child: SvgPicture.asset(
@@ -159,6 +175,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                             ),
                           ),
                         ),
+                        SizedBox(height: 6,),
                         text('Upload', Colors.black, 12, FontWeight.w500),
                         text('Documents', Colors.black, 12, FontWeight.w500)
                       ],
@@ -167,13 +184,14 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Card(
-                          elevation: 10,
+                          elevation: 4,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                           child: Container(
                             height: 50,
                             width: 55,
                             decoration: BoxDecoration(
                                 color: Colors.white,
-                                borderRadius: BorderRadius.circular(5)),
+                                borderRadius: BorderRadius.circular(10)),
                             child: Padding(
                               padding: const EdgeInsets.all(12.0),
                               child: SvgPicture.asset(
@@ -183,6 +201,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                             ),
                           ),
                         ),
+                        SizedBox(height: 6,),
                         text('Scan', Colors.black, 12, FontWeight.w500),
                         text('Documents', Colors.black, 12, FontWeight.w500)
                       ],
