@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:colab_ezzyfy_solutions/resource/extension.dart';
+import 'package:colab_ezzyfy_solutions/shared/colab_shared_preference.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -36,8 +37,8 @@ class CreateProjectController extends GetxController {
   var thumbnailImageUrl = "https://firebasestorage.googleapis.com/v0/b/colab-sample.appspot.com/o/default_placeholder%2Fdefault_project_image.png?alt=media&token=95134897-5068-4064-b3e2-0c0b565a8ef7";
 
   void initController() async {
-    SharedPreferences.getInstance().then((value)async {
-      userName.value = value.getString('userName') ?? userName.value;
+    getColabUserName().then((value){
+      userName.value = value;
     });
   }
 

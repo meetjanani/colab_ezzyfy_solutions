@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../firebase_operation/firebase_auth_controller.dart';
 import '../firebase_operation/project_controller_supabase.dart';
 import '../model/create_project_response_model.dart';
+import '../shared/colab_shared_preference.dart';
 
 class ProjectListController extends GetxController {
   static ProjectListController get to => Get.find();
@@ -15,6 +16,9 @@ class ProjectListController extends GetxController {
 
   ProjectListController() {
     fetchProject();
+    getColabUserName().then((value){
+      userName.value = value;
+    });
   }
   void fetchProject() async {
     projectLoader.value = true;

@@ -23,6 +23,13 @@ class ProjectDetailsController extends GetxController {
   RxBool projectAttachmentsLoader = false.obs;
   RxBool projectAssignedUserLoader = false.obs;
 
+  void init() {
+    Future.delayed(Duration(seconds: 2)).then((value) {
+      fetchProjectAttachments();
+      getAssignedUserByProject();
+      // hideProgressBar();
+    });
+  }
   String? getImageFromIndex(int index) {
     try {
       return projectAttachmentsList.value[index]?.projectAttachmentUrl;
