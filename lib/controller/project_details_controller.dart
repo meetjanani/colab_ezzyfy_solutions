@@ -24,6 +24,8 @@ class ProjectDetailsController extends GetxController {
   RxBool projectAssignedUserLoader = false.obs;
 
   void init() {
+    projectAttachmentsLoader.value = true;
+    projectAssignedUserLoader.value = true;
     Future.delayed(Duration(seconds: 2)).then((value) {
       fetchProjectAttachments();
       getAssignedUserByProject();
