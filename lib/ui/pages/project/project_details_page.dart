@@ -30,17 +30,11 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
     super.initState();
     controller.projectResponseModel =
         Get.arguments as CreateProjectResponseModel;
-    // showProgress();
-    Future.delayed(Duration(seconds: 2)).then((value) {
-      controller
-        ..fetchProjectAttachments()
-        ..getAssignedUserByProject();
-      // hideProgressBar();
-    });
   }
 
   @override
   Widget build(BuildContext context) {
+    controller.init();
     return Scaffold(
       backgroundColor: Colors.white,
       body: Obx(() => Column(
