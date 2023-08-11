@@ -275,7 +275,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                   ),
                 ),
                 Container(
-                  height: Get.width / 1.5,
+                  height: Get.width / 1.4,
                   child: Padding(
                     padding: const EdgeInsets.all(20),
                     child: ListView.builder(
@@ -355,7 +355,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                                               FontWeight.w600),
                                         ],
                                       ),
-                                      //SizedBox(height: 10,)
+                                      SizedBox(height: 10,)
                                     ],
                                   ),
                                 ),

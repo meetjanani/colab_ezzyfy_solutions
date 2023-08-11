@@ -96,7 +96,7 @@ class FirebaseAuthController extends GetxController {
       await FirebaseAuth.instance
           .signInWithCredential(credential)
           .then((authResult) async {
-        getStorageRepository.write('UserCredential', authResult);
+        getStorageRepository.write('UserCredential', authResult.user!.uid);
         getStorageRepository.write('isAuthSignIn', true); // for use to Auto loading
         await getUserFromPhoneNumber(phoneNumber);
       });

@@ -63,25 +63,13 @@ class ProjectRowItem extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(5),
                                     border: Border.all(color: textVioletColor),
                                     color: Colors.white),
-                                child: Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    text('Add', textVioletColor, 10,
-                                        FontWeight.w500),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Icon(
-                                      Icons.camera_alt,
-                                      color: textVioletColor,
-                                      size: 20,
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                  ],
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Icon(
+                                    Icons.camera_alt,
+                                    color: textVioletColor,
+                                    size: 20,
+                                  ),
                                 ),
                               ),
                               onTap: onAddImageClick,
