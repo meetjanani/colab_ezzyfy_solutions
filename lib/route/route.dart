@@ -10,6 +10,8 @@ abstract class AppRoute {
   static const home = '/home';
   static const createProject = '/createProject';
   static const projectList = '/projectList';
+  static const projectAttachmentList = '/projectAttachmentList';
+  static const projectFullScreenAttachment = '/projectFullScreenAttachment';
   static const projectDetails = '/projectDetails';
   static const addUser = '/addUser';
 

@@ -13,9 +13,8 @@ CreateProjectRequestModel _$CreateProjectRequestModelFromJson(
       address: json['address'] as String,
       thumbnailImageUrl: json['thumbnailImageUrl'] as String,
       createdByUser: json['createdByUser'] as int,
-    )
-      ..createAt = json['createAt'] as String
-      ..assignedUser = json['assignedUser'] as String;
+      assignedUser: json['assignedUser'] as String,
+    )..createAt = json['createAt'] as String;
 
 Map<String, dynamic> _$CreateProjectRequestModelToJson(
         CreateProjectRequestModel instance) =>

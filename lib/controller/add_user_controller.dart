@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../firebase_operation/project_controller_supabase.dart';
@@ -10,8 +11,8 @@ class AddUserController extends GetxController {
   static AddUserController get to => Get.find();
   ProjectControllerSupabase projectControllerSupabase =
       ProjectControllerSupabase.to;
-  RxList<ProjectAttachmentsResponseModel> projectAttachmentsList = RxList();
   RxList<UserModelSupabase> allSystemUsers = RxList();
+  RxList<UserModelSupabase> searchSystemUser = RxList();
   RxList<UserModelSupabase> projectAssignedUserList = RxList();
   late CreateProjectResponseModel projectResponseModel;
   RxBool loader = false.obs;
@@ -30,6 +31,9 @@ class AddUserController extends GetxController {
       ..clear()
       ..addAll(await projectControllerSupabase
           .fetAllSystemUsers());
+    searchSystemUser
+      ..clear()
+      ..addAll(allSystemUsers);
     loader.value = false;
   }
 

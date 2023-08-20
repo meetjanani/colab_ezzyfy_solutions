@@ -6,6 +6,8 @@ import 'package:colab_ezzyfy_solutions/binding/splash_binding.dart';
 import 'package:colab_ezzyfy_solutions/ui/pages/Auth/login_page.dart';
 import 'package:colab_ezzyfy_solutions/ui/pages/Auth/register_page.dart';
 import 'package:colab_ezzyfy_solutions/ui/pages/project/add_user_page.dart';
+import 'package:colab_ezzyfy_solutions/ui/pages/project/full_screen_image_page.dart';
+import 'package:colab_ezzyfy_solutions/ui/pages/project/project_attachment_list_page.dart';
 import 'package:colab_ezzyfy_solutions/ui/pages/project/project_list_page.dart';
 import 'package:colab_ezzyfy_solutions/ui/pages/splashpage.dart';
 import 'package:colab_ezzyfy_solutions/ui/widget/bottom_navigation_bar.dart';
@@ -52,6 +54,16 @@ class AppPage {
         name: AppRoute.projectList,
         page: () => const ProjectListPage(),
         binding: ProjectListBinding()),
+
+    GetPage(
+        name: AppRoute.projectAttachmentList,
+        page: () => const ProjectAttachmentListPage(),
+        binding: ProjectDetailsBinding()),
+
+    GetPage(
+        name: AppRoute.projectFullScreenAttachment,
+        page: () => const FullScreenImagePage(),
+        binding: ProjectDetailsBinding()),
 
     GetPage(
       name: AppRoute.projectDetails,

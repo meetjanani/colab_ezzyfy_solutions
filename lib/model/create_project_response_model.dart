@@ -10,6 +10,7 @@ class CreateProjectResponseModel {
   String thumbnailImageUrl = "";
   int createdByUser = 0;
   String createAt = DateTime.now().toString();
+  String updatedAt = DateTime.now().toString();
   String assignedUser = "";
 
   CreateProjectResponseModel({

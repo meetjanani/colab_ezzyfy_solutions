@@ -36,11 +36,15 @@ class FirebaseStorageController extends GetxController {
       ) async {
     var userName = userModelSupabase.name.toString().replaceAll(' ', '').trim();
     var userId = userModelSupabase.id.toString().replaceAll(' ', '').trim();
-    String? fileName =
-        '${userId}_${userName}_${file?.path.split('/').last.replaceAll(' ', '').trim()}.png';
-    var fileRef =
-    DatabaseSchema.userProfileRef.child('/${userId}_$userName').child(fileName);
-    await fileRef.delete();
+    String? fileName = '${userId}_${userName}.png';
+    var folderRef =
+    DatabaseSchema.userProfileRef.child('/${userId}_$userName');
+    var fileRef = folderRef.child(fileName);
+    try {
+      await fileRef.delete();
+    } catch (e) {
+      print("error");
+    }
     await fileRef.putFile(file);
     return await fileRef.getDownloadURL();
   }
