@@ -229,6 +229,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                     ],
                   ),
                 ),
+                SizedBox(height: 10,),
                 Obx(
                   () => controller.projectLoader.value == true
                       ? const Center(

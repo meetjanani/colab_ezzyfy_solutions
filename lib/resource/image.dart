@@ -13,6 +13,10 @@ const Document = 'assets/Document.svg';
 const bottomimage = 'assets/bottomimage.svg';
 const Chat = 'assets/Chat.svg';
 
+const alert1 = 'assets/alert.png';
+const alert2 = 'assets/alert2.png';
+const alertBack = 'assets/alertBack.png';
+
 
 
 // network Image List

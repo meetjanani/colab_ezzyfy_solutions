@@ -1,5 +1,8 @@
 import 'package:colab_ezzyfy_solutions/model/user_model_supabase.dart';
 import 'package:colab_ezzyfy_solutions/resource/extension.dart';
+import 'package:colab_ezzyfy_solutions/resource/image.dart';
+import 'package:colab_ezzyfy_solutions/ui/widget/all_widget.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -7,6 +10,7 @@ import '../model/create_project_request_model.dart';
 import '../model/create_project_response_model.dart';
 import '../model/project_attchments_request_model.dart';
 import '../model/project_attchments_response_model.dart';
+import '../resource/constant.dart';
 import '../resource/database_schema.dart';
 
 class ProjectControllerSupabase {
@@ -47,7 +51,33 @@ class ProjectControllerSupabase {
     await Supabase.instance.client.from(DatabaseSchema.projectTable).upsert([
       projectCreateModel.toJson(),
     ]);
-    Get.showSuccessSnackbar('New Project Created successfully.');
+    Get.back();
+    showDialog(
+      context: Get.context!,
+
+      builder: (BuildContext context) {
+
+        return Dialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.asset(alert1),
+              text('Congratulation', Colors.black, 28, FontWeight.w600),
+              SizedBox(height: 5,),
+              text('Project Created', Colors.grey, 16, FontWeight.w400),
+              text('Successfully', Colors.grey, 16, FontWeight.w400),
+              SizedBox(height: 10,),
+              blueButton('Done', (){Get.back();},52,Get.width/2),
+              SizedBox(height: 10,),
+            ],
+          ),
+        );
+
+      },
+    );
+    //Get.showSuccessSnackbar('New Project Created successfully.');
+
   }
 
   Future<CreateProjectResponseModel> getProjectById(int projectId) async {
@@ -65,7 +95,57 @@ class ProjectControllerSupabase {
     if (!assignedUserList.contains(userId.toString())) {
       assignedUserList.add(userId.toString());
     } else {
-      assignedUserList.remove(userId.toString());
+      // showDialog(
+      //   context: Get.context!,
+      //
+      //   builder: (BuildContext context) {
+      //
+      //     return Dialog(
+      //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      //       child: Column(
+      //         mainAxisSize: MainAxisSize.min,
+      //         children: [
+      //           Image.asset(alert2),
+      //           text('Alert!', Colors.black, 28, FontWeight.w600),
+      //           SizedBox(height: 5,),
+      //           text('Are you sure you want to', Colors.grey, 16, FontWeight.w400),
+      //           text('remove this user', Colors.grey, 16, FontWeight.w400),
+      //           SizedBox(height: 10,),
+      //           Row(
+      //             children: [
+      //               Flexible(child: whiteButton('Cancel', (){Get.back();},52,Get.width/2)),
+      //               Flexible(child: InkWell(
+      //                 onTap: (){
+      //                   assignedUserList.remove(userId.toString());
+      //                   Get.back();
+      //                 },
+      //                 child: Container(
+      //                   height: 55,
+      //                   width: Get.width/2,
+      //                   decoration: BoxDecoration(
+      //                       borderRadius: BorderRadius.circular(10),
+      //                       color: pinkButtonColor
+      //                   ),
+      //                   child: const Center(
+      //                       child: Text('Remove',
+      //                           style: TextStyle(fontSize: 22,color: Colors.white,fontFamily: 'futur',fontWeight: FontWeight.bold))),
+      //                 ),
+      //               ),),
+      //               // Flexible(child: blueButton('Remove',
+      //               //   assignedUserList.remove(userId.toString()),
+      //               //     52,Get.width/2)),
+      //             ],
+      //           ),
+      //
+      //           SizedBox(height: 10,),
+      //         ],
+      //       ),
+      //     );
+      //
+      //   },
+      // );
+       assignedUserList.remove(userId.toString());
+
     }
     await Supabase.instance.client
         .from(DatabaseSchema.projectTable)

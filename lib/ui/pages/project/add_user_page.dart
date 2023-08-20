@@ -141,7 +141,9 @@ class _AddUserPageState extends State<AddUserPage> {
                                             imageUrl: controller.allSystemUsers
                                                 .value[index].profilePictureUrl,
                                             height: 50,
-                                            width: 50),
+                                            width: 50,
+                                            boxFit: BoxFit.cover,
+                                        ),
                                       ),
                                     ),
                                     SizedBox(
@@ -152,34 +154,65 @@ class _AddUserPageState extends State<AddUserPage> {
                                     Spacer(),
                                     InkWell(
                                       onTap: () {
+                                        // showDialog(
+                                        //   context: Get.context!,
+                                        //
+                                        //   builder: (BuildContext context) {
+                                        //
+                                        //     return Dialog(
+                                        //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                        //       child: Column(
+                                        //         mainAxisSize: MainAxisSize.min,
+                                        //         children: [
+                                        //           Image.asset(alert2),
+                                        //           text('Alert!', Colors.black, 28, FontWeight.w600),
+                                        //           SizedBox(height: 5,),
+                                        //           text('Are you sure you want to', Colors.grey, 16, FontWeight.w400),
+                                        //           text('remove this user', Colors.grey, 16, FontWeight.w400),
+                                        //           SizedBox(height: 10,),
+                                        //           Row(
+                                        //             children: [
+                                        //               Flexible(child: whiteButton('Cancle', (){Get.back();},52,Get.width/2)),
+                                        //               Flexible(child: blueButton('Remove', (){Get.back();},52,Get.width/2)),
+                                        //             ],
+                                        //           ),
+                                        //
+                                        //           SizedBox(height: 10,),
+                                        //         ],
+                                        //       ),
+                                        //     );
+                                        //
+                                        //   },
+                                        // );
                                         controller.addOrRemoveUserFromProject(controller.allSystemUsers.value[index].id);
+
                                       },
                                       child: Container(
+                                        width: 67,
                                         decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(5),
                                             border:
-                                            Border.all(color: textVioletColor),
+                                            Border.all(color: isUserAdded ? Colors.red : textVioletColor),
                                             color: Colors.white),
                                         child: Padding(
                                           padding: const EdgeInsets.all(4.0),
                                           child: Row(
+
                                             children: [
-                                              SizedBox(
-                                                width: 5,
-                                              ),
+
+                                              isUserAdded ?
+                                              SizedBox() :
                                               Icon(
                                                 Icons.add_circle_outline_sharp,
                                                 color: textVioletColor,
                                                 size: 20,
                                               ),
                                               SizedBox(
-                                                width: 5,
+                                                width: 1,
                                               ),
-                                              text(isUserAdded ? 'Remove': 'Add', textVioletColor, 14,
+                                              text(isUserAdded ? 'Remove': 'Add', isUserAdded ? Colors.red : textVioletColor, 14,
                                                   FontWeight.w500),
-                                              SizedBox(
-                                                width: 5,
-                                              ),
+
                                             ],
                                           ),
                                         ),

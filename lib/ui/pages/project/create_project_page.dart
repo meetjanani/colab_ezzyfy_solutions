@@ -90,23 +90,26 @@ class CreateProjectPage extends GetView<CreateProjectController> {
                         () => Container(
                           width: Get.width,
                           height: 240,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                           child: Column(
                             children: [
                               if (controller
-                                      .selectedPhoto.value?.first?.path !=
-                                  null)
-                                Image.file(File(controller.selectedPhoto.value?.first?.path ??
+                                      .selectedPhoto.isNotEmpty
+                                  )
+                                Image.file(File(controller.selectedPhoto.value.first.path ??
                                     ""),
                                 height: 200,
                                 width: Get.width,
-                                fit: BoxFit.fitWidth,)
+                                fit: BoxFit.cover,)
                               else
                                 Image.asset(upload),
                               SizedBox(
                                 height: 16,
                               ),
                               text('Upload Media', Colors.blue, 14,
-                                  FontWeight.normal)
+                                  FontWeight.w500)
                             ],
                           ),
                         ),
@@ -116,7 +119,7 @@ class CreateProjectPage extends GetView<CreateProjectController> {
                 ),
               ),
               SizedBox(
-                height: 10,
+                height: 20,
               ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
@@ -128,9 +131,7 @@ class CreateProjectPage extends GetView<CreateProjectController> {
                       return value?.projectNameValidation();
                     }),
               ),
-              SizedBox(
-                height: 10,
-              ),
+
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                 child: inputField(
@@ -151,7 +152,32 @@ class CreateProjectPage extends GetView<CreateProjectController> {
                   : Padding(
                       padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                       child: greenButton('Create Project', () {
+                        // showDialog(
+                        //   context: Get.context!,
+                        //
+                        //   builder: (BuildContext context) {
+                        //
+                        //     return Dialog(
+                        //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                        //       child: Column(
+                        //         mainAxisSize: MainAxisSize.min,
+                        //         children: [
+                        //           Image.asset(alert1),
+                        //           text('Congratulation', Colors.black, 28, FontWeight.w600),
+                        //           SizedBox(height: 5,),
+                        //           text('Project Created', Colors.grey, 16, FontWeight.w400),
+                        //           text('Successfully', Colors.grey, 16, FontWeight.w400),
+                        //           SizedBox(height: 10,),
+                        //           blueButton('Done', (){Get.back();},52,Get.width/2),
+                        //           SizedBox(height: 10,),
+                        //         ],
+                        //       ),
+                        //     );
+                        //
+                        //   },
+                        // );
                         controller.createProject();
+
                       }),
                     ),
               SizedBox(
