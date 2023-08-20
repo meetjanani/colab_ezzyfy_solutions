@@ -54,6 +54,7 @@ class CreateProjectController extends GetxController {
       projectLoader.value = false;
       return;
     }
+    showProgress();
     var sharedPreference = await SharedPreferences.getInstance();
     var userId = sharedPreference.getInt(userIdSessionStorage) ?? 0;
     var signInUser = await firebaseAuthController.getUserById(userId);
@@ -75,6 +76,7 @@ class CreateProjectController extends GetxController {
           address: address.text.toString(),
           thumbnailImageUrl: thumbnailImageUrl,
           createdByUser: signInUser.id,
+          assignedUser: signInUser.id.toString(),
         );
         supabaseSetupController.createNewProject(project);
         projectLoader.value = false;

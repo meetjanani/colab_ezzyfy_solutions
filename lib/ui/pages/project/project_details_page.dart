@@ -105,145 +105,151 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                     children: [
                       ColabLoaderWidget(
                           loading: controller.projectAttachmentsLoader.value,
-                          child: Column(
-                            children: [
-                              Container(
-                                height: (controller.getImageFromIndex(1) !=
-                                    null) ? Get.width / 1.7 : 0,
+                          child: InkWell(
+                            onTap: () {
+                              Get.toNamed(AppRoute.projectAttachmentList,
+                              arguments: controller.projectAttachmentsList.value);
+                            },
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: (controller.getImageFromIndex(0) !=
+                                      null) ? Get.width / 1.7 : 0,
 
 
-                                width: Get.width,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Stack(
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(10),
-                                      child: (controller.getImageFromIndex(0) !=
-                                              null)
-                                          ? ColabCatchedImageWidget(
-                                              imageUrl:
-                                                  controller.getImageFromIndex(0),
-                                              boxFit: BoxFit.cover,
-                                              width: Get.width,
-                                              height: Get.width * 0.50,
-                                            )
-                                          : SizedBox(),
-                                    ),
-                                    Visibility(
-                                      visible: false,
-                                      child: Positioned(
-                                        child: Container(
-                                          height: 32,
-                                          width: 32,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(50),
-                                              color: Colors.white),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(5.0),
-                                            child: SvgPicture.asset(
-                                              heart,
-                                              color: Colors.red,
-                                              height: 20,
-                                              width: 20,
+                                  width: Get.width,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: Stack(
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(10),
+                                        child: (controller.getImageFromIndex(0) !=
+                                                null)
+                                            ? ColabCatchedImageWidget(
+                                                imageUrl:
+                                                    controller.getImageFromIndex(0),
+                                                boxFit: BoxFit.cover,
+                                                width: Get.width,
+                                                height: Get.width * 0.50,
+                                              )
+                                            : SizedBox(),
+                                      ),
+                                      Visibility(
+                                        visible: false,
+                                        child: Positioned(
+                                          child: Container(
+                                            height: 32,
+                                            width: 32,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(50),
+                                                color: Colors.white),
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(5.0),
+                                              child: SvgPicture.asset(
+                                                heart,
+                                                color: Colors.red,
+                                                height: 20,
+                                                width: 20,
+                                              ),
                                             ),
                                           ),
+                                          top: Get.width / 20,
+                                          right: Get.width / 20,
                                         ),
-                                        top: Get.width / 20,
-                                        right: Get.width / 20,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Container(
-                                    height: (controller.getImageFromIndex(1) !=
-                                        null) ? Get.width * .25 : 0,
-                                    width: Get.width * .25,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: ClipRRect(
-                                      child: (controller.getImageFromIndex(1) !=
-                                              null)
-                                          ? ColabCatchedImageWidget(
-                                              imageUrl:
-                                                  controller.getImageFromIndex(1),
-                                              boxFit: BoxFit.cover,
-                                              width: Get.width,
-                                              height: Get.width * 0.50,
-                                            )
-                                          : SizedBox(),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                  ),
-                                  Container(
-                                    height: (controller.getImageFromIndex(1) !=
-                                        null) ? Get.width * .25 : 0,
-                                    width: Get.width * .25,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: ClipRRect(
-                                      child: (controller.getImageFromIndex(2) !=
-                                              null)
-                                          ? ColabCatchedImageWidget(
-                                              imageUrl:
-                                                  controller.getImageFromIndex(2),
-                                              boxFit: BoxFit.cover,
-                                              width: Get.width,
-                                              height: Get.width * 0.50,
-                                            )
-                                          : SizedBox(),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                  ),
-                                  Stack(
-                                    children: [
-                                      Container(
-                                        height: (controller.getImageFromIndex(1) !=
-                                            null) ? Get.width * .25 : 0,
-                                        width: Get.width * .25,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(10),
-                                        ),
-                                        child: ClipRRect(
-                                          child:
-                                              (controller.getImageFromIndex(3) !=
-                                                      null)
-                                                  ? ColabCatchedImageWidget(
-                                                      imageUrl: controller
-                                                          .getImageFromIndex(3),
-                                                      boxFit: BoxFit.cover,
-                                                      width: Get.width,
-                                                      height: Get.width * 0.50,
-                                                    )
-                                                  : SizedBox(),
-                                          borderRadius: BorderRadius.circular(10),
-                                        ),
-                                      ),
-                                      Positioned.fill(
-                                        child: Align(
-                                            alignment: Alignment.center,
-                                            child: text( controller.projectAttachmentsList.value.length - 3 < 0 ? '' :
-                                                '${controller.projectAttachmentsList.value.length - 3}+',
-                                                Colors.white,
-                                                24,
-                                                FontWeight.w600)),
                                       )
                                     ],
                                   ),
-                                ],
-                              ),
-                            ],
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      height: (controller.getImageFromIndex(1) !=
+                                          null) ? Get.width * .25 : 0,
+                                      width: Get.width * .25,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: ClipRRect(
+                                        child: (controller.getImageFromIndex(1) !=
+                                                null)
+                                            ? ColabCatchedImageWidget(
+                                                imageUrl:
+                                                    controller.getImageFromIndex(1),
+                                                boxFit: BoxFit.cover,
+                                                width: Get.width,
+                                                height: Get.width * 0.50,
+                                              )
+                                            : SizedBox(),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
+                                    Container(
+                                      height: (controller.getImageFromIndex(1) !=
+                                          null) ? Get.width * .25 : 0,
+                                      width: Get.width * .25,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: ClipRRect(
+                                        child: (controller.getImageFromIndex(2) !=
+                                                null)
+                                            ? ColabCatchedImageWidget(
+                                                imageUrl:
+                                                    controller.getImageFromIndex(2),
+                                                boxFit: BoxFit.cover,
+                                                width: Get.width,
+                                                height: Get.width * 0.50,
+                                              )
+                                            : SizedBox(),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
+                                    Stack(
+                                      children: [
+                                        Container(
+                                          height: (controller.getImageFromIndex(1) !=
+                                              null) ? Get.width * .25 : 0,
+                                          width: Get.width * .25,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(10),
+                                          ),
+                                          child: ClipRRect(
+                                            child:
+                                                (controller.getImageFromIndex(3) !=
+                                                        null)
+                                                    ? ColabCatchedImageWidget(
+                                                        imageUrl: controller
+                                                            .getImageFromIndex(3),
+                                                        boxFit: BoxFit.cover,
+                                                        width: Get.width,
+                                                        height: Get.width * 0.50,
+                                                      )
+                                                    : SizedBox(),
+                                            borderRadius: BorderRadius.circular(10),
+                                          ),
+                                        ),
+                                        Positioned.fill(
+                                          child: Align(
+                                              alignment: Alignment.center,
+                                              child: text( controller.projectAttachmentsList.value.length - 3 < 0 ? '' :
+                                                  '${controller.projectAttachmentsList.value.length - 3}+',
+                                                  Colors.white,
+                                                  24,
+                                                  FontWeight.w600)),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           )),
                       SizedBox(
                         height: Get.width * 0.08,

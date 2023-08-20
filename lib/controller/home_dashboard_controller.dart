@@ -1,10 +1,10 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:colab_ezzyfy_solutions/resource/extension.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../firebase_operation/firebase_auth_controller.dart';
@@ -50,10 +50,33 @@ class HomeDashboardController extends GetxController {
     projectList
       ..clear()
       ..addAll(await projectControllerSupabase.getProjectsByUserId(userModelSupabase?.id ?? 0));
+    projectList.value.sort((a, b) => a.updatedAt.compareTo(b.updatedAt));
     projectLoader.value = false;
   }
 
-  void addImage(CreateProjectResponseModel project) async {
+  // Image Edit flow
+  /*Future<Uint8List> addImageFromCamera(CreateProjectResponseModel project, BuildContext context) async {
+    final ImagePicker _picker = ImagePicker();
+    final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
+    var file =  File(photo!.path);
+    Uint8List bytes = file.readAsBytesSync();
+    final editedImage = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ImageEditor(
+          image: bytes, // <-- Uint8List of image
+        ),
+      ),
+    );
+    var fileEdited = File.fromRawPath(editedImage);
+    selectedPhoto
+    ..clear()
+    ..add(fileEdited);
+    await uploadFileOverFirebase(project);
+    return bytes;
+  }*/
+
+  void addImage(CreateProjectResponseModel project, BuildContext context) async {
     projectAttachmentsListSupabase.clear();
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       allowMultiple: true,
@@ -65,13 +88,13 @@ class HomeDashboardController extends GetxController {
       ],
     );
     if (result != null) {
+      selectedPhoto.clear();
       List<File> fileTemp =
           result.paths.map((path) => File(path ?? '')).toList();
       for (int i = 0; i < fileTemp.length; i++) {
         int sizeInBytes = fileTemp[i].lengthSync();
         double sizeInMb = sizeInBytes / (1024 * 1024);
         if (sizeInMb < 30) {
-          selectedPhoto.clear();
           selectedPhoto.add(fileTemp[i]);
           await uploadFileOverFirebase(project);
         } else {
@@ -96,6 +119,7 @@ class HomeDashboardController extends GetxController {
       ],
     );
     if(result != null) {
+      selectedPhoto.clear();
       List<File> fileTemp =
       result.paths.map((path) => File(path ?? '')).toList();
       for (int i = 0; i < fileTemp.length; i++) {
@@ -116,6 +140,7 @@ class HomeDashboardController extends GetxController {
     File fileToUpload = File(selectedPhoto.value?.first?.path ?? '');
     var projectAttachmentUrl = await firebaseStorageController.uploadImageByProjectId(
         fileToUpload, project,);
+    selectedPhoto.value.removeAt(0);
     projectAttachmentsListSupabase.add(ProjectAttachmentsRequestModel(
         projectId: project.id,
         createdByUser: project.createdByUser,
@@ -129,8 +154,6 @@ class HomeDashboardController extends GetxController {
 
     setColabKey(userProfilePictureSessionStorage, userModelSupabase!.profilePictureUrl);
 
-
-
     await Supabase.instance.client
         .from(DatabaseSchema.usersTable)
         .update(
@@ -138,6 +161,7 @@ class HomeDashboardController extends GetxController {
         .eq(DatabaseSchema.usersId, userModelSupabase!.id)
         .select();
     await firebaseAuthController.getUserById(userModelSupabase!.id);
+    selectedPhoto.value.removeAt(0);
     init();
     projectLoader.value = false;
   }

@@ -105,7 +105,16 @@ class _AddUserPageState extends State<AddUserPage> {
                               width: 20,
                             ),
                             Flexible(
-                              child: inputField2(hintText: 'Search User....'),
+                              child: inputField2(
+                                  hintText: 'Search User....',
+                                  onChanged: (value) {
+                                    controller.allSystemUsers
+                                      ..clear()
+                                      ..addAll(controller.searchSystemUser
+                                          .where((element) => element.name
+                                              .toLowerCase()
+                                              .contains(value.toLowerCase())));
+                                  }),
                             ),
                             Icon(Icons.search),
                             SizedBox(
@@ -154,6 +163,55 @@ class _AddUserPageState extends State<AddUserPage> {
                                     Spacer(),
                                     InkWell(
                                       onTap: () {
+                                        if(isUserAdded) {
+                                          showDialog(
+                                            context: Get.context!,
+
+                                            builder: (BuildContext context) {
+
+                                              return Dialog(
+                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                                child: Column(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: [
+                                                    Image.asset(alert2),
+                                                    text('Alert!', Colors.black, 28, FontWeight.w600),
+                                                    SizedBox(height: 5,),
+                                                    text('Are you sure you want to', Colors.grey, 16, FontWeight.w400),
+                                                    text('remove this user', Colors.grey, 16, FontWeight.w400),
+                                                    SizedBox(height: 10,),
+                                                    Row(
+                                                      children: [
+                                                        Flexible(child: whiteButton('Cancel', (){Get.back();},52,Get.width/2)),
+                                                        Flexible(child: InkWell(
+                                                          onTap: (){
+                                                            Get.back();
+                                                            controller.addOrRemoveUserFromProject(controller.allSystemUsers.value[index].id);
+                                                          },
+                                                          child: Container(
+                                                            height: 55,
+                                                            width: Get.width/2,
+                                                            decoration: BoxDecoration(
+                                                                borderRadius: BorderRadius.circular(10),
+                                                                color: pinkButtonColor
+                                                            ),
+                                                            child: const Center(
+                                                                child: Text('Remove',
+                                                                    style: TextStyle(fontSize: 22,color: Colors.white,fontFamily: 'futur',fontWeight: FontWeight.bold))),
+                                                          ),
+                                                        ),),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
+
+                                            },
+                                          );
+                                        }
+                                        else {
+                                          controller.addOrRemoveUserFromProject(controller.allSystemUsers.value[index].id);
+                                        }
                                         // showDialog(
                                         //   context: Get.context!,
                                         //
@@ -184,7 +242,6 @@ class _AddUserPageState extends State<AddUserPage> {
                                         //
                                         //   },
                                         // );
-                                        controller.addOrRemoveUserFromProject(controller.allSystemUsers.value[index].id);
 
                                       },
                                       child: Container(

@@ -238,7 +238,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                       : Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: ListView.builder(
-                              itemCount: controller.projectList.value.length,
+                              itemCount: controller.projectList.value.take(3).length,
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
@@ -248,7 +248,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                                       controller.projectList.value[index],
                                   onAddImageClick: () {
                                     controller.addImage(
-                                        controller.projectList.value[index]);
+                                        controller.projectList.value[index], context);
                                   },
                                   onProjectClick: () {
                                     Get.toNamed(AppRoute.projectDetails,

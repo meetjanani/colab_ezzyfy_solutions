@@ -19,7 +19,8 @@ class ProjectControllerSupabase {
   Future<List<CreateProjectResponseModel>> getAllProjects() async {
     final response = await Supabase.instance.client
         .from(DatabaseSchema.projectTable)
-        .select('*');
+        .select('*')
+        .order(DatabaseSchema.projectupdatedAt, ascending: false);
     var projectList = CreateProjectResponseModel.fromJsonList(response);
     return projectList;
   }
@@ -28,9 +29,15 @@ class ProjectControllerSupabase {
     final response = await Supabase.instance.client
         .from(DatabaseSchema.projectTable)
         .select('*')
-        .eq(DatabaseSchema.projectCreatedByUser, userId);
-
+        .textSearch(DatabaseSchema.projectAssignedUser, userId.toString())
+        .order(DatabaseSchema.projectupdatedAt, ascending: false);
+    final responseCreatedByUser = await Supabase.instance.client
+        .from(DatabaseSchema.projectTable)
+        .select('*')
+        .eq(DatabaseSchema.projectCreatedByUser, userId)
+        .order(DatabaseSchema.projectupdatedAt, ascending: false);
     var projectList = CreateProjectResponseModel.fromJsonList(response);
+    var responseCreatedByUserList = CreateProjectResponseModel.fromJsonList(responseCreatedByUser);
     return projectList;
   }
 
@@ -51,7 +58,8 @@ class ProjectControllerSupabase {
     await Supabase.instance.client.from(DatabaseSchema.projectTable).upsert([
       projectCreateModel.toJson(),
     ]);
-    Get.back();
+    Get.back(); // dismiss progress bar
+    Get.back(); // navigate back screen
     showDialog(
       context: Get.context!,
 
@@ -95,57 +103,7 @@ class ProjectControllerSupabase {
     if (!assignedUserList.contains(userId.toString())) {
       assignedUserList.add(userId.toString());
     } else {
-      // showDialog(
-      //   context: Get.context!,
-      //
-      //   builder: (BuildContext context) {
-      //
-      //     return Dialog(
-      //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-      //       child: Column(
-      //         mainAxisSize: MainAxisSize.min,
-      //         children: [
-      //           Image.asset(alert2),
-      //           text('Alert!', Colors.black, 28, FontWeight.w600),
-      //           SizedBox(height: 5,),
-      //           text('Are you sure you want to', Colors.grey, 16, FontWeight.w400),
-      //           text('remove this user', Colors.grey, 16, FontWeight.w400),
-      //           SizedBox(height: 10,),
-      //           Row(
-      //             children: [
-      //               Flexible(child: whiteButton('Cancel', (){Get.back();},52,Get.width/2)),
-      //               Flexible(child: InkWell(
-      //                 onTap: (){
-      //                   assignedUserList.remove(userId.toString());
-      //                   Get.back();
-      //                 },
-      //                 child: Container(
-      //                   height: 55,
-      //                   width: Get.width/2,
-      //                   decoration: BoxDecoration(
-      //                       borderRadius: BorderRadius.circular(10),
-      //                       color: pinkButtonColor
-      //                   ),
-      //                   child: const Center(
-      //                       child: Text('Remove',
-      //                           style: TextStyle(fontSize: 22,color: Colors.white,fontFamily: 'futur',fontWeight: FontWeight.bold))),
-      //                 ),
-      //               ),),
-      //               // Flexible(child: blueButton('Remove',
-      //               //   assignedUserList.remove(userId.toString()),
-      //               //     52,Get.width/2)),
-      //             ],
-      //           ),
-      //
-      //           SizedBox(height: 10,),
-      //         ],
-      //       ),
-      //     );
-      //
-      //   },
-      // );
        assignedUserList.remove(userId.toString());
-
     }
     await Supabase.instance.client
         .from(DatabaseSchema.projectTable)
@@ -178,6 +136,12 @@ class ProjectControllerSupabase {
     await Supabase.instance.client
         .from(DatabaseSchema.projectAttachmentsTable)
         .insert(ProjectAttachmentsRequestModel.toJsonListProject(projectAttachment));
+    await Supabase.instance.client
+        .from(DatabaseSchema.projectTable)
+        .update(
+        {DatabaseSchema.projectupdatedAt: DateTime.now().toString()})
+        .eq(DatabaseSchema.projectId, projectAttachment.first.projectId)
+        .select();
     hideProgressBar();
     Get.showSuccessSnackbar('Image uploaded successfully.');
   }

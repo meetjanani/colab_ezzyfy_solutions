@@ -16,6 +16,7 @@ class CreateProjectRequestModel {
     required this.address,
     required this.thumbnailImageUrl,
     required this.createdByUser,
+    required this.assignedUser,
   });
 
   static List<CreateProjectRequestModel> fromJsonList(List<dynamic> dataList) {

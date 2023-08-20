@@ -68,7 +68,7 @@ class _ProjectListPageState extends State<ProjectListPage> {
                       SizedBox(
                         width: Get.width / 4,
                       ),
-                      text('All Projects', Colors.white, 18, FontWeight.w500),
+                      text('Recent Projects', Colors.white, 18, FontWeight.w500),
                     ],
                   ),
                   SizedBox(
