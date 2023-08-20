@@ -1,3 +1,5 @@
+import 'package:colab_ezzyfy_solutions/resource/constant.dart';
+import 'package:colab_ezzyfy_solutions/route/route.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -20,15 +22,17 @@ class _ProjectListPageState extends State<ProjectListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Obx(
-        () => Column(
+      body:
+        // Obx(
+        // () =>
+        Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
               width: Get.width,
               decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage(bg), fit: BoxFit.fill),
+                  image:
+                  DecorationImage(image: AssetImage(bg), fit: BoxFit.fill),
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(20),
                       bottomRight: Radius.circular(20)),
@@ -39,24 +43,32 @@ class _ProjectListPageState extends State<ProjectListPage> {
                   SizedBox(
                     height: 44,
                   ),
-                  text('All Projects', Colors.white, 25, FontWeight.w500),
-                  SizedBox(
-                    height: 6,
-                  ),
                   Row(
+                    // mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       SizedBox(
                         width: 20,
                       ),
-                      CircleAvatar(),
-                      SizedBox(
-                        width: 10,
+                      InkWell(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: Container(
+                          height: Get.width / 12,
+                          width: Get.width / 12,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(Get.width / 12),
+                          ),
+                          child: Center(
+                            child: Icon(Icons.arrow_back_ios_new),
+                          ),
+                        ),
                       ),
-                      text('Hello,', Colors.white, 14, FontWeight.normal),
                       SizedBox(
-                        width: 5,
+                        width: Get.width / 4,
                       ),
-                      text(controller.userName.value.toString(), Colors.white, 14, FontWeight.bold),
+                      text('All Projects', Colors.white, 18, FontWeight.w500),
                     ],
                   ),
                   SizedBox(
@@ -75,30 +87,62 @@ class _ProjectListPageState extends State<ProjectListPage> {
                         child: CircularProgressIndicator(),
                       ),
                   )
-                  : Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                      child: Expanded(
-                        child: ListView.builder(
-                            itemCount: controller.projectList.value.length,
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              return ProjectRowItem(
-                                projectCreateModel:
-                                    controller.projectList.value[index],
-                                onAddImageClick: () {
-                                  controller.addImage(controller
-                                      .projectList.value[index].createdByUser);
-                                },
-                                onProjectClick: () {},
-                              );
-                            }),
-                      ),
+                  : Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(20,0,20,0),
+                      child: ListView.builder(
+                          itemCount: controller.projectList.value.length,
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+
+                          itemBuilder: (context, index) {
+                            return ProjectRowItem(
+                              projectCreateModel:
+                                  controller.projectList.value[index],
+                              onAddImageClick: () {
+                                controller.addImage(controller
+                                    .projectList.value[index].createdByUser);
+                              },
+                              onProjectClick: () {},
+                            );
+                          }),
                     ),
+                  ),
             ),
+
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: InkWell(
+                onTap: (){
+                  Get.toNamed(AppRoute.createProject);
+                },
+                child: Container(
+                  height: 52,
+                  width: Get.width,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: pinkButtonColor
+                  ),
+                  child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text('New Project',
+                              style: const TextStyle(fontSize: 22,color: Colors.white,fontFamily: 'futur',fontWeight: FontWeight.bold)),
+                          SizedBox(width: 10,),
+                          Icon(Icons.add_box_outlined,color: Colors.white,size: 20,)
+                        ],
+                      )),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+
           ],
         ),
-      ),
+      // ),
     );
   }
 }

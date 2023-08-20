@@ -58,6 +58,25 @@ Widget greenButton(String text, Function fun,){
   );
 }
 
+Widget blueButton(String text, Function fun,double height, double width){
+  return GestureDetector(
+    onTap: () async {
+      fun();
+    },
+    child: Container(
+      height: height,
+      width: width,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: pinkButtonColor
+      ),
+      child: Center(
+          child: Text(text,
+              style: const TextStyle(fontSize: 22,color: Colors.white,fontFamily: 'futur',fontWeight: FontWeight.bold))),
+    ),
+  );
+}
+
 Widget whiteButton(String text, Function fun,double height, double width){
   return GestureDetector(
     onTap: () async {
@@ -68,7 +87,7 @@ Widget whiteButton(String text, Function fun,double height, double width){
       width: width,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Colors.white
+          color: Colors.grey.shade50
       ),
       child: Center(
           child: Text(text,

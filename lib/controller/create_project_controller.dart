@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:colab_ezzyfy_solutions/resource/extension.dart';
+import 'package:colab_ezzyfy_solutions/resource/image.dart';
 import 'package:colab_ezzyfy_solutions/shared/colab_shared_preference.dart';
+import 'package:colab_ezzyfy_solutions/ui/widget/all_widget.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -76,7 +78,8 @@ class CreateProjectController extends GetxController {
         );
         supabaseSetupController.createNewProject(project);
         projectLoader.value = false;
-        Get.back();
+
+        // Get.back();
       }
       projectLoader.value = false;
     });

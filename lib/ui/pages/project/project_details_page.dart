@@ -108,7 +108,10 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                           child: Column(
                             children: [
                               Container(
-                                height: Get.width / 1.7,
+                                height: (controller.getImageFromIndex(1) !=
+                                    null) ? Get.width / 1.7 : 0,
+
+
                                 width: Get.width,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
@@ -126,7 +129,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                                               width: Get.width,
                                               height: Get.width * 0.50,
                                             )
-                                          : Image.asset(bg),
+                                          : SizedBox(),
                                     ),
                                     Visibility(
                                       visible: false,
@@ -162,7 +165,8 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
-                                    height: Get.width * .25,
+                                    height: (controller.getImageFromIndex(1) !=
+                                        null) ? Get.width * .25 : 0,
                                     width: Get.width * .25,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
@@ -177,12 +181,13 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                                               width: Get.width,
                                               height: Get.width * 0.50,
                                             )
-                                          : Image.asset(bg),
+                                          : SizedBox(),
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                   ),
                                   Container(
-                                    height: Get.width * .25,
+                                    height: (controller.getImageFromIndex(1) !=
+                                        null) ? Get.width * .25 : 0,
                                     width: Get.width * .25,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
@@ -197,14 +202,15 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                                               width: Get.width,
                                               height: Get.width * 0.50,
                                             )
-                                          : Image.asset(bg),
+                                          : SizedBox(),
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                   ),
                                   Stack(
                                     children: [
                                       Container(
-                                        height: Get.width * .25,
+                                        height: (controller.getImageFromIndex(1) !=
+                                            null) ? Get.width * .25 : 0,
                                         width: Get.width * .25,
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(10),
@@ -220,20 +226,14 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                                                       width: Get.width,
                                                       height: Get.width * 0.50,
                                                     )
-                                                  : Image.asset(
-                                                      bg,
-                                                      fit: BoxFit.cover,
-                                                      opacity:
-                                                          const AlwaysStoppedAnimation(
-                                                              .5),
-                                                    ),
+                                                  : SizedBox(),
                                           borderRadius: BorderRadius.circular(10),
                                         ),
                                       ),
                                       Positioned.fill(
                                         child: Align(
                                             alignment: Alignment.center,
-                                            child: text(
+                                            child: text( controller.projectAttachmentsList.value.length - 3 < 0 ? '' :
                                                 '${controller.projectAttachmentsList.value.length - 3}+',
                                                 Colors.white,
                                                 24,
