@@ -12,6 +12,7 @@ import '../firebase_operation/firebase_storage_controller.dart';
 import '../firebase_operation/project_controller_supabase.dart';
 import '../model/create_project_response_model.dart';
 import '../model/project_attchments_request_model.dart';
+import '../model/project_attchments_response_model.dart';
 import '../model/user_model_supabase.dart';
 import '../resource/database_schema.dart';
 import '../resource/session_string.dart';
@@ -31,6 +32,7 @@ class HomeDashboardController extends GetxController {
   RxList<File> projectAttachmentRequestModel = RxList();
   RxList<ProjectAttachmentsRequestModel> projectAttachmentsListSupabase =
       RxList();
+  RxList<ProjectAttachmentsResponseModel> projectAttachmentsList = RxList();
   RxBool projectLoader = false.obs;
   RxBool isProfilePictureUpload = false.obs;
   UserModelSupabase? userModelSupabase = null;
@@ -39,18 +41,28 @@ class HomeDashboardController extends GetxController {
     projectLoader.value = true;
     userModelSupabase = await getUserModel();
     userName.value = userModelSupabase?.name ?? '';
-    Future.delayed(Duration(seconds: 2));
-    fetchProject();
+    await Future.delayed(Duration(seconds: 2));
+    await fetchProject();
+    await fetchFeed();
     return true;
   }
 
-  void fetchProject() async {
+  Future<void> fetchProject() async {
     projectLoader.value = true;
     await Future.delayed(Duration(seconds: 2));
     projectList
       ..clear()
       ..addAll(await projectControllerSupabase.getProjectsByUserId(userModelSupabase?.id ?? 0));
     projectList.value.sort((a, b) => a.updatedAt.compareTo(b.updatedAt));
+    projectLoader.value = false;
+  }
+
+  Future<void> fetchFeed() async {
+    projectLoader.value = true;
+    projectAttachmentsList
+      ..clear()
+      ..addAll(
+          await projectControllerSupabase.getRecentTenProjectAttachments());
     projectLoader.value = false;
   }
 

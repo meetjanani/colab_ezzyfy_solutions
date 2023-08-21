@@ -280,9 +280,10 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                   child: Padding(
                     padding: const EdgeInsets.all(20),
                     child: ListView.builder(
-                        itemCount: 2,
+                        itemCount: controller.projectAttachmentsList.value.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
+                          var attachment = controller.projectAttachmentsList.value[index];
                           return Card(
                             elevation: 10,
                             shape: RoundedRectangleBorder(
@@ -296,11 +297,12 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                                     children: [
                                       ClipRRect(
                                           borderRadius: BorderRadius.circular(10),
-                                          child: Image.asset(
-                                            ex,
+                                          child: ColabCatchedImageWidget(
+                                            imageUrl:
+                                                attachment.projectAttachmentUrl,
                                             height: Get.width / 3,
                                             width: Get.width / 3,
-                                            fit: BoxFit.cover,
+                                            boxFit: BoxFit.cover,
                                           )),
                                       Positioned(
                                         child: Container(
@@ -334,7 +336,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
-                                          text('Sky Height', Colors.black, 14,
+                                          text(attachment.projectName, Colors.black, 14,
                                               FontWeight.w600),
                                         ],
                                       ),
@@ -350,7 +352,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                                             color: textVioletColor,
                                           ),
                                           text(
-                                              'M-191 Westheimer Rd.',
+                                              attachment.userName,
                                               Colors.grey.shade700,
                                               12,
                                               FontWeight.w600),
