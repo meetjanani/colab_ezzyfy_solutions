@@ -155,17 +155,20 @@ class FirebaseAuthController extends GetxController {
   }
 
   Future<bool> checkUserIsRegisteredOrNot(String phoneNumber) async {
-    showProgress();
-    return await Supabase.instance.client
-        .from(DatabaseSchema.usersTable)
-        .select('*')
-        .eq(DatabaseSchema.userMobileNumber, phoneNumber)
-        .limit(1)
-        .then((value) {
-      value.runtimeType;
-      hideProgressBar();
-      return (value.length > 0);
-    });
+    try {
+      showProgress();
+      return await Supabase.instance.client
+          .from(DatabaseSchema.usersTable)
+          .select('*')
+          .eq(DatabaseSchema.userMobileNumber, phoneNumber)
+          .range(0, 1)
+          .then((value) {
+        hideProgressBar();
+        return (value.length > 0);
+      });
+    } catch (e) {
+      return await false;
+    }
   }
 
   Future<void> signOutUser({navigateUser = false}) async {

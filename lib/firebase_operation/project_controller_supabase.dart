@@ -149,8 +149,18 @@ class ProjectControllerSupabase {
   Future<List<ProjectAttachmentsResponseModel>> getProjectAttachments(int projectId) async {
     final response = await Supabase.instance.client
         .from(DatabaseSchema.projectAttachmentsTable)
-        .select('*')
+        .select('*, users:createdByUser ( name ), projects:projectId ( name )')
         .eq(DatabaseSchema.projectAttachmentsProjectId, projectId);
+    var projectList = ProjectAttachmentsResponseModel.fromJsonList(response);
+    return projectList;
+  }
+
+  Future<List<ProjectAttachmentsResponseModel>> getRecentTenProjectAttachments() async {
+    final response = await Supabase.instance.client
+        .from(DatabaseSchema.projectAttachmentsTable)
+        .select('*, users:createdByUser ( name ), projects:projectId ( name )')
+        .limit(10)
+        .order(DatabaseSchema.projectAttachmentsCreateAt, ascending: false);
     var projectList = ProjectAttachmentsResponseModel.fromJsonList(response);
     return projectList;
   }
