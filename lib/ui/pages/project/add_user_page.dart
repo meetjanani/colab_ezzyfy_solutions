@@ -1,4 +1,5 @@
 import 'package:colab_ezzyfy_solutions/controller/add_user_controller.dart';
+import 'package:colab_ezzyfy_solutions/controller/project_details_controller.dart';
 import 'package:colab_ezzyfy_solutions/resource/constant.dart';
 import 'package:colab_ezzyfy_solutions/resource/image.dart';
 import 'package:colab_ezzyfy_solutions/ui/widget/all_widget.dart';
@@ -18,6 +19,7 @@ class AddUserPage extends StatefulWidget {
 
 class _AddUserPageState extends State<AddUserPage> {
   AddUserController controller = AddUserController.to;
+  ProjectDetailsController projectDetailsController = ProjectDetailsController.to;
 
   @override
   void initState() {
@@ -25,10 +27,7 @@ class _AddUserPageState extends State<AddUserPage> {
     super.initState();
     controller.projectResponseModel =
         Get.arguments as CreateProjectResponseModel;
-    Future.delayed(const Duration(seconds: 2)).then((value) {
-      controller.fetAllSystemUsers();
-      // hideProgressBar();
-    });
+    controller.fetAllSystemUsers();
   }
 
   @override
@@ -65,6 +64,7 @@ class _AddUserPageState extends State<AddUserPage> {
                           InkWell(
                             onTap: () {
                               Get.back();
+                              projectDetailsController.init();
                             },
                             child: Container(
                               height: Get.width / 12,
@@ -283,7 +283,7 @@ class _AddUserPageState extends State<AddUserPage> {
                       SizedBox(
                         height: 20,
                       ),
-                      greenButton('Invite New user', () {}),
+                      // greenButton('Invite New user', () {}),
                       SizedBox(
                         height: 10,
                       ),

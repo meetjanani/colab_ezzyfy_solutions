@@ -54,7 +54,7 @@ class _OtpPageState extends State<OtpPage> {
                   text('Enter Verification Code', Colors.black, 22,
                       FontWeight.w800),
                   const SizedBox(height: 10),
-                  text('Enter 4 digits code that you received on your email. ',
+                  text('Enter 6 digits OTP that you received on your phone. ',
                       Colors.grey, 15, FontWeight.w700),
                   const SizedBox(height: 20),
                   Padding(
@@ -105,8 +105,11 @@ class _OtpPageState extends State<OtpPage> {
                         () => controller.seconds.value == 0 ?
                             InkWell(
                             onTap: () {
-                              controller.resend();
-                            },
+                              // controller.resend();
+                              Get.back(); // dismiss otp screen
+                              controller.firebaseController
+                                      .fbLogin(widget.phoneNumber);
+                                },
                             child: text(
                                 'Resend', pinkButtonColor, 15, FontWeight.bold)) :
                         Text('Resend OTP in ${controller.seconds} secs.'),

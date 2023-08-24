@@ -101,6 +101,7 @@ class FirebaseAuthController extends GetxController {
         await getUserFromPhoneNumber(phoneNumber);
       });
     } catch (e) {
+      Get.back(); // dismiss progress bar
       if (e is FirebaseAuthException && e.code == 'invalid-verification-code') {
         print("codeSent exception");
         Get.showErrorSnackbar('${e.code} - ${e.message}');
@@ -140,15 +141,18 @@ class FirebaseAuthController extends GetxController {
         await Supabase.instance.client
             .from(DatabaseSchema.usersTable)
             .insert([userRegisterData]).select();
+        Get.showSuccessSnackbar('New user successfully created.');
+        hideProgressBar();
+        fbLogin(mobileNumber);
         // insert into Firebase
-        CollectionReference users =
+        /*CollectionReference users =
             FirebaseFirestore.instance.collection(DatabaseSchema.usersTable);
         users.add(userRegisterData).then((value) {
-          Get.showSuccessSnackbar('New user successfully created.');
-          hideProgressBar();
-          fbLogin(mobileNumber);
+
         }).catchError(
-            (error) => Get.showSuccessSnackbar('Failed to add user: $error'));
+            (error){
+              Get.showSuccessSnackbar('Failed to add user: $error');
+            });*/
       }
     });
     isLoginRequest = false;

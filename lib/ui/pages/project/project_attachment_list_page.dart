@@ -92,11 +92,12 @@ class _ProjectAttachmentListPageState extends State<ProjectAttachmentListPage> {
                 ],
               ),
             ),
-            Container(
-              child: Expanded(
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.all(4),
                 child: GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
+                        crossAxisCount: 3,
                         crossAxisSpacing: 4.0,
                         mainAxisSpacing: 4.0),
                     itemCount: projectAttachmentsList.length,

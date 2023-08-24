@@ -5,6 +5,8 @@ import 'package:colab_ezzyfy_solutions/resource/extension.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:image_sketcher/image_sketcher.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../firebase_operation/firebase_auth_controller.dart';
@@ -41,7 +43,6 @@ class HomeDashboardController extends GetxController {
     projectLoader.value = true;
     userModelSupabase = await getUserModel();
     userName.value = userModelSupabase?.name ?? '';
-    await Future.delayed(Duration(seconds: 2));
     await fetchProject();
     await fetchFeed();
     return true;
@@ -49,7 +50,6 @@ class HomeDashboardController extends GetxController {
 
   Future<void> fetchProject() async {
     projectLoader.value = true;
-    await Future.delayed(Duration(seconds: 2));
     projectList
       ..clear()
       ..addAll(await projectControllerSupabase.getProjectsByUserId(userModelSupabase?.id ?? 0));
@@ -62,10 +62,19 @@ class HomeDashboardController extends GetxController {
     projectAttachmentsList
       ..clear()
       ..addAll(
-          await projectControllerSupabase.getRecentTenProjectAttachments());
+          await projectControllerSupabase.getRecentOwnProjectAttachments(userModelSupabase?.id ?? 0));
     projectLoader.value = false;
   }
 
+  Future<void> imagesketer(CreateProjectResponseModel project, BuildContext context) async {
+    final _imageKey = GlobalKey<ImageSketcherState>();
+    final _key = GlobalKey<ScaffoldState>();
+    final ImagePicker _picker = ImagePicker();
+    final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
+    var file =  File(photo!.path);
+    await ImageSketcher.file(file, key: _imageKey);
+    print('Hello');
+  }
   // Image Edit flow
   /*Future<Uint8List> addImageFromCamera(CreateProjectResponseModel project, BuildContext context) async {
     final ImagePicker _picker = ImagePicker();

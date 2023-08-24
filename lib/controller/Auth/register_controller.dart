@@ -53,10 +53,11 @@ class RegisterController extends GetxController {
 
   void resend() {
     Get.back();
-    Get.toNamed(AppRoute.login);
+    Get.offNamed(AppRoute.login);
   }
 
   void startTimer() {
+    seconds = 60.obs;
     timer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (seconds > 0) {
         seconds.value--;

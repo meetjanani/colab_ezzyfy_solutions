@@ -60,6 +60,7 @@ dependencies:
   stylish_bottom_bar:
   cached_network_image: ^3.2.3
   shared_preferences: ^2.2.0
+  image_sketcher: ^0.0.4
 #  camera:
 #  image_editor_plus:
 

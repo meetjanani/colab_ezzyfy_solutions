@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'project_attchments_response_model.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(nullable: true)
 class ProjectAttachmentsResponseModel {
   int id = 0;
   int projectId = 0;
@@ -10,6 +10,7 @@ class ProjectAttachmentsResponseModel {
   String projectAttachmentUrl = "";
   String userName = "";
   String projectName = "";
+  String? profilePictureUrl = "";
   // response[0]['users']['name']
 
   String createAt = DateTime.now().toString();
@@ -25,6 +26,7 @@ class ProjectAttachmentsResponseModel {
     for (var e in dataList) {
       var attachment = _$ProjectAttachmentsResponseModelFromJson(e);
       attachment.userName = e['users']['name'];
+      attachment.profilePictureUrl = e['users']['profilePictureUrl'];
       attachment.projectName = e['projects']['name'];
       record.add(attachment);
     }

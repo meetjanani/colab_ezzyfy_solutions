@@ -149,16 +149,29 @@ class ProjectControllerSupabase {
   Future<List<ProjectAttachmentsResponseModel>> getProjectAttachments(int projectId) async {
     final response = await Supabase.instance.client
         .from(DatabaseSchema.projectAttachmentsTable)
-        .select('*, users:createdByUser ( name ), projects:projectId ( name )')
+        .select('*, users:createdByUser ( name, profilePictureUrl ), projects:projectId ( name )')
         .eq(DatabaseSchema.projectAttachmentsProjectId, projectId);
     var projectList = ProjectAttachmentsResponseModel.fromJsonList(response);
     return projectList;
   }
 
-  Future<List<ProjectAttachmentsResponseModel>> getRecentTenProjectAttachments() async {
+  Future<List<ProjectAttachmentsResponseModel>> getRecentOwnProjectAttachments(int currentUserId) async {
     final response = await Supabase.instance.client
         .from(DatabaseSchema.projectAttachmentsTable)
-        .select('*, users:createdByUser ( name ), projects:projectId ( name )')
+        .select('*, users:createdByUser ( name, profilePictureUrl ), projects:projectId ( name )')
+    .eq(DatabaseSchema.projectAttachmentsCreatedByUser, currentUserId)
+        .limit(10)
+        .order(DatabaseSchema.projectAttachmentsCreateAt, ascending: false);
+    var projectList = ProjectAttachmentsResponseModel.fromJsonList(response);
+    return projectList;
+  }
+
+  Future<List<ProjectAttachmentsResponseModel>> getAssignedProjectWiseAttachments(int currentUserId) async {
+    //TODO: Fetch feeds only uploaded by current user.
+    final response = await Supabase.instance.client
+        .from(DatabaseSchema.projectAttachmentsTable)
+        .select('*, users:createdByUser ( name, profilePictureUrl ), projects:projectId ( name )')
+        .eq(DatabaseSchema.projectAttachmentsCreatedByUser, currentUserId)
         .limit(10)
         .order(DatabaseSchema.projectAttachmentsCreateAt, ascending: false);
     var projectList = ProjectAttachmentsResponseModel.fromJsonList(response);
