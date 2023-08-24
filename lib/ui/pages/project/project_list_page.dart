@@ -1,4 +1,5 @@
 import 'package:colab_ezzyfy_solutions/resource/constant.dart';
+import 'package:colab_ezzyfy_solutions/resource/extension.dart';
 import 'package:colab_ezzyfy_solutions/route/route.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -101,9 +102,13 @@ class _ProjectListPageState extends State<ProjectListPage> {
                                   controller.projectList.value[index],
                               onAddImageClick: () {
                                 controller.addImage(controller
-                                    .projectList.value[index].createdByUser);
+                                    .projectList.value[index], context);
                               },
-                              onProjectClick: () {},
+                                onProjectClick: () {
+                                  Get.toNamed(AppRoute.projectDetails,
+                                      arguments: controller
+                                          .projectList.value[index]);
+                                },
                             );
                           }),
                     ),
@@ -114,7 +119,11 @@ class _ProjectListPageState extends State<ProjectListPage> {
               padding: const EdgeInsets.all(20.0),
               child: InkWell(
                 onTap: (){
-                  Get.toNamed(AppRoute.createProject);
+                  if(controller.userModelSupabase?.isAdmin == true) {
+                    Get.toNamed(AppRoute.createProject);
+                  } else {
+                    Get.showErrorSnackbar("Only Admin user can access this feature");
+                  }
                 },
                 child: Container(
                   height: 52,

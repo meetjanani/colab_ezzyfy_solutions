@@ -32,9 +32,9 @@ class SplashController extends GetxController
   _launchPage() async {
     await Future.delayed(const Duration(seconds: 2), () {});
     if (FirebaseAuth.instance.currentUser != null) {
-      Get.toNamed(AppRoute.home);
+      Get.offNamed(AppRoute.home);
     } else {
-      Get.toNamed(AppRoute.login);
+      Get.offNamed(AppRoute.login);
     }
   }
 }

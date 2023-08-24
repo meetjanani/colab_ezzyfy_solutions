@@ -69,8 +69,10 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                           ),
                           InkWell(
                             onTap: () async {
-                              await refreshDashboardUI();
-                              Get.back();
+                              if(controller.projectAttachmentsLoader.value == false) {
+                                await refreshDashboardUI();
+                                Get.back();
+                              }
                             },
                             child: Container(
                               height: Get.width / 12,
@@ -393,7 +395,9 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
     );
   }
 
-  Future<bool> refreshDashboardUI() {
-    return homeController.init();
+  Future<bool> refreshDashboardUI() async {
+    controller.projectAttachmentsLoader.value = true;
+    homeController.init();
+    return await true;
   }
 }

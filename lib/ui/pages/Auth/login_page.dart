@@ -43,7 +43,7 @@ class LoginPage extends GetView<LoginController> {
                     SizedBox(
                       height: 20,
                     ),
-                    text('Stay SIGN IN in with your account\nto make searching',
+                    text('Sign in to get exclusive updates',
                         Colors.white, 18, FontWeight.w500),
                     SizedBox(
                       height: 20,

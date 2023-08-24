@@ -712,6 +712,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.1"
+  image_sketcher:
+    dependency: "direct main"
+    description:
+      name: image_sketcher
+      sha256: c50245c7b1b6959e20733005a8c6f37de679ebf8f0939abaf6419dd0e8edeac3
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.4"
   intl:
     dependency: "direct main"
     description:
@@ -972,10 +980,10 @@ packages:
     dependency: transitive
     description:
       name: realtime_client
-      sha256: "69187110a1930e8db2b121cad25a247283f384f078d213ab87072814be12b1a4"
+      sha256: b4b7bb293417dafc73943ed639209b2dcb796db8495e56bba29a4e26fadef5cd
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.0"
+    version: "1.2.1"
   retry:
     dependency: transitive
     description:
@@ -1185,18 +1193,18 @@ packages:
     dependency: transitive
     description:
       name: supabase
-      sha256: "2f274a29c28e0b0fe7642196c099efeba50a83a570aac6b86577389585a7da82"
+      sha256: c48671b62720f15067f6b31abe964950bf1405b7eec367a97f683dee25715a77
       url: "https://pub.dev"
     source: hosted
-    version: "1.11.0"
+    version: "1.11.1"
   supabase_flutter:
     dependency: "direct main"
     description:
       name: supabase_flutter
-      sha256: "9dbd6f66fb95a1a5b37f0f4c79d8de8c34181e4012833289273d08d6ab61faa3"
+      sha256: a9070f578d8b21799b43d7145586b32838b7970c831a5637f67e91f3bd3ea287
       url: "https://pub.dev"
     source: hosted
-    version: "1.10.13"
+    version: "1.10.14"
   synchronized:
     dependency: transitive
     description:

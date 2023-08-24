@@ -14,7 +14,10 @@ ProjectAttachmentsResponseModel _$ProjectAttachmentsResponseModelFromJson(
       projectAttachmentUrl: json['projectAttachmentUrl'] as String,
     )
       ..id = json['id'] as int
-      ..createAt = json['createAt'] as String;
+      ..userName = json['userName'] ?? '' as String
+      ..profilePictureUrl = json['profilePictureUrl'] ?? '' as String
+      ..projectName = json['projectName'] ?? '' as String
+      ..createAt = json['createAt'] ?? '' as String;
 
 Map<String, dynamic> _$ProjectAttachmentsResponseModelToJson(
         ProjectAttachmentsResponseModel instance) =>
@@ -23,5 +26,8 @@ Map<String, dynamic> _$ProjectAttachmentsResponseModelToJson(
       'projectId': instance.projectId,
       'createdByUser': instance.createdByUser,
       'projectAttachmentUrl': instance.projectAttachmentUrl,
+      'userName': instance.userName,
+      'profilePictureUrl': instance.profilePictureUrl,
+      'projectName': instance.projectName,
       'createAt': instance.createAt,
     };

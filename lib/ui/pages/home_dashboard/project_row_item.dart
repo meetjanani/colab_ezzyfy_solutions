@@ -26,55 +26,52 @@ class ProjectRowItem extends StatelessWidget {
         elevation: 10,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: Container(
+          padding: const EdgeInsets.all(10.0),
           height: 100, // max height set as 100
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: ColabCatchedImageWidget(
-                      imageUrl: projectCreateModel.thumbnailImageUrl,
-                    )),
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: ColabCatchedImageWidget(
+                    imageUrl: projectCreateModel.thumbnailImageUrl,
+                  )),
+              SizedBox(
+                width: 10,
               ),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
+              Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Column(
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
                       children: [
-                        SizedBox(
-                          height: 10,
+                        Expanded(
+                          child: textMore(projectCreateModel.name, Colors.black,
+                              14, FontWeight.w600, 3),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: Get.width / 2.5,
-                              child: textMore(projectCreateModel.name,
-                                  Colors.black, 14, FontWeight.w600, 3),
-                            ),
-                            InkWell(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    border: Border.all(color: textVioletColor),
-                                    color: Colors.white),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(5.0),
-                                  child: Icon(
-                                    Icons.camera_alt,
-                                    color: textVioletColor,
-                                    size: 20,
-                                  ),
-                                ),
+                        InkWell(
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                border: Border.all(color: textVioletColor),
+                                color: Colors.white),
+                            child: Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Icon(
+                                Icons.camera_alt,
+                                color: textVioletColor,
+                                size: 20,
                               ),
-                              onTap: onAddImageClick,
-                            )
-                          ],
+                            ),
+                          ),
+                          onTap: onAddImageClick,
+                        ),
+                        SizedBox(
+                          width: 10,
                         ),
                       ],
                     )

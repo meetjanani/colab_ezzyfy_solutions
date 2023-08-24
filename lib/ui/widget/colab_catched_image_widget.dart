@@ -30,6 +30,15 @@ class _ColabCatchedImageWidgetState extends State<ColabCatchedImageWidget> {
       width: widget.width,
       height: widget.height,
       fit: boxfit,
+      imageBuilder: (context, imageProvider) => Container(
+        width: widget.width, // 80.0
+        height: widget.height, // 80.0
+        decoration: BoxDecoration(
+          shape: BoxShape.rectangle,
+          image: DecorationImage(
+              image: imageProvider, fit: BoxFit.cover),
+        ),
+      ),
       imageUrl: widget.imageUrl ?? projectDefaultImageUrl,
       placeholder: (context, url) => Center(child: CircularProgressIndicator()),
       errorWidget: (context, url, error) => const Icon(Icons.error),
