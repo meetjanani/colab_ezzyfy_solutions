@@ -8,6 +8,7 @@ import '../../../resource/image.dart';
 import '../../../route/route.dart';
 import '../../widget/all_widget.dart';
 import '../../widget/colab_catched_image_widget.dart';
+import '../../widget/common_toolbar.dart';
 import 'image_list_grid_row.dart';
 
 class ProjectAttachmentListPage extends StatefulWidget {
@@ -41,56 +42,8 @@ class _ProjectAttachmentListPageState extends State<ProjectAttachmentListPage> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: Get.width,
-              decoration: BoxDecoration(
-                  image:
-                      DecorationImage(image: AssetImage(bg), fit: BoxFit.fill),
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20)),
-                  color: Colors.blue),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 44,
-                  ),
-                  Row(
-                    // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      SizedBox(
-                        width: 20,
-                      ),
-                      InkWell(
-                        onTap: () async {
-                          await refreshDashboardUI();
-                          Get.back();
-                        },
-                        child: Container(
-                          height: Get.width / 12,
-                          width: Get.width / 12,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(Get.width / 12),
-                          ),
-                          child: Center(
-                            child: Icon(Icons.arrow_back_ios_new),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: Get.width / 7,
-                      ),
-                      text('Project Attachments', Colors.white, 25,
-                          FontWeight.w500),
-                    ],
-                  ),
-                  SizedBox(
-                    height: Get.width / 10,
-                  ),
-                ],
-              ),
+            CommonToolbar(
+              toolbarTitle: 'Project Attachments',
             ),
             Expanded(
               child: Padding(

@@ -20,6 +20,7 @@ import '../shared/get_storage_repository.dart';
 class CreateProjectController extends GetxController {
   static CreateProjectController get to => Get.find();
   final GetStorageRepository getStorageRepository;
+  Rx<UserModelSupabase?> userModelSupabase = null.obs;
 
   CreateProjectController(this.getStorageRepository) {
     initController();
@@ -29,7 +30,6 @@ class CreateProjectController extends GetxController {
       FirebaseStorageController.to;
   FirebaseAuthController firebaseAuthController = FirebaseAuthController.to;
   ProjectControllerSupabase supabaseSetupController = ProjectControllerSupabase.to;
-  Rx<String> userName = "Ronaldo".obs;
   RxBool projectLoader = false.obs;
 
   var formKey = GlobalKey<FormState>();
@@ -39,9 +39,7 @@ class CreateProjectController extends GetxController {
   var thumbnailImageUrl = "https://firebasestorage.googleapis.com/v0/b/colab-sample.appspot.com/o/default_placeholder%2Fdefault_project_image.png?alt=media&token=95134897-5068-4064-b3e2-0c0b565a8ef7";
 
   void initController() async {
-    getColabUserName().then((value){
-      userName.value = value;
-    });
+    userModelSupabase.value = await getUserModel();
   }
 
   bool fieldValidation() {
@@ -58,7 +56,6 @@ class CreateProjectController extends GetxController {
     var sharedPreference = await SharedPreferences.getInstance();
     var userId = sharedPreference.getInt(userIdSessionStorage) ?? 0;
     var signInUser = await firebaseAuthController.getUserById(userId);
-    print(" $userName, $signInUser");
     supabaseSetupController
         .checkForDuplicateProject(projectName.text)
         .then((isDuplicate) async {

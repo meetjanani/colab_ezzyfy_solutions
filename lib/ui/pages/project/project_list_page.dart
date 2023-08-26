@@ -1,6 +1,7 @@
 import 'package:colab_ezzyfy_solutions/resource/constant.dart';
 import 'package:colab_ezzyfy_solutions/resource/extension.dart';
 import 'package:colab_ezzyfy_solutions/route/route.dart';
+import 'package:colab_ezzyfy_solutions/ui/widget/common_toolbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -29,54 +30,8 @@ class _ProjectListPageState extends State<ProjectListPage> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: Get.width,
-              decoration: BoxDecoration(
-                  image:
-                  DecorationImage(image: AssetImage(bg), fit: BoxFit.fill),
-                  borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20)),
-                  color: Colors.blue),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 44,
-                  ),
-                  Row(
-                    // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      SizedBox(
-                        width: 20,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Get.back();
-                        },
-                        child: Container(
-                          height: Get.width / 12,
-                          width: Get.width / 12,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(Get.width / 12),
-                          ),
-                          child: Center(
-                            child: Icon(Icons.arrow_back_ios_new),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: Get.width / 4,
-                      ),
-                      text('Recent Projects', Colors.white, 18, FontWeight.w500),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                ],
-              ),
+            CommonToolbar(
+              toolbarTitle: 'All Projects',
             ),
             SizedBox(
               height: 20,

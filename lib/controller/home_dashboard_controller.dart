@@ -5,6 +5,7 @@ import 'package:colab_ezzyfy_solutions/resource/extension.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:image_sketcher/image_sketcher.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -29,41 +30,59 @@ class HomeDashboardController extends GetxController {
   ProjectControllerSupabase projectControllerSupabase =
       ProjectControllerSupabase.to;
   RxList<CreateProjectResponseModel> projectList = RxList();
+  RxList<UserModelSupabase> starredPeople = RxList();
   Rx<String> userName = "Ronaldo".obs;
   RxList<File> selectedPhoto = RxList();
   RxList<File> projectAttachmentRequestModel = RxList();
   RxList<ProjectAttachmentsRequestModel> projectAttachmentsListSupabase =
       RxList();
   RxList<ProjectAttachmentsResponseModel> projectAttachmentsList = RxList();
-  RxBool projectLoader = false.obs;
+  RxBool projectsLoader = false.obs;
+  RxBool projectFeedsLoader = false.obs;
   RxBool isProfilePictureUpload = false.obs;
   UserModelSupabase? userModelSupabase = null;
 
-  Future<bool> init() async {
-    projectLoader.value = true;
-    userModelSupabase = await getUserModel();
-    userName.value = userModelSupabase?.name ?? '';
+  Future<bool> init({bool showLoader = false}) async {
+    if (showLoader){
+      projectsLoader.value = true;
+      projectFeedsLoader.value = true;
+    }
+    await fetchUserProfile();
     await fetchProject();
     await fetchFeed();
+    projectsLoader.value = false;
     return true;
   }
 
+  Future<void> fetchUserProfile() async {
+    userModelSupabase = await getUserModel();
+    userName.value = userModelSupabase?.name ?? '';
+  }
+
   Future<void> fetchProject() async {
-    projectLoader.value = true;
+    var response = await projectControllerSupabase.getProjectsByUserId(userModelSupabase?.id ?? 0);
+    response.sort((b, a) => a.updatedAt.compareTo(b.updatedAt));
     projectList
       ..clear()
-      ..addAll(await projectControllerSupabase.getProjectsByUserId(userModelSupabase?.id ?? 0));
-    projectList.value.sort((a, b) => a.updatedAt.compareTo(b.updatedAt));
-    projectLoader.value = false;
+      ..addAll(response);
+    projectsLoader.value = false;
+    fetchProjectUsers();
+  }
+
+  Future<void> fetchProjectUsers() async {
+    var response = await projectControllerSupabase.getAssignedProjectUsers(projectList.value);
+    starredPeople
+      ..clear()
+      ..addAll(response);
+    projectsLoader.value = false;
   }
 
   Future<void> fetchFeed() async {
-    projectLoader.value = true;
+    var response = await projectControllerSupabase.getRecentOwnProjectAttachments(userModelSupabase?.id ?? 0);
     projectAttachmentsList
       ..clear()
-      ..addAll(
-          await projectControllerSupabase.getRecentOwnProjectAttachments(userModelSupabase?.id ?? 0));
-    projectLoader.value = false;
+      ..addAll(response);
+    projectFeedsLoader.value = false;
   }
 
   Future<void> imagesketer(CreateProjectResponseModel project, BuildContext context) async {
@@ -109,6 +128,7 @@ class HomeDashboardController extends GetxController {
       ],
     );
     if (result != null) {
+      projectsLoader.value = true;
       selectedPhoto.clear();
       List<File> fileTemp =
           result.paths.map((path) => File(path ?? '')).toList();
@@ -123,7 +143,9 @@ class HomeDashboardController extends GetxController {
         }
       }
       // insert into supabase in one go
-      projectControllerSupabase.createProjectAttachment(projectAttachmentsListSupabase.value);
+      await projectControllerSupabase.createProjectAttachment(projectAttachmentsListSupabase.value);
+      init();
+      projectsLoader.value = false;
     } else {
       // User canceled the picker
     }
@@ -148,7 +170,7 @@ class HomeDashboardController extends GetxController {
         double sizeInMb = sizeInBytes / (1024 * 1024);
         if (sizeInMb < 30) {
           selectedPhoto.add(fileTemp[i]);
-          projectLoader.value = true;
+          projectsLoader.value = true;
           await uploadUserProfileOverFirebase();
         } else {
           Get.showErrorSnackbar('File size is more then 30 MB');
@@ -181,9 +203,10 @@ class HomeDashboardController extends GetxController {
         {DatabaseSchema.userProfilePictureUrl: userModelSupabase!.profilePictureUrl})
         .eq(DatabaseSchema.usersId, userModelSupabase!.id)
         .select();
+    // stre into local shared preference
     await firebaseAuthController.getUserById(userModelSupabase!.id);
     selectedPhoto.value.removeAt(0);
-    init();
-    projectLoader.value = false;
+    await init();
+    projectsLoader.value = false;
   }
 }

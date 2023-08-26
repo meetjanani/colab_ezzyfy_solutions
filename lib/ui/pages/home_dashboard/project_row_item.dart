@@ -23,7 +23,7 @@ class ProjectRowItem extends StatelessWidget {
     return InkWell(
       onTap: onProjectClick,
       child: Card(
-        elevation: 10,
+        elevation: 2,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: Container(
           padding: const EdgeInsets.all(10.0),

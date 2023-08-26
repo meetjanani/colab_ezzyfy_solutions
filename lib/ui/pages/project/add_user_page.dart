@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../model/create_project_response_model.dart';
+import '../../widget/common_toolbar.dart';
 
 class AddUserPage extends StatefulWidget {
   const AddUserPage({Key? key}) : super(key: key);
@@ -40,55 +41,8 @@ class _AddUserPageState extends State<AddUserPage> {
             () => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: Get.width,
-                  decoration: BoxDecoration(
-                      image:
-                      DecorationImage(image: AssetImage(bg), fit: BoxFit.fill),
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(20),
-                          bottomRight: Radius.circular(20)),
-                      color: Colors.blue),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: 44,
-                      ),
-                      Row(
-                        // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          SizedBox(
-                            width: 20,
-                          ),
-                          InkWell(
-                            onTap: () {
-                              Get.back();
-                              projectDetailsController.init();
-                            },
-                            child: Container(
-                              height: Get.width / 12,
-                              width: Get.width / 12,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(Get.width / 12),
-                              ),
-                              child: Center(
-                                child: Icon(Icons.arrow_back_ios_new),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: Get.width / 4,
-                          ),
-                          text('Add User', Colors.white, 18, FontWeight.w500),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                    ],
-                  ),
+                CommonToolbar(
+                  toolbarTitle: 'Add User',
                 ),
                 Padding(
                   padding: const EdgeInsets.all(20.0),
@@ -96,15 +50,9 @@ class _AddUserPageState extends State<AddUserPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(color: Colors.grey.shade400)),
                         child: Row(
                           children: [
-                            SizedBox(
-                              width: 20,
-                            ),
-                            Flexible(
+                            Expanded(
                               child: inputField2(
                                   hintText: 'Search User....',
                                   onChanged: (value) {
@@ -116,15 +64,12 @@ class _AddUserPageState extends State<AddUserPage> {
                                               .contains(value.toLowerCase())));
                                   }),
                             ),
-                            Icon(Icons.search),
                             SizedBox(
-                              width: 20,
+                              width: 10,
                             ),
+                            Icon(Icons.search),
                           ],
                         ),
-                      ),
-                      SizedBox(
-                        height: 10,
                       ),
                       ColabLoaderWidget(
                         loading: controller.loader.value,
@@ -280,13 +225,7 @@ class _AddUserPageState extends State<AddUserPage> {
                               );
                             }),
                       ),
-                      SizedBox(
-                        height: 20,
-                      ),
                       // greenButton('Invite New user', () {}),
-                      SizedBox(
-                        height: 10,
-                      ),
                     ],
                   ),
                 ),
@@ -347,29 +286,29 @@ inputField2({
                     counterText: "",
                     border: InputBorder.none,
                     hintStyle: TextStyle(
-                      color: Colors.black,
+                      color: hintTextColor,
                     ),
                     filled: true,
-                    // focusedBorder: OutlineInputBorder(
-                    //   borderSide:  BorderSide(color: bluebuttonColor),
-                    //   borderRadius: BorderRadius.circular(15.0),
-                    // ),
-                    // focusedErrorBorder: OutlineInputBorder(
-                    //   borderSide:  BorderSide(color: bluebuttonColor),
-                    //   borderRadius: BorderRadius.circular(15.0),
-                    // ),
-                    // disabledBorder: OutlineInputBorder(
-                    //   borderSide:  BorderSide(color: bluebuttonColor),
-                    //   borderRadius: BorderRadius.circular(15.0),
-                    // ),
-                    // enabledBorder:OutlineInputBorder(
-                    //   borderSide:  BorderSide(color: bluebuttonColor),
-                    //   borderRadius: BorderRadius.circular(15.0),
-                    // ),
-                    // errorBorder: OutlineInputBorder(
-                    //   borderSide:  BorderSide(color: bluebuttonColor),
-                    //   borderRadius: BorderRadius.circular(15.0),
-                    // ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:  BorderSide(color: uploadImageDottedBorderColor),
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    focusedErrorBorder: OutlineInputBorder(
+                      borderSide:  BorderSide(color: uploadImageDottedBorderColor),
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    disabledBorder: OutlineInputBorder(
+                      borderSide:  BorderSide(color: uploadImageDottedBorderColor),
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    enabledBorder:OutlineInputBorder(
+                      borderSide:  BorderSide(color: uploadImageDottedBorderColor),
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    errorBorder: OutlineInputBorder(
+                      borderSide:  BorderSide(color: uploadImageDottedBorderColor),
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
                     fillColor: Colors.white,
                     hintText: hintText,
                     suffixIcon: Padding(

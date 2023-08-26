@@ -9,12 +9,14 @@ class FullScreenImagePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ColabCatchedImageWidget(
-      imageUrl: (Get.arguments as ProjectAttachmentsResponseModel)
-          .projectAttachmentUrl,
-      height: Get.height,
-      width: Get.height,
-      boxFit: BoxFit.fill,
+    return SafeArea(
+      child: ColabCatchedImageWidget(
+        imageUrl: (Get.arguments as ProjectAttachmentsResponseModel)
+            .projectAttachmentUrl,
+        height: Get.height,
+        width: Get.height,
+        boxFit: BoxFit.fill,
+      ),
     );
   }
 }

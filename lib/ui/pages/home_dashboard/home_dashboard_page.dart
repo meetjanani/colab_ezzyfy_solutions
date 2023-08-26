@@ -11,7 +11,9 @@ import 'package:get/get.dart';
 import '../../../resource/constant.dart';
 import '../../../resource/image.dart';
 import '../../widget/all_widget.dart';
+import '../../widget/common_toolbar.dart';
 import 'feed_row_item.dart';
+import 'starred_people_row.dart';
 
 class HomeDashboardPage extends StatefulWidget {
   const HomeDashboardPage({super.key});
@@ -26,17 +28,16 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
   @override
   void initState() {
     super.initState();
+    controller.init(showLoader: true);
   }
 
   @override
   Widget build(BuildContext context) {
-    controller.init();
     return WillPopScope(
       onWillPop: () async {
         return await false;
       },
       child: Scaffold(
-        backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Obx(
             () => Form(
@@ -46,6 +47,11 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                 children: [
                   Column(
                     children: [
+                      Container(height: 44,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(bg), fit: BoxFit.fill),
+                              color: Colors.blue)),
                       Container(
                         width: Get.width,
                         decoration: BoxDecoration(
@@ -58,9 +64,6 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            SizedBox(
-                              height: 44,
-                            ),
                             text('Colab', Colors.white, 25, FontWeight.w500),
                             SizedBox(
                               height: 6,
@@ -72,7 +75,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                                 ),
                                 InkWell(
                                   child: ColabLoaderWidget(
-                                    loading: controller.projectLoader.value,
+                                    loading: controller.projectsLoader.value,
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(20),
                                       child: ColabCatchedImageWidget(
@@ -284,7 +287,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                       minHeight: Get.height * 0.15,
                     ),
                     child: Obx(
-                      () => controller.projectLoader.value == true
+                      () => controller.projectsLoader.value == true
                           ? const Center(
                               child: CircularProgressIndicator(),
                             )
@@ -321,8 +324,12 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                                           },
                                           onProjectClick: () {
                                             Get.toNamed(AppRoute.projectDetails,
-                                                arguments: controller
-                                                    .projectList.value[index]);
+                                                    arguments: controller
+                                                        .projectList
+                                                        .value[index])
+                                                ?.then((value) {
+                                              controller.init();
+                                            });
                                           },
                                         );
                                       }),
@@ -345,15 +352,18 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                       ],
                     ),
                   ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   ConstrainedBox(
                     constraints: BoxConstraints(
                       minHeight: Get.height * 0.15,
                       maxHeight: Get.height *
-                          ((controller.projectLoader.value == true)
+                          ((controller.projectFeedsLoader.value == true)
                               ? 0.15
-                              : 0.29),
+                              : 0.30),
                     ),
-                    child: Obx(() => controller.projectLoader.value == true
+                    child: Obx(() => controller.projectFeedsLoader.value == true
                         ? const Center(
                             child: CircularProgressIndicator(),
                           )
@@ -388,34 +398,33 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                           )),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 20),
+                    padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                     child: text(
                         'Starred People', Colors.black, 16, FontWeight.w700),
                   ),
+                  SizedBox(
+                    height: 10,
+                  ),
                   Container(
-                    height: Get.width / 3.5,
-                    child: Padding(
-                      padding: const EdgeInsets.all(20),
-                      child: ListView.builder(
-                          itemCount: 4,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            return Row(
-                              children: [
-                                Card(
-                                  elevation: 10,
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(50)),
-                                  child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(50),
-                                      child: Image.asset(ex)),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                              ],
-                            );
-                          }),
+                    height: 80,
+                    child: Obx(
+                      () => controller.projectFeedsLoader.value == true
+                          ? const Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 20),
+                              child: ListView.builder(
+                                  itemCount:
+                                      controller.starredPeople.value.length,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, index) {
+                                    var starPeople =
+                                        controller.starredPeople.value[index];
+                                    return StarredPeopleRow(starredPeople: starPeople);
+                                  }),
+                            ),
                     ),
                   ),
                 ],
