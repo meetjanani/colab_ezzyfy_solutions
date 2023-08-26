@@ -21,7 +21,6 @@ class ProjectListController extends GetxController {
   ProjectControllerSupabase projectControllerSupabase =
       ProjectControllerSupabase.to;
   RxList<CreateProjectResponseModel> projectList = RxList();
-  Rx<String> userName = "Ronaldo".obs;
   RxBool projectLoader = false.obs;
   UserModelSupabase? userModelSupabase = null;
   RxList<File> selectedPhoto = RxList();
@@ -30,19 +29,25 @@ class ProjectListController extends GetxController {
   RxList();
 
   ProjectListController() {
-    fetchProject();
-    getColabUserName().then((value){
-      userName.value = value;
-    });
-    getUserModel().then((value) {
-      userModelSupabase = value;
-    });
+    init();
   }
-  void fetchProject() async {
+
+  Future<void> init() async {
     projectLoader.value = true;
+    await fetchUserProfile();
+    await fetchProject();
+    projectLoader.value = false;
+  }
+
+  Future<void> fetchUserProfile() async {
+    userModelSupabase = await getUserModel();
+  }
+  Future<void> fetchProject() async {
+    var response = await projectControllerSupabase.getProjectsByUserId(userModelSupabase?.id ?? 0);
+    response.sort((b, a) => a.updatedAt.compareTo(b.updatedAt));
     projectList
       ..clear()
-      ..addAll(await projectControllerSupabase.getAllProjects());
+      ..addAll(response);
     projectLoader.value = false;
   }
 

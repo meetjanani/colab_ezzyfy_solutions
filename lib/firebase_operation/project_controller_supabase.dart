@@ -16,6 +16,7 @@ import '../resource/database_schema.dart';
 class ProjectControllerSupabase {
   static ProjectControllerSupabase get to => Get.find();
 
+  //This can be use for Admin Role
   Future<List<CreateProjectResponseModel>> getAllProjects() async {
     final response = await Supabase.instance.client
         .from(DatabaseSchema.projectTable)
@@ -26,6 +27,7 @@ class ProjectControllerSupabase {
   }
 
   Future<List<CreateProjectResponseModel>> getProjectsByUserId(int userId) async {
+    List<CreateProjectResponseModel> allProjectList = [];
     final response = await Supabase.instance.client
         .from(DatabaseSchema.projectTable)
         .select('*')
@@ -36,9 +38,36 @@ class ProjectControllerSupabase {
         .select('*')
         .eq(DatabaseSchema.projectCreatedByUser, userId)
         .order(DatabaseSchema.projectupdatedAt, ascending: false);
-    var projectList = CreateProjectResponseModel.fromJsonList(response);
-    var responseCreatedByUserList = CreateProjectResponseModel.fromJsonList(responseCreatedByUser);
-    return projectList;
+    allProjectList.addAll(CreateProjectResponseModel.fromJsonList(response));
+    CreateProjectResponseModel.fromJsonList(responseCreatedByUser)
+        .forEach((newProject) {
+      if (!allProjectList
+          .where((element) => element.id == newProject.id)
+          .isNotEmpty) {
+        allProjectList.add(newProject);
+      }
+    });
+    return allProjectList.toList();
+  }
+
+  Future<List<UserModelSupabase>> getAssignedProjectUsers(
+      List<CreateProjectResponseModel> projectLists) async {
+    List<int> assignedUserIds = [];
+    projectLists.forEach((userIds) {
+      userIds.assignedUser.split(',').forEach((userId) {
+        if (!assignedUserIds.contains(int.parse(userId))) {
+          assignedUserIds.add(int.parse(userId));
+        }
+      });
+    });
+    List<UserModelSupabase> allAssignedUsersList = [];
+    // select * from users where id IN (38,22)
+    final response = await Supabase.instance.client
+        .from(DatabaseSchema.usersTable)
+        .select()
+        .in_(DatabaseSchema.usersId, assignedUserIds);
+    allAssignedUsersList.addAll(UserModelSupabase.fromJsonList(response));
+    return allAssignedUsersList.toList();
   }
 
   // Get a reference your Supabase client
@@ -130,7 +159,7 @@ class ProjectControllerSupabase {
     return UserModelSupabase.fromJsonList(userResponse);
   }
 
-  void createProjectAttachment(
+  Future<void> createProjectAttachment(
       List<ProjectAttachmentsRequestModel> projectAttachment) async {
     showProgress();
     await Supabase.instance.client
