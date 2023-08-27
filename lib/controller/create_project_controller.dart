@@ -60,7 +60,7 @@ class CreateProjectController extends GetxController {
         .checkForDuplicateProject(projectName.text)
         .then((isDuplicate) async {
       if (!isDuplicate) {
-        if(selectedPhoto.value?.first != null) {
+        if((selectedPhoto.value.length ?? 0) > 0) {
           File fileToUpload = File(selectedPhoto.value?.first?.path ?? '');
           var projectNameTrim =
           projectName.text.toString().replaceAll(' ', '').trim();
@@ -77,8 +77,6 @@ class CreateProjectController extends GetxController {
         );
         supabaseSetupController.createNewProject(project);
         projectLoader.value = false;
-
-        // Get.back();
       }
       projectLoader.value = false;
     });
