@@ -63,56 +63,46 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                             },
                             child: Column(
                               children: [
-                                Container(
-                                  height: (controller.getImageFromIndex(0) !=
-                                      null) ? Get.width / 1.7 : 0,
-
-
-                                  width: Get.width,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: Stack(
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(10),
-                                        child: (controller.getImageFromIndex(0) !=
-                                            null)
-                                            ? ColabCatchedImageWidget(
-                                          imageUrl:
-                                          controller.getImageFromIndex(0),
-                                          boxFit: BoxFit.cover,
-                                          width: Get.width,
-                                          height: Get.width * 0.50,
-                                        )
-                                            : SizedBox(),
-                                      ),
-                                      Visibility(
-                                        visible: false,
-                                        child: Positioned(
-                                          child: Container(
-                                            height: 32,
-                                            width: 32,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                BorderRadius.circular(50),
-                                                color: Colors.white),
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(5.0),
-                                              child: SvgPicture.asset(
-                                                heart,
-                                                color: Colors.red,
-                                                height: 20,
-                                                width: 20,
-                                              ),
+                                Stack(
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(10),
+                                      child: (controller.getImageFromIndex(0) !=
+                                          null)
+                                          ? ColabCatchedImageWidget(
+                                        imageUrl:
+                                        controller.getImageFromIndex(0),
+                                        boxFit: BoxFit.cover,
+                                        width: Get.width,
+                                        height: Get.width * 0.50,
+                                      )
+                                          : SizedBox(),
+                                    ),
+                                    Visibility(
+                                      visible: false,
+                                      child: Positioned(
+                                        child: Container(
+                                          height: 32,
+                                          width: 32,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                              BorderRadius.circular(50),
+                                              color: Colors.white),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(5.0),
+                                            child: SvgPicture.asset(
+                                              heart,
+                                              color: Colors.red,
+                                              height: 20,
+                                              width: 20,
                                             ),
                                           ),
-                                          top: Get.width / 20,
-                                          right: Get.width / 20,
                                         ),
-                                      )
-                                    ],
-                                  ),
+                                        top: Get.width / 20,
+                                        right: Get.width / 20,
+                                      ),
+                                    )
+                                  ],
                                 ),
                                 SizedBox(
                                   height: 10,
@@ -308,9 +298,6 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                             ),
                           )
                         ],
-                      ),
-                      SizedBox(
-                        height: 14,
                       ),
                       Container(
                         height: 80,
