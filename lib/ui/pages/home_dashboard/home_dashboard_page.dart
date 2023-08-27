@@ -426,6 +426,9 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                             ),
                     ),
                   ),
+                  SizedBox(
+                    height: 10,
+                  ),
                 ],
               ),
             ),

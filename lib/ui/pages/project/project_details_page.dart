@@ -40,15 +40,15 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
     controller.init();
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Obx(() =>
-          SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CommonToolbar(
-                  toolbarTitle: 'Project Details',
-                ),
-                Padding(
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CommonToolbar(
+              toolbarTitle: 'Project Details',
+            ),
+            Obx(
+                () => Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -302,7 +302,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                       Container(
                         height: 80,
                         child: ColabLoaderWidget(
-                          loading: controller.projectAttachmentsLoader.value,
+                          loading: controller.projectAssignedUserLoader.value,
                           child: ListView.builder(
                               itemCount:
                               controller.projectAssignedUserList.value.length,
@@ -316,9 +316,10 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                     ],
                   ),
                 )
-              ],
-            ),
-          )),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

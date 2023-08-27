@@ -38,8 +38,7 @@ class ProjectDetailsController extends GetxController {
   }
 
   void fetchProjectAttachments() async {
-    projectAttachmentsLoader.value = true;
-    projectAttachmentsList
+    projectAttachmentsList.value
       ..clear()
       ..addAll(await projectControllerSupabase
           .getProjectAttachments(projectResponseModel.id));
@@ -47,8 +46,7 @@ class ProjectDetailsController extends GetxController {
   }
 
   void getAssignedUserByProject() async {
-    projectAssignedUserLoader.value = true;
-    projectAssignedUserList
+    projectAssignedUserList.value
       ..clear()
       ..addAll(await projectControllerSupabase
           .getAssignedUserByProject(projectResponseModel.id));
