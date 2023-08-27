@@ -1,8 +1,45 @@
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 
+extension ScreenSizeResolutionDouble on double {
+  dynamicHeight() {
+    double originalHeight = 800;
+    double currentHeight = Get.height;
+    double givenHeight = this;
+    double calculatedHeight = 0;
+    calculatedHeight = ((currentHeight * givenHeight) / originalHeight);
+    return calculatedHeight;
+  }
+  dynamicWidth() {
+    double originalWidth = 375;
+    double currentWidth = Get.height;
+    double givenWidth = this;
+    double calculatedWidth = 0;
+    calculatedWidth = ((currentWidth * givenWidth) / originalWidth);
+    return calculatedWidth;
+  }
+}
 
+extension ScreenSizeResolutionInt on int {
+  dynamicHeight() {
+    double originalHeight = 800;
+    double currentHeight = Get.height;
+    int givenHeight = this;
+    double calculatedHeight = 0;
+    calculatedHeight = ((currentHeight * givenHeight) / originalHeight);
+    return calculatedHeight;
+  }
+  dynamicWidth() {
+    double originalWidth = 375;
+    double currentWidth = Get.height;
+    int givenWidth = this;
+    double calculatedWidth = 0;
+    calculatedWidth = ((currentWidth * givenWidth) / originalWidth);
+    return calculatedWidth;
+  }
+}
 
 extension ValiationExtensions on String {
   validateEmpty() {

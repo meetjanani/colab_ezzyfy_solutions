@@ -358,10 +358,10 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                   ConstrainedBox(
                     constraints: BoxConstraints(
                       minHeight: Get.height * 0.15,
-                      maxHeight: Get.height *
+                      maxHeight: (Get.height *
                           ((controller.projectFeedsLoader.value == true)
                               ? 0.15
-                              : 0.30),
+                              : 0.28)),
                     ),
                     child: Obx(() => controller.projectFeedsLoader.value == true
                         ? const Center(
