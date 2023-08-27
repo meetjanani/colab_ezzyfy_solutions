@@ -46,7 +46,7 @@ class LoginPage extends GetView<LoginController> {
                     text('Sign in to get exclusive updates',
                         Colors.white, 18, FontWeight.w500),
                     SizedBox(
-                      height: 20,
+                      height: Get.width / 10,
                     ),
                   ],
                 ),
