@@ -1,5 +1,6 @@
 import 'package:colab_ezzyfy_solutions/controller/home_dashboard_controller.dart';
 import 'package:colab_ezzyfy_solutions/resource/extension.dart';
+import 'package:colab_ezzyfy_solutions/resource/extensions.dart';
 import 'package:colab_ezzyfy_solutions/route/route.dart';
 import 'package:colab_ezzyfy_solutions/ui/pages/home_dashboard/project_row_item.dart';
 import 'package:colab_ezzyfy_solutions/ui/widget/colab_catched_image_widget.dart';
@@ -355,7 +356,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                   ),
                   ConstrainedBox(
                     constraints: BoxConstraints(
-                      minHeight: Get.height * 0.15,
+                      minHeight: Get.height * 0.15.dynamicHeight(),
                       maxHeight: (Get.height *
                           ((controller.projectFeedsLoader.value == true)
                               ? 0.15

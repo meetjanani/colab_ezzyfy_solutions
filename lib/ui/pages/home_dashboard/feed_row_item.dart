@@ -21,7 +21,7 @@ class FeedRowItem extends StatelessWidget {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10)),
       child: Container(
-        padding: EdgeInsets.all(8),
+        padding: EdgeInsets.all(8.dynamicHeight()),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
