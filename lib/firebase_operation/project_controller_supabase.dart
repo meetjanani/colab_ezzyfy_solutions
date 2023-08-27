@@ -78,7 +78,7 @@ class ProjectControllerSupabase {
         .eq(DatabaseSchema.projectName, projectName)
         .limit(1);
     if (duplicateProject.length > 0) {
-      Get.showErrorSnackbar("Duplicate Project");
+      Get.showErrorSnackbar("This project is already exists");
     }
     return duplicateProject.length > 0;
   }
@@ -87,8 +87,8 @@ class ProjectControllerSupabase {
     await Supabase.instance.client.from(DatabaseSchema.projectTable).upsert([
       projectCreateModel.toJson(),
     ]);
-    Get.back(); // dismiss progress bar
-    Get.back(); // navigate back screen
+    Get.back(result: true); // dismiss progress bar
+    Get.back(result: true); // navigate back screen
     showDialog(
       context: Get.context!,
 
@@ -105,7 +105,7 @@ class ProjectControllerSupabase {
               text('Project Created', Colors.grey, 16, FontWeight.w400),
               text('Successfully', Colors.grey, 16, FontWeight.w400),
               SizedBox(height: 10,),
-              blueButton('Done', (){Get.back();},52,Get.width/2),
+              blueButton('Done', (){Get.back(result: true);},52,Get.width/2),
               SizedBox(height: 10,),
             ],
           ),

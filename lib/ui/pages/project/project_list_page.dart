@@ -75,7 +75,9 @@ class _ProjectListPageState extends State<ProjectListPage> {
               child: InkWell(
                 onTap: (){
                   if(controller.userModelSupabase?.isAdmin == true) {
-                    Get.toNamed(AppRoute.createProject);
+                    Get.toNamed(AppRoute.createProject)?.then((value){
+                      controller.init();
+                    });
                   } else {
                     Get.showErrorSnackbar("Only Admin user can access this feature");
                   }
