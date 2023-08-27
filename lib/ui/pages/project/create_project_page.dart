@@ -61,12 +61,12 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                     borderType: BorderType.RRect,
                     dashPattern: [12, 5],
                     strokeWidth: 2,
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Obx(
-                        () => Container(
+                    child: Obx(
+                      () => Padding(
+                        padding:  EdgeInsets.all(20.dynamicHeight()),
+                        child: Container(
                           width: Get.width,
-                          height: 240,
+                          height: 200.dynamicHeight(),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -77,13 +77,16 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                                   )
                                 Image.file(File(controller.selectedPhoto.value.first.path ??
                                     ""),
-                                height: 200,
-                                width: Get.width,
-                                fit: BoxFit.cover,)
+                                height: 130.dynamicHeight(),
+                                width: 169.dynamicWidth(),
+                               )
                               else
-                                Image.asset(upload),
+                                Image.asset(upload,
+                                  height: 130.dynamicHeight(),
+                                  width: 169.dynamicWidth(),
+                                ),
                               SizedBox(
-                                height: 16,
+                                height: 20.dynamicHeight(),
                               ),
                               text('Upload Media', Colors.blue, 14,
                                   FontWeight.w500)

@@ -20,7 +20,7 @@ class RegisterPage extends GetView<RegisterController> {
           child: Column(
             children: [
               Container(
-                height: Get.height / 3.8,
+                height: 246.dynamicHeight(),
                 width: Get.width,
                 decoration: BoxDecoration(
                     image: DecorationImage(

@@ -279,9 +279,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                       ],
                     ),
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
+
                   ConstrainedBox(
                     constraints: BoxConstraints(
                       minHeight: Get.height * 0.15,
