@@ -12,16 +12,19 @@ class FullScreenImagePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Center(
-        child: SizedBox(
-          height: Get.width.dynamicWidth(),
-          width: Get.width.dynamicWidth(),
+        child: Container(
+          padding: EdgeInsets.all(12),
+          height: Get.width.dynamicWidth() * 0.75,
+          width: Get.width.dynamicWidth() * 1,
           child: Center(
-            child: ColabCatchedImageWidget(
-              imageUrl: (Get.arguments as ProjectAttachmentsResponseModel)
-                  .projectAttachmentUrl,
-              height: Get.width.dynamicWidth(),
-              width: Get.width.dynamicWidth(),
-              boxFit: BoxFit.contain,
+            child: InteractiveViewer(
+              child: ColabCatchedImageWidget(
+                imageUrl: (Get.arguments as ProjectAttachmentsResponseModel)
+                    .projectAttachmentUrl,
+                height: Get.width.dynamicWidth(),
+                width: Get.width.dynamicWidth(),
+                boxFit: BoxFit.contain,
+              ),
             ),
           ),
         ),

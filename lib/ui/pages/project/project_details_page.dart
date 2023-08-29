@@ -202,8 +202,66 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                       SizedBox(
                         height: Get.width * 0.08,
                       ),
-                      text(controller.projectResponseModel.name, Colors.black, 18,
-                          FontWeight.w700),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InkWell(
+                            onTap: (){
+                              if(controller.userModelSupabase?.isAdmin == true) {
+                                controller.updateProjectThumbnail(context);
+                              } else {
+                                Get.showErrorSnackbar("Only Admin user can access this feature");
+                              }
+                            },
+                            child: text('Project Thumbnail', Colors.black, 18,
+                                FontWeight.w700),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: Get.width * 0.08,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          text(controller.projectResponseModel.name, Colors.black, 18,
+                              FontWeight.w700),
+                          InkWell(
+                            onTap: () {
+                              controller.uploadProjectAttachment(context);
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(color: textVioletColor),
+                                  color: Colors.white),
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Icon(
+                                      Icons.add_circle_outline_sharp,
+                                      color: textVioletColor,
+                                      size: 20,
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    text('Add Image', textVioletColor, 14,
+                                        FontWeight.w500),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                       SizedBox(
                         height: 10,
                       ),
