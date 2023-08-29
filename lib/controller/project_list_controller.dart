@@ -66,6 +66,7 @@ class ProjectListController extends GetxController {
       selectedPhoto.clear();
       List<File> fileTemp =
       result.paths.map((path) => File(path ?? '')).toList();
+      showProgress();
       for (int i = 0; i < fileTemp.length; i++) {
         int sizeInBytes = fileTemp[i].lengthSync();
         double sizeInMb = sizeInBytes / (1024 * 1024);
@@ -76,6 +77,7 @@ class ProjectListController extends GetxController {
           Get.showErrorSnackbar('File size is more then 30 MB');
         }
       }
+      hideProgressBar();
       // insert into supabase in one go
       projectControllerSupabase.createProjectAttachment(projectAttachmentsListSupabase.value);
     } else {
@@ -90,7 +92,7 @@ class ProjectListController extends GetxController {
     selectedPhoto.value.removeAt(0);
     projectAttachmentsListSupabase.add(ProjectAttachmentsRequestModel(
         projectId: project.id,
-        createdByUser: project.createdByUser,
+        createdByUser: userModelSupabase?.id ?? project.createdByUser,
         projectAttachmentUrl: projectAttachmentUrl));
   }
 }

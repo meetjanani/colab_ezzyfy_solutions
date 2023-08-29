@@ -62,7 +62,9 @@ class _ProjectListPageState extends State<ProjectListPage> {
                                 onProjectClick: () {
                                   Get.toNamed(AppRoute.projectDetails,
                                       arguments: controller
-                                          .projectList.value[index]);
+                                          .projectList.value[index])?.then((value){
+                                            controller.init();
+                                  });
                                 },
                             );
                           }),

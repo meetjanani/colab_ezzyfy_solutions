@@ -44,13 +44,18 @@ class FirebaseAuthController extends GetxController {
   void firebasePhoneSignIn(String phoneNumber) async {
     try {
       showProgress();
+     //  FirebaseAuth.instance.setSettings(appVerificationDisabledForTesting: true,
+    //  forceRecaptchaFlow: true);
       await FirebaseAuth.instance.verifyPhoneNumber(
         timeout: const Duration(seconds: 60),
         phoneNumber: phoneNumber,
         verificationCompleted: (PhoneAuthCredential credential) async {
           print("verificationCompleted");
         },
-        verificationFailed: (FirebaseAuthException e) {},
+        verificationFailed: (FirebaseAuthException e) {
+          hideProgressBar();
+          Get.showErrorSnackbar(e.message);
+        },
         codeSent: (String verificationId, int? resendToken) {
           hideProgressBar();
           // navigate to next screen

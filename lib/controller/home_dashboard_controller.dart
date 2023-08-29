@@ -17,6 +17,7 @@ import '../model/create_project_response_model.dart';
 import '../model/project_attchments_request_model.dart';
 import '../model/project_attchments_response_model.dart';
 import '../model/user_model_supabase.dart';
+import '../resource/Image_picker_widget.dart';
 import '../resource/database_schema.dart';
 import '../resource/session_string.dart';
 import '../shared/colab_shared_preference.dart';
@@ -117,31 +118,18 @@ class HomeDashboardController extends GetxController {
   }*/
 
   void addImage(CreateProjectResponseModel project, BuildContext context) async {
+    showProgress();
+    projectsLoader.value = true;
     projectAttachmentsListSupabase.clear();
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      allowMultiple: true,
-      type: FileType.custom,
-      allowedExtensions: [
-        'jpg',
-        'png',
-        'jpeg',
-      ],
-    );
-    if (result != null) {
-      projectsLoader.value = true;
-      selectedPhoto.clear();
-      List<File> fileTemp =
-          result.paths.map((path) => File(path ?? '')).toList();
-      for (int i = 0; i < fileTemp.length; i++) {
-        int sizeInBytes = fileTemp[i].lengthSync();
-        double sizeInMb = sizeInBytes / (1024 * 1024);
-        if (sizeInMb < 30) {
-          selectedPhoto.add(fileTemp[i]);
-          await uploadFileOverFirebase(project);
-        } else {
-          Get.showErrorSnackbar('File size is more then 30 MB');
-        }
+    selectedPhoto.clear();
+    List<File> result = await ImagePickerWidget().pickImageFromGallery(context);
+    selectedPhoto.value.addAll(result);
+    if (selectedPhoto.value.isNotEmpty) {
+      int imageCount = selectedPhoto.value.length;
+      for (int i = 0; i < imageCount; i++) {
+        await uploadFileOverFirebase(project);
       }
+      hideProgressBar();
       // insert into supabase in one go
       await projectControllerSupabase.createProjectAttachment(projectAttachmentsListSupabase.value);
       init();
@@ -186,7 +174,7 @@ class HomeDashboardController extends GetxController {
     selectedPhoto.value.removeAt(0);
     projectAttachmentsListSupabase.add(ProjectAttachmentsRequestModel(
         projectId: project.id,
-        createdByUser: project.createdByUser,
+        createdByUser: userModelSupabase?.id ?? project.createdByUser,
         projectAttachmentUrl: projectAttachmentUrl));
   }
 
