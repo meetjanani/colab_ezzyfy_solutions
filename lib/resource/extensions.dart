@@ -158,7 +158,6 @@ extension WidgetExtensions on Widget {
       Padding(
         padding: const EdgeInsets.only(top:5,bottom: 2),
         child: TextFormField(
-
           readOnly: readonly,
           controller: controller,
           obscureText: obscureText,

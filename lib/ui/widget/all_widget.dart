@@ -49,11 +49,25 @@ Widget greenButton(String text, Function fun,){
       width: Get.width/1.1,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: pinkButtonColor
+        color: pinkButtonColor,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5), // Shadow color
+            spreadRadius: 2, // Spread radius
+            blurRadius: 2, // Blur radius
+            offset: Offset(0, 1), // Offset in the x and y directions
+          ),
+        ]
       ),
       child: Center(
           child: Text(text,
-              style: const TextStyle(fontSize: 22,color: Colors.white,fontFamily: 'futur',fontWeight: FontWeight.bold))),
+              style: GoogleFonts.inter(
+                textStyle: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),)),
     ),
   );
 }
