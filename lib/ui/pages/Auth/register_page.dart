@@ -6,6 +6,7 @@ import 'package:colab_ezzyfy_solutions/route/route.dart';
 import 'package:colab_ezzyfy_solutions/ui/widget/all_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class RegisterPage extends GetView<RegisterController> {
   const RegisterPage({Key? key}) : super(key: key);
@@ -35,16 +36,24 @@ class RegisterPage extends GetView<RegisterController> {
                     SizedBox(
                       height: Get.width / 10,
                     ),
-                    text('Colab', Colors.white, 35, FontWeight.w500),
+                    Text('Colab',
+                      style: GoogleFonts.ibmPlexMono(
+                        textStyle: TextStyle(
+                          color: Colors.white,
+                          fontSize: 54,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
                     SizedBox(
                       height: 20,
                     ),
-                    text('Welcome', Colors.white, 25, FontWeight.bold),
+                    text('Welcome', Colors.white, 24, FontWeight.w800),
                     SizedBox(
                       height: 20,
                     ),
                     text(
-                        'Glad to see yoy !', Colors.white, 18, FontWeight.w500),
+                        'Glad to see yoy !', Colors.white, 14, FontWeight.w500),
                     text('Create your account and join us', Colors.white, 18,
                         FontWeight.w500),
                     SizedBox(
@@ -67,17 +76,23 @@ class RegisterPage extends GetView<RegisterController> {
                             return value?.nameValidation();
                           }),
                       SizedBox(
-                        height: 20,
+                        height: 14,
                       ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
-                            width:Get.width/5,
-                            child: inputFieldCountryCode(
+                            width:Get.width * 0.25,
+                            child: Flexible(child:   inputField(
+                              editable: false,
                                 hintText: '+91',
-                                controller: controller.countryCodeController,
+                                labelText: '+91',
+                                controller: controller.mobileNumberController,
                                 keyboardType: TextInputType.number,
-                                ),
+                                validation: (value) {
+                                  return value?.validateMobile();
+                                }), ),
                           ),
                           SizedBox(
                             width: 10,
@@ -93,9 +108,8 @@ class RegisterPage extends GetView<RegisterController> {
 
                         ],
                       ),
-
                       SizedBox(
-                        height: 20,
+                        height: 14,
                       ),
                       inputField(
                           hintText: 'Enter Email Address',
@@ -107,9 +121,6 @@ class RegisterPage extends GetView<RegisterController> {
                       SizedBox(
                         height: 20,
                       ),
-                      SizedBox(
-                        height: 10,
-                      ),
                       Obx(() => Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -117,7 +128,7 @@ class RegisterPage extends GetView<RegisterController> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Checkbox(
-                                    activeColor: pinkButtonColor,
+                                    activeColor: darkVioletColor,
                                     value: controller.isSelect1.value,
                                     focusColor: Colors.white,
                                     checkColor: Colors.white,
@@ -128,14 +139,7 @@ class RegisterPage extends GetView<RegisterController> {
                                   SizedBox(
                                     width: 0,
                                   ),
-                                  const Text(
-                                    'I have read and agree to the',
-                                    style: TextStyle(
-                                        //decoration: TextDecoration.underline,
-                                        color: Colors.grey,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500),
-                                  ),
+                                  text('I have read and agree to the', Colors.grey, 14, FontWeight.w400),
                                 ],
                               ),
                               Row(
@@ -148,33 +152,30 @@ class RegisterPage extends GetView<RegisterController> {
                                       // Get.to(LinkWebView(),arguments: "https://suriwallet.com/terms-and-conditions/");
                                     },
                                     child: Text(
-                                      ' Terms & Condition',
-                                      style: TextStyle(
-                                          decoration: TextDecoration.underline,
-                                          color: darkVioletColor,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500),
+                                      ' Terms & Condition ',
+                                      style: GoogleFonts.nunitoSans(
+                                          textStyle: TextStyle(
+                                              decoration: TextDecoration.underline,
+                                              color: darkVioletColor,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w800)
+                                      ),
                                     ),
                                   ),
-                                  const Text(
-                                    ' and',
-                                    style: TextStyle(
-                                        //decoration: TextDecoration.underline,
-                                        color: Colors.grey,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500),
-                                  ),
+                                  text('and', Colors.grey, 14, FontWeight.w400),
                                   InkWell(
                                     onTap: () {
                                       //Get.to(LinkWebView(),arguments: "https://suriwallet.com/privacy/");
                                     },
                                     child: Text(
                                       ' Privacy Policy',
-                                      style: TextStyle(
-                                          decoration: TextDecoration.underline,
-                                          color: darkVioletColor,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500),
+                                      style: GoogleFonts.nunitoSans(
+                                          textStyle: TextStyle(
+                                              decoration: TextDecoration.underline,
+                                              color: darkVioletColor,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.w800)
+                                      ),
                                     ),
                                   ),
                                 ],

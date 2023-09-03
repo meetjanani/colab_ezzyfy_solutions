@@ -6,6 +6,7 @@ import 'package:colab_ezzyfy_solutions/route/route.dart';
 import 'package:colab_ezzyfy_solutions/ui/widget/all_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginPage extends GetView<LoginController> {
   const LoginPage({Key? key}) : super(key: key);
@@ -35,16 +36,24 @@ class LoginPage extends GetView<LoginController> {
                     SizedBox(
                       height: Get.width / 10,
                     ),
-                    text('Colab', Colors.white, 35, FontWeight.w500),
+                    Text('Colab',
+                      style: GoogleFonts.ibmPlexMono(
+                        textStyle: TextStyle(
+                          color: Colors.white,
+                          fontSize: 54,
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
                     SizedBox(
                       height: 20,
                     ),
-                    text('Welcome Back', Colors.white, 25, FontWeight.bold),
+                    text('Welcome Back', Colors.white, 24, FontWeight.w800),
                     SizedBox(
                       height: 20,
                     ),
                     text('Sign in to get exclusive updates',
-                        Colors.white, 18, FontWeight.w500),
+                        Colors.white, 14, FontWeight.w500),
                     SizedBox(
                       height: Get.width / 10,
                     ),
