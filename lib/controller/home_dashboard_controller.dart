@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:image_sketcher/image_sketcher.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../firebase_operation/firebase_auth_controller.dart';
@@ -86,15 +85,6 @@ class HomeDashboardController extends GetxController {
     projectFeedsLoader.value = false;
   }
 
-  Future<void> imagesketer(CreateProjectResponseModel project, BuildContext context) async {
-    final _imageKey = GlobalKey<ImageSketcherState>();
-    final _key = GlobalKey<ScaffoldState>();
-    final ImagePicker _picker = ImagePicker();
-    final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
-    var file =  File(photo!.path);
-    await ImageSketcher.file(file, key: _imageKey);
-    print('Hello');
-  }
   // Image Edit flow
   /*Future<Uint8List> addImageFromCamera(CreateProjectResponseModel project, BuildContext context) async {
     final ImagePicker _picker = ImagePicker();

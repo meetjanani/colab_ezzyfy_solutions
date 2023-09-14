@@ -39,10 +39,9 @@ dependencies:
   get_storage:
   dio: ^4.0.6
   equatable:
-  google_fonts:
   otp_text_field:
   intl:
-  flutter_svg:
+#  flutter_svg:
   image_picker:
   http:
   file_picker:
@@ -56,13 +55,19 @@ dependencies:
   cloud_firestore: ^4.8.3
   firebase_storage: ^11.2.5
   dotted_border:
-  supabase_flutter: ^1.10.10
+  supabase_flutter:
   stylish_bottom_bar:
   cached_network_image: ^3.2.3
   shared_preferences: ^2.2.0
-  image_sketcher: ^0.0.4
+  whatsapp_story_editor: ^0.0.6
+#  whatsapp_story_editor:
+#    path: custom_package/whatsapp_story_editor-main
+  image_cropper:
 #  camera:
 #  image_editor_plus:
+
+dependency_overrides:
+  google_fonts:
 
 dev_dependencies:
   flutter_test:
