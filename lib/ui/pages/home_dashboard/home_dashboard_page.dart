@@ -1,16 +1,23 @@
+import 'dart:math';
+import 'dart:typed_data';
+
 import 'package:colab_ezzyfy_solutions/controller/home_dashboard_controller.dart';
 import 'package:colab_ezzyfy_solutions/resource/extension.dart';
 import 'package:colab_ezzyfy_solutions/resource/extensions.dart';
-import 'package:colab_ezzyfy_solutions/route/route.dart';
+import 'package:whatsapp_story_editor/whatsapp_story_editor.dart';
 import 'package:colab_ezzyfy_solutions/ui/pages/home_dashboard/project_row_item.dart';
+import 'package:colab_ezzyfy_solutions/ui/pages/home_dashboard/saved_image_view.dart';
 import 'package:colab_ezzyfy_solutions/ui/widget/colab_catched_image_widget.dart';
 import 'package:colab_ezzyfy_solutions/ui/widget/colab_loader_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:whatsapp_story_editor/whatsapp_story_editor.dart';
 
 import '../../../resource/constant.dart';
 import '../../../resource/image.dart';
+import '../../../route/route.dart';
 import '../../widget/all_widget.dart';
 import '../../widget/common_toolbar.dart';
 import 'feed_row_item.dart';
@@ -39,6 +46,42 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
         return await false;
       },
       child: Scaffold(
+        floatingActionButton: Builder(builder: (context) {
+          return FloatingActionButton(
+            onPressed: () async {
+              Get.toNamed(AppRoute.editImageFromCamera);
+              /// Below is plugin original Code -> whatsapp_story_editor
+              /*Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => WhatsappStoryEditor()),
+              ).then((whatsappStoryEditorResult) {
+                if (whatsappStoryEditorResult != null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            SavedImageView(
+                              image: whatsappStoryEditorResult.image,
+                              caption: whatsappStoryEditorResult.caption,
+                            )),
+                  );
+                }
+              });*/
+            },
+            child: Container(
+              height: 60,
+              width: 60,
+              decoration:
+              BoxDecoration(color: Colors.green, shape: BoxShape.circle),
+              child: const Icon(
+                Icons.camera_alt,
+                color: Colors.white,
+                size: 20,
+              ),
+            ),
+          );
+        }),
         body: SingleChildScrollView(
           child: Obx(
             () => Form(
@@ -282,7 +325,6 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                       ],
                     ),
                   ),
-
                   ConstrainedBox(
                     constraints: BoxConstraints(
                       minHeight: Get.height * 0.15,

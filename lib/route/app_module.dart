@@ -12,6 +12,7 @@ import 'package:colab_ezzyfy_solutions/ui/pages/project/project_list_page.dart';
 import 'package:colab_ezzyfy_solutions/ui/pages/splashpage.dart';
 import 'package:colab_ezzyfy_solutions/ui/widget/bottom_navigation_bar.dart';
 import 'package:get/route_manager.dart';
+import 'package:whatsapp_story_editor/whatsapp_story_editor.dart';
 
 
 import '../binding/home_dashboard_bindiing.dart';
@@ -74,5 +75,9 @@ class AppPage {
         name: AppRoute.addUser,
         page: () => const AddUserPage(),
         binding: AddUserBinding()),
+
+    GetPage(
+        name: AppRoute.editImageFromCamera,
+        page: () => WhatsappStoryEditor(),),
   ];
 }
