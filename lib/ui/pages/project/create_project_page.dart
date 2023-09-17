@@ -53,7 +53,9 @@ class _CreateProjectPageState extends State<CreateProjectPage> {
                 height: 10,
               ),
               InkWell(
-                onTap: controller.selectPhoto,
+                onTap: (){
+                  controller.selectPhoto(context);
+                },
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                   child: DottedBorder(

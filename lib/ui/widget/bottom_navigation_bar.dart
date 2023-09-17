@@ -6,6 +6,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
+import 'custom_image_picker.dart';
+
 class BottomNavigationPage extends StatefulWidget {
   BottomNavigationPage({Key? key, required this.currentIndex})
       : super(key: key);
@@ -133,8 +135,9 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
       ),
 
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-
+        onPressed: () async {
+          var result = await CustomImagePicker().pickImage(context);
+          print("${result.firstOrNull?.path}");
         },
         backgroundColor: Colors.white,
         // elevation: 8,
