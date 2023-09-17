@@ -33,14 +33,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.4.3"
-  archive:
-    dependency: transitive
-    description:
-      name: archive
-      sha256: e0902a06f0e00414e4e3438a084580161279f137aeb862274710f29ec10cf01e
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.3.9"
   args:
     dependency: transitive
     description:
@@ -153,30 +145,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
-  camera:
-    dependency: transitive
-    description:
-      name: camera
-      sha256: "2bfd375ed79503d909c3356c862c19ef95bfd84772f167cfe4aa7258b94be8fc"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.8.1+7"
-  camera_camera:
-    dependency: transitive
-    description:
-      name: camera_camera
-      sha256: "93c87789668b2ecacabb7a0fbef4f5257aa498f394f26fd4dc0ef573ea682f1a"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.2"
-  camera_platform_interface:
-    dependency: transitive
-    description:
-      name: camera_platform_interface
-      sha256: "60fa0bb62a4f3bf3a7c413e31e4cd01b69c779ccc8e4668904a24581b86c316b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.5.1"
   characters:
     dependency: transitive
     description:
@@ -550,6 +518,13 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.0.0+1"
+  flutter_photo_editor:
+    dependency: "direct main"
+    description:
+      path: "custom_package/flutter_photo_editor-main"
+      relative: true
+    source: path
+    version: "0.0.3"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -558,16 +533,8 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.15"
-  flutter_sliding_up_panel:
-    dependency: transitive
-    description:
-      name: flutter_sliding_up_panel
-      sha256: "94f928973d83e146bbc52051e2d9f2a7ed7a5c9e7f04b54d835fff2e41d6cb99"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.1.1"
   flutter_svg:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flutter_svg
       sha256: f991fdb1533c3caeee0cdc14b04f50f0c3916f0dbcbc05237ccbe4e3c6b93f3f
@@ -584,14 +551,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  font_awesome_flutter:
-    dependency: transitive
-    description:
-      name: font_awesome_flutter
-      sha256: "1f93e5799f0e6c882819e8393a05c6ca5226010f289190f2242ec19f3f0fdba5"
-      url: "https://pub.dev"
-    source: hosted
-    version: "9.2.0"
   frontend_server_client:
     dependency: transitive
     description:
@@ -672,14 +631,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.0"
-  hsv_color_pickers:
-    dependency: transitive
-    description:
-      name: hsv_color_pickers
-      sha256: "70becca80fe1f9561e51b23e403e9b09c5a4862ff90b6d36a52878dc94ad8284"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.2.2"
   http:
     dependency: "direct main"
     description:
@@ -704,22 +655,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
-  image:
-    dependency: transitive
-    description:
-      name: image
-      sha256: "8e9d133755c3e84c73288363e6343157c383a0c6c56fc51afcc5d4d7180306d6"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.3.0"
-  image_crop_plus_updated:
-    dependency: transitive
-    description:
-      name: image_crop_plus_updated
-      sha256: "1896d4fdb39b3976e2958f6e3bf612299eb5d7b0b49d3c35ce27753eac373c9f"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.7.1"
   image_cropper:
     dependency: "direct main"
     description:
@@ -1008,62 +943,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.0"
-  pedantic:
-    dependency: transitive
-    description:
-      name: pedantic
-      sha256: "67fc27ed9639506c856c840ccce7594d0bdcd91bc8d53d6e52359449a1d50602"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.11.1"
-  perfect_freehand:
-    dependency: transitive
-    description:
-      name: perfect_freehand
-      sha256: "77bfdd5efb223d120de5cc18c5d6e0b36a835e920521cfe67e281960bad44c9b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.4"
-  permission_handler:
-    dependency: transitive
-    description:
-      name: permission_handler
-      sha256: bc56bfe9d3f44c3c612d8d393bd9b174eb796d706759f9b495ac254e4294baa5
-      url: "https://pub.dev"
-    source: hosted
-    version: "10.4.5"
-  permission_handler_android:
-    dependency: transitive
-    description:
-      name: permission_handler_android
-      sha256: "59c6322171c29df93a22d150ad95f3aa19ed86542eaec409ab2691b8f35f9a47"
-      url: "https://pub.dev"
-    source: hosted
-    version: "10.3.6"
-  permission_handler_apple:
-    dependency: transitive
-    description:
-      name: permission_handler_apple
-      sha256: "99e220bce3f8877c78e4ace901082fb29fa1b4ebde529ad0932d8d664b34f3f5"
-      url: "https://pub.dev"
-    source: hosted
-    version: "9.1.4"
-  permission_handler_platform_interface:
-    dependency: transitive
-    description:
-      name: permission_handler_platform_interface
-      sha256: f2343e9fa9c22ae4fd92d4732755bfe452214e7189afcc097380950cf567b4b2
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.11.5"
-  permission_handler_windows:
-    dependency: transitive
-    description:
-      name: permission_handler_windows
-      sha256: cc074aace208760f1eee6aa4fae766b45d947df85bc831cde77009cdb4720098
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.3"
   petitparser:
     dependency: transitive
     description:
@@ -1072,30 +951,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.1.0"
-  photo_gallery:
-    dependency: transitive
-    description:
-      name: photo_gallery
-      sha256: f8daca29042710ba2836a0666f0d18b320e286b5843dcd68d6f1980a2de0c8b2
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.2"
-  photo_view:
-    dependency: transitive
-    description:
-      name: photo_view
-      sha256: "8036802a00bae2a78fc197af8a158e3e2f7b500561ed23b4c458107685e645bb"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.14.0"
-  photofilters:
-    dependency: transitive
-    description:
-      name: photofilters
-      sha256: "757197a7b54b4db36eed3fbdf0afcc8cc3b9058b1242c8f6675426aca1b56d39"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.1"
   platform:
     dependency: transitive
     description:
@@ -1112,14 +967,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.5"
-  pointycastle:
-    dependency: transitive
-    description:
-      name: pointycastle
-      sha256: "7c1e5f0d23c9016c5bbd8b1473d0d3fb3fc851b876046039509e18e0c7485f2c"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.7.3"
   pool:
     dependency: transitive
     description:
@@ -1152,14 +999,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
-  quiver:
-    dependency: transitive
-    description:
-      name: quiver
-      sha256: b1c1ac5ce6688d77f65f3375a9abb9319b3cb32486bdc7a1e0fdf004d7ba4e47
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.2.1"
   realtime_client:
     dependency: transitive
     description:
@@ -1549,22 +1388,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.4.0"
-  whatsapp_camera:
-    dependency: transitive
-    description:
-      name: whatsapp_camera
-      sha256: "570f0303f8eed178718e9093fff568b61857dcb7459c1111b9f616127732b170"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.0.0"
-  whatsapp_story_editor:
-    dependency: "direct main"
-    description:
-      name: whatsapp_story_editor
-      sha256: "40a82853a4e5022f50d4f8c795c50cc7d8840e70428613d316310f8bea19936c"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.6"
   win32:
     dependency: transitive
     description:

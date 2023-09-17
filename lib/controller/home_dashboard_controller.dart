@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:colab_ezzyfy_solutions/resource/extension.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_photo_editor/flutter_photo_editor.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
@@ -16,10 +17,10 @@ import '../model/create_project_response_model.dart';
 import '../model/project_attchments_request_model.dart';
 import '../model/project_attchments_response_model.dart';
 import '../model/user_model_supabase.dart';
-import '../resource/Image_picker_widget.dart';
 import '../resource/database_schema.dart';
 import '../resource/session_string.dart';
 import '../shared/colab_shared_preference.dart';
+import '../ui/widget/custom_image_picker.dart';
 
 class HomeDashboardController extends GetxController {
   static HomeDashboardController get to => Get.find();
@@ -85,34 +86,12 @@ class HomeDashboardController extends GetxController {
     projectFeedsLoader.value = false;
   }
 
-  // Image Edit flow
-  /*Future<Uint8List> addImageFromCamera(CreateProjectResponseModel project, BuildContext context) async {
-    final ImagePicker _picker = ImagePicker();
-    final XFile? photo = await _picker.pickImage(source: ImageSource.camera);
-    var file =  File(photo!.path);
-    Uint8List bytes = file.readAsBytesSync();
-    final editedImage = await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ImageEditor(
-          image: bytes, // <-- Uint8List of image
-        ),
-      ),
-    );
-    var fileEdited = File.fromRawPath(editedImage);
-    selectedPhoto
-    ..clear()
-    ..add(fileEdited);
-    await uploadFileOverFirebase(project);
-    return bytes;
-  }*/
-
   void addImage(CreateProjectResponseModel project, BuildContext context) async {
     showProgress();
     projectsLoader.value = true;
     projectAttachmentsListSupabase.clear();
     selectedPhoto.clear();
-    List<File> result = await ImagePickerWidget().pickImageFromGallery(context);
+    List<File> result = await CustomImagePicker().pickImage(context);
     selectedPhoto.value.addAll(result);
     if (selectedPhoto.value.isNotEmpty) {
       int imageCount = selectedPhoto.value.length;
@@ -126,35 +105,18 @@ class HomeDashboardController extends GetxController {
       projectsLoader.value = false;
     } else {
       // User canceled the picker
+      projectsLoader.value = true;
+      hideProgressBar();
     }
   }
 
-  void changeProfilePicture() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      allowMultiple: false,
-      type: FileType.custom,
-      allowedExtensions: [
-        'jpg',
-        'png',
-        'jpeg',
-      ],
-    );
-    if(result != null) {
-      selectedPhoto.clear();
-      List<File> fileTemp =
-      result.paths.map((path) => File(path ?? '')).toList();
-      for (int i = 0; i < fileTemp.length; i++) {
-        int sizeInBytes = fileTemp[i].lengthSync();
-        double sizeInMb = sizeInBytes / (1024 * 1024);
-        if (sizeInMb < 30) {
-          selectedPhoto.add(fileTemp[i]);
-          projectsLoader.value = true;
-          await uploadUserProfileOverFirebase();
-        } else {
-          Get.showErrorSnackbar('File size is more then 30 MB');
-        }
-      }
-    }
+  void changeProfilePicture(BuildContext context) async {
+    List<File> result = await CustomImagePicker().pickImage(context);
+    result.forEach((fileTemp) async {
+      selectedPhoto.add(fileTemp);
+      projectsLoader.value = true;
+      await uploadUserProfileOverFirebase();
+    });
   }
 
   Future<void> uploadFileOverFirebase(CreateProjectResponseModel project) async {

@@ -13,10 +13,10 @@ import '../model/create_project_response_model.dart';
 import '../model/project_attchments_request_model.dart';
 import '../model/project_attchments_response_model.dart';
 import '../model/user_model_supabase.dart';
-import '../resource/Image_picker_widget.dart';
 import '../resource/database_schema.dart';
 import '../shared/colab_shared_preference.dart';
 import '../shared/get_storage_repository.dart';
+import '../ui/widget/custom_image_picker.dart';
 
 class ProjectDetailsController extends GetxController {
   static ProjectDetailsController get to => Get.find();
@@ -80,7 +80,7 @@ class ProjectDetailsController extends GetxController {
     projectAttachmentsLoader.value = true;
     projectAttachmentsListSupabase.clear();
     selectedPhoto.clear();
-    List<File> result = await ImagePickerWidget().pickImageFromGallery(context);
+    List<File> result = await CustomImagePicker().pickImage(context);
     selectedPhoto.value.addAll(result);
     if(selectedPhoto.value.isNotEmpty) {
       int imageCount = selectedPhoto.value.length;
@@ -108,7 +108,7 @@ class ProjectDetailsController extends GetxController {
 
   Future<void> updateProjectThumbnail(BuildContext context) async {
     projectAttachmentsLoader.value = true;
-    List<File> result = await ImagePickerWidget().pickImageFromGallery(context,allowMultipleImages: false);
+    List<File> result = await CustomImagePicker().pickImage(context,allowMultipleImages: false);
     File fileToUpload = File(result?.first?.path ?? '');
     var projectNameTrim =
     projectResponseModel.name.toString().replaceAll(' ', '').trim();

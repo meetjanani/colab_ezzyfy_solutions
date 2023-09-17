@@ -1,30 +1,57 @@
 import 'dart:io';
 
+import 'package:colab_ezzyfy_solutions/resource/extension.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_photo_editor/flutter_photo_editor.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CustomImagePicker {
-  late File file;
-  Future<File> showSelectionDialog(BuildContext context) {
+  late List<File> selectedImages;
+
+  Future<List<File>> pickImage(BuildContext context,
+      {bool allowMultipleImages = true}) {
     return showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-              title:const Text("From where do you want to take the photo?"),
+              title: Row(
+                children: [
+                  const Expanded(child: Text("Select Attachment")),
+                  InkWell(child: const Icon(Icons.clear),
+                  onTap: (){
+                    Get.back();
+                  },),
+                ],
+              ),
               content: SingleChildScrollView(
                 child: ListBody(
                   children: <Widget>[
                     GestureDetector(
-                      child:const Text("Gallery"),
+                      child: const Text("Gallery"),
                       onTap: () async {
-                        file = (await _openGallery(context))!;
+                        selectedImages = (await _pickImageFromGallery(context,
+                            allowMultipleImages: true))!;
+                        if (selectedImages.firstOrNull?.path != null) {
+                          await FlutterPhotoEditor()
+                              .editImage(selectedImages.first!.path);
+                          Get.back();
+                        }
                       },
                     ),
                     const Padding(padding: EdgeInsets.all(8.0)),
                     GestureDetector(
-                      child:const Text("Camera"),
+                      child: const Text("Camera"),
                       onTap: () async {
-                        file = (await _openCamera(context))!;
+                        selectedImages = (await _pickImageFromCamera(context))!;
+                        if (selectedImages.firstOrNull?.path != null) {
+                          await FlutterPhotoEditor()
+                              .editImage(selectedImages.first!.path);
+                          Get.back();
+                        }
+
                         // print("camera---");
                         // print(file.toString());
                       },
@@ -32,40 +59,49 @@ class CustomImagePicker {
                   ],
                 ),
               ));
-        }).then((value) {
-      return file;
-
+        }).then((value) async {
+      return selectedImages;
     });
   }
 
-  final picker = ImagePicker();
-  Future<File?> _openGallery(BuildContext context) async {
-    // var picture = await ImagePicker.platform.pickImage(source: ImageSource.gallery, imageQuality: 50);
-    XFile? picture =
-    await picker.pickImage(source: ImageSource.gallery, imageQuality: 20);
+  Future<List<File>> _pickImageFromGallery(BuildContext context,
+      {bool allowMultipleImages = true}) async {
+    List<File> fileTemp = [];
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      allowMultiple: false, // allowMultipleImages
+      type: FileType.custom,
+      allowedExtensions: [
+        'jpg',
+        'png',
+        'jpeg',
+      ],
+    );
+    if (result != null) {
+      fileTemp = result.paths.map((path) => File(path ?? '')).toList();
 
-
-    // f1=
-    // this.setState(() {
-    //   imageFile = picture;
-    //   uploadImage();
-    // });
-    Navigator.of(context).pop();
-    File file = File(picture!.path);
-
-    return file;
+      for (int i = 0; i < fileTemp.length; i++) {
+        int sizeInBytes = fileTemp[i].lengthSync();
+        double sizeInMb = sizeInBytes / (1024 * 1024);
+        if (sizeInMb < 30) {
+        } else {
+          Get.showErrorSnackbar('File size is more then 30 MB');
+          fileTemp.removeAt(i);
+        }
+      }
+      return fileTemp;
+    } else {
+      // User canceled the picker
+      return fileTemp;
+    }
   }
 
-  Future<File?> _openCamera(BuildContext context) async {
-    var picture = await picker.pickImage(
+  Future<List<File>> _pickImageFromCamera(BuildContext context) async {
+    List<File> file = [];
+    var picture = await ImagePicker().pickImage(
       source: ImageSource.camera,
       imageQuality: 20,
     );
-
-    Navigator.of(context).pop();
-
-
-    File file = File(picture!.path);
+    file.add(File(picture!.path));
     return file;
   }
 }

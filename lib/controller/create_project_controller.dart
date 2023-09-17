@@ -16,6 +16,7 @@ import '../model/create_project_request_model.dart';
 import '../model/user_model_supabase.dart';
 import '../resource/session_string.dart';
 import '../shared/get_storage_repository.dart';
+import '../ui/widget/custom_image_picker.dart';
 
 class CreateProjectController extends GetxController {
   static CreateProjectController get to => Get.find();
@@ -82,31 +83,11 @@ class CreateProjectController extends GetxController {
     });
   }
 
-  void selectPhoto() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      allowMultiple: false,
-      type: FileType.custom,
-      allowedExtensions: [
-        'jpg',
-        'png',
-        'jpeg',
-      ],
-    );
-    if (result != null) {
-      List<File> fileTemp =
-          result.paths.map((path) => File(path ?? '')).toList();
-      for (int i = 0; i < fileTemp.length; i++) {
-        int sizeInBytes = fileTemp[i].lengthSync();
-        double sizeInMb = sizeInBytes / (1024 * 1024);
-        if (sizeInMb < 30) {
-          selectedPhoto.clear();
-          selectedPhoto.add(fileTemp[i]);
-        } else {
-          Get.showErrorSnackbar('File size is more then 30 MB');
-        }
-      }
-    } else {
-      // User canceled the picker
-    }
+  void selectPhoto(BuildContext context) async {
+    List<File> result = await CustomImagePicker().pickImage(context);
+    result.forEach((fileTemp) async {
+      selectedPhoto.clear();
+      selectedPhoto.add(fileTemp);
+    });
   }
 }

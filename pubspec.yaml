@@ -41,7 +41,7 @@ dependencies:
   equatable:
   otp_text_field:
   intl:
-#  flutter_svg:
+  flutter_svg:
   image_picker:
   http:
   file_picker:
@@ -59,12 +59,9 @@ dependencies:
   stylish_bottom_bar:
   cached_network_image: ^3.2.3
   shared_preferences: ^2.2.0
-  whatsapp_story_editor: ^0.0.6
-#  whatsapp_story_editor:
-#    path: custom_package/whatsapp_story_editor-main
+  flutter_photo_editor:
+    path: custom_package/flutter_photo_editor-main
   image_cropper:
-#  camera:
-#  image_editor_plus:
 
 dependency_overrides:
   google_fonts:
