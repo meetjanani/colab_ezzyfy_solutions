@@ -20,12 +20,50 @@ class OtpPage extends StatefulWidget {
 class _OtpPageState extends State<OtpPage> {
   RegisterController controller = RegisterController.to;
   FirebaseAuthController firebaseController = FirebaseAuthController.to;
-
+  /*late OTPTextEditController otpController;
+  late OTPInteractor _otpInteractor;
+  final scaffoldKey = GlobalKey();*/
   @override
   void initState() {
     super.initState();
     controller.startTimer();
+    /*_initInteractor();
+    _otpInteractor.getAppSignature()
+        .then((value) => print('signature - $value'));
+    otpController = OTPTextEditController(
+      codeLength: 6,
+      //ignore: avoid_print
+      onCodeReceive: (code){ // ltcOOJ/OPI4
+        print('Your Application receive code - $code');
+        List<String> otpDigits = [];
+        code.split('').forEach((element) {
+          otpDigits.add(element);
+        });
+        controller.otpController.set(otpDigits);
+      },
+      otpInteractor: _otpInteractor,
+    )..startListenUserConsent(
+          (code) {
+        final exp = RegExp(r'(\d{6})');
+        return exp.stringMatch(code ?? '') ?? '';
+      },
+      strategies: [
+        // SampleStrategy(),
+      ],
+    );*/
   }
+
+  /*Future<void> _initInteractor() async {
+    _otpInteractor = OTPInteractor();
+    // You can receive your app signature by using this method.
+    final appSignature = await _otpInteractor.getAppSignature();
+    print('Your app signature: $appSignature');
+  }
+  @override
+  void dispose() {
+    otpController.stopListen();
+    super.dispose();
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -35,21 +73,16 @@ class _OtpPageState extends State<OtpPage> {
         children: [
           Container(
             width: Get.width,
-
             decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(25), topRight: Radius.circular(25)),
               color: Colors.white,
             ),
-            //height: 50,
-
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  //SizedBox(height: 10,),
-
                   const SizedBox(height: 10),
                   text('Enter Verification Code', Colors.black, 22,
                       FontWeight.w800),
@@ -106,9 +139,7 @@ class _OtpPageState extends State<OtpPage> {
                             InkWell(
                             onTap: () {
                               // controller.resend();
-                              Get.back(); // dismiss otp screen
-                              controller.firebaseController
-                                      .fbLogin(widget.phoneNumber);
+                              verifyOtp();
                                 },
                             child: text(
                                 'Resend', pinkButtonColor, 15, FontWeight.bold)) :
@@ -124,5 +155,11 @@ class _OtpPageState extends State<OtpPage> {
         ],
       ),
     );
+  }
+
+  void verifyOtp() {
+     Get.back(); // dismiss otp screen
+    controller.firebaseController
+            .fbLogin(widget.phoneNumber);
   }
 }

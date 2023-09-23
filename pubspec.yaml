@@ -62,6 +62,8 @@ dependencies:
   flutter_photo_editor:
     path: custom_package/flutter_photo_editor-main
   image_cropper:
+  otp_autofill:
+  permission_handler: ^11.0.0
 
 dependency_overrides:
   google_fonts:
