@@ -3,9 +3,11 @@ import 'package:colab_ezzyfy_solutions/ui/pages/home_dashboard/home_dashboard_pa
 import 'package:colab_ezzyfy_solutions/ui/widget/all_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
+import '../../route/route.dart';
 import 'custom_image_picker.dart';
 
 class BottomNavigationPage extends StatefulWidget {
@@ -137,7 +139,10 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           var result = await CustomImagePicker().pickImage(context);
-          print("${result.firstOrNull?.path}");
+          var editedImage = result.firstOrNull;
+          if(editedImage != null) {
+            Get.toNamed(AppRoute.projectList, arguments: editedImage);
+          }
         },
         backgroundColor: Colors.white,
         // elevation: 8,
