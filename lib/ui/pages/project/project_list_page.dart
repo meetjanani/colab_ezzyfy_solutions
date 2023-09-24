@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:colab_ezzyfy_solutions/resource/constant.dart';
 import 'package:colab_ezzyfy_solutions/resource/extension.dart';
 import 'package:colab_ezzyfy_solutions/route/route.dart';
@@ -20,6 +22,14 @@ class ProjectListPage extends StatefulWidget {
 
 class _ProjectListPageState extends State<ProjectListPage> {
   ProjectListController controller = ProjectListController();
+  static int useCount = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    useCount = 0;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,9 +65,14 @@ class _ProjectListPageState extends State<ProjectListPage> {
                             return ProjectRowItem(
                               projectCreateModel:
                                   controller.projectList.value[index],
-                              onAddImageClick: () {
-                                controller.addImage(controller
-                                    .projectList.value[index], context);
+                              onAddImageClick: () async {
+                                if(getArgumentsFirstTimeOnly() is File){
+                                  await controller.addEditedPhotoDirectely(Get.arguments, controller.projectList.value[index]);
+                                  Get.back();
+                                } else {
+                                  controller.addImage(controller
+                                      .projectList.value[index], context);
+                                }
                               },
                                 onProjectClick: () {
                                   Get.toNamed(AppRoute.projectDetails,
@@ -112,5 +127,14 @@ class _ProjectListPageState extends State<ProjectListPage> {
         ),
       // ),
     );
+  }
+
+  dynamic getArgumentsFirstTimeOnly() {
+    if (useCount >= 1) {
+      return null;
+    }
+    useCount++;
+
+    return Get.arguments;
   }
 }

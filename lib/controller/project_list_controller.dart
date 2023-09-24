@@ -95,4 +95,15 @@ class ProjectListController extends GetxController {
         createdByUser: userModelSupabase?.id ?? project.createdByUser,
         projectAttachmentUrl: projectAttachmentUrl));
   }
+
+  Future<void> addEditedPhotoDirectely(File file, CreateProjectResponseModel project) async{
+    showProgress();
+    selectedPhoto.clear();
+    projectAttachmentsListSupabase.clear();
+    selectedPhoto.add(file);
+    await uploadFileOverFirebase(project);
+    hideProgressBar();
+    await projectControllerSupabase.createProjectAttachment(projectAttachmentsListSupabase.value);
+    return;
+  }
 }

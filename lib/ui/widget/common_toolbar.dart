@@ -32,7 +32,7 @@ class _CommonToolbarState extends State<CommonToolbar> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            height: 48,
+            height: 58,
           ),
           Row(
             // mainAxisAlignment: MainAxisAlignment.spaceAround,
