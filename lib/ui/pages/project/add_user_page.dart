@@ -28,7 +28,9 @@ class _AddUserPageState extends State<AddUserPage> {
     super.initState();
     controller.projectResponseModel =
         Get.arguments as CreateProjectResponseModel;
-    controller.fetAllSystemUsers();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      controller.fetAllSystemUsers();
+    });
   }
 
   @override
@@ -115,12 +117,40 @@ class _AddUserPageState extends State<AddUserPage> {
                                             builder: (BuildContext context) {
 
                                               return Dialog(
-                                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                                // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                                backgroundColor: Colors.transparent,
+                                                surfaceTintColor: Colors.transparent,
+                                                shadowColor: Colors.transparent,
                                                 child: Column(
                                                   mainAxisSize: MainAxisSize.min,
                                                   children: [
-                                                    Image.asset(alert2),
-                                                    text('Alert!', Colors.black, 28, FontWeight.w600),
+                                                    Stack(
+                                                      children: [
+                                                        Image.asset(alertErrorShowRemoveUserBody),
+                                                        Positioned(
+                                                          bottom: 0,
+                                                          left: 0,
+                                                          right: 0,
+                                                          child: Row(
+                                                            mainAxisSize: MainAxisSize.max,
+                                                            mainAxisAlignment: MainAxisAlignment.center,
+                                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                                            children: [
+                                                              InkWell(child: Image.asset(alertErrorShowRemoveUserCancleButton),
+                                                               onTap: (){
+                                                                 Get.back();
+                                                               },),
+                                                              InkWell(child: Image.asset(alertErrorShowRemoveUserRemoveButton),
+                                                                onTap: (){
+                                                                  Get.back();
+                                                                  controller.addOrRemoveUserFromProject(controller.allSystemUsers.value[index].id);
+                                                                },),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    /*text('Alert!', Colors.black, 28, FontWeight.w600),
                                                     SizedBox(height: 5,),
                                                     text('Are you sure you want to', Colors.grey, 16, FontWeight.w400),
                                                     text('remove this user', Colors.grey, 16, FontWeight.w400),
@@ -146,11 +176,10 @@ class _AddUserPageState extends State<AddUserPage> {
                                                           ),
                                                         ),),
                                                       ],
-                                                    ),
+                                                    ),*/
                                                   ],
                                                 ),
                                               );
-
                                             },
                                           );
                                         }

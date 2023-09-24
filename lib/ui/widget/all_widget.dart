@@ -12,7 +12,7 @@ Widget imageWidget(String image) {
 
 
 
-Widget text(String text,Color color,double fontsize,FontWeight fontWeight){
+Widget text(String text,Color color,double fontsize,FontWeight fontWeight,){
   return Text(text,
     style: GoogleFonts.inter(
       textStyle: TextStyle(
@@ -52,7 +52,7 @@ Widget greenButton(String text, Function fun,){
         color: pinkButtonColor,
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5), // Shadow color
+            color: buttonShadowColor.withOpacity(0.4), // Shadow color
             spreadRadius: 2, // Spread radius
             blurRadius: 2, // Blur radius
             offset: Offset(0, 1), // Offset in the x and y directions

@@ -16,6 +16,10 @@ const Chat = 'assets/Chat.svg';
 const alert1 = 'assets/alert.png';
 const alert2 = 'assets/alert2.png';
 const alertBack = 'assets/alertBack.png';
+const alertProjectCreateSuccessDialogImg = 'assets/Project_create_dialog_img.png';
+const alertErrorShowRemoveUserBody = 'assets/error_show_add_user.png';
+const alertErrorShowRemoveUserCancleButton = 'assets/cancle_button_img_dialog.png';
+const alertErrorShowRemoveUserRemoveButton = 'assets/remove_button_img_dialog.png';
 
 
 

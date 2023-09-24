@@ -95,18 +95,24 @@ class ProjectControllerSupabase {
       builder: (BuildContext context) {
 
         return Dialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          backgroundColor: Colors.transparent,
+          surfaceTintColor: Colors.transparent,
+          shadowColor: Colors.transparent,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Image.asset(alert1),
-              text('Congratulation', Colors.black, 28, FontWeight.w600),
+              InkWell(child: Image.asset(alertProjectCreateSuccessDialogImg),
+              onTap: (){
+                Get.back(result: true);
+              },),
+              /*text('Congratulation', Colors.black, 28, FontWeight.w600),
               SizedBox(height: 5,),
               text('Project Created', Colors.grey, 16, FontWeight.w400),
               text('Successfully', Colors.grey, 16, FontWeight.w400),
               SizedBox(height: 10,),
               blueButton('Done', (){Get.back(result: true);},52,Get.width/2),
-              SizedBox(height: 10,),
+              SizedBox(height: 10,),*/
             ],
           ),
         );
