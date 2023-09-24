@@ -88,7 +88,7 @@ class _OtpPageState extends State<OtpPage> {
                       FontWeight.w800),
                   const SizedBox(height: 10),
                   text('Enter 6 digits OTP that you received on your phone. ',
-                      Colors.grey, 15, FontWeight.w700),
+                      hintTextColor, 14, FontWeight.w500),
                   const SizedBox(height: 20),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
@@ -103,10 +103,10 @@ class _OtpPageState extends State<OtpPage> {
                       textFieldAlignment: MainAxisAlignment.spaceAround,
                       fieldStyle: FieldStyle.box,
                       otpFieldStyle: OtpFieldStyle(
-                          borderColor: Colors.grey,
-                          disabledBorderColor: Colors.grey,
-                          enabledBorderColor: Colors.grey,
-                          focusBorderColor: Colors.grey),
+                          borderColor: uploadImageDottedBorderColor,
+                          disabledBorderColor: uploadImageDottedBorderColor,
+                          enabledBorderColor: uploadImageDottedBorderColor,
+                          focusBorderColor: uploadImageDottedBorderColor),
                       onCompleted: (pin) {
                         print("Completed: " + pin);
                         controller.pin.value = pin.toString();
@@ -132,8 +132,8 @@ class _OtpPageState extends State<OtpPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      text('Don\'t receive OTP ? ', Colors.black, 15,
-                          FontWeight.w700),
+                      text('Don\'t receive OTP ? ', Colors.black, 14,
+                          FontWeight.w500),
                       Obx(
                         () => controller.seconds.value == 0 ?
                             InkWell(
@@ -142,7 +142,7 @@ class _OtpPageState extends State<OtpPage> {
                               verifyOtp();
                                 },
                             child: text(
-                                'Resend', pinkButtonColor, 15, FontWeight.bold)) :
+                                'Resend', pinkButtonColor, 14, FontWeight.w500)) :
                         Text('Resend OTP in ${controller.seconds} secs.'),
                       ),
                     ],

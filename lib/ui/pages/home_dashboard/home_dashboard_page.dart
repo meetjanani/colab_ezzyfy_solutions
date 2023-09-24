@@ -12,13 +12,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 import '../../../resource/constant.dart';
 import '../../../resource/image.dart';
 import '../../../route/route.dart';
 import '../../widget/all_widget.dart';
-import '../../widget/common_toolbar.dart';
-import '../../widget/custom_image_picker.dart';
 import 'feed_row_item.dart';
 import 'starred_people_row.dart';
 
@@ -71,9 +69,20 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            text('Colab', Colors.white, 25, FontWeight.w500),
                             SizedBox(
-                              height: 6,
+                              height: 12,
+                            ),
+                            Text('Colab',
+                              style: GoogleFonts.ibmPlexMono(
+                                textStyle: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 12,
                             ),
                             Row(
                               children: [
@@ -89,8 +98,8 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                                         imageUrl: controller.userModelSupabase
                                                 ?.profilePictureUrl ??
                                             '',
-                                        width: 40,
-                                        height: 40,
+                                        width: 46,
+                                        height: 46,
                                       ),
                                     ),
                                   ),
@@ -102,12 +111,12 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                                   width: 10,
                                 ),
                                 text('Hello,', Colors.white, 14,
-                                    FontWeight.normal),
+                                    FontWeight.w400),
                                 SizedBox(
                                   width: 5,
                                 ),
                                 text(controller.userName.value.toString(),
-                                    Colors.white, 14, FontWeight.bold),
+                                    Colors.white, 14, FontWeight.w700),
                                 Expanded(
                                   child: Container(),
                                 ),
@@ -115,6 +124,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                                   child: Icon(
                                     Icons.logout,
                                     color: Colors.white,
+                                    size: 24,
                                   ),
                                   onTap: () {
                                     controller.firebaseAuthController
@@ -145,7 +155,8 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                         child: Column(
                           children: [
                             Card(
-                              elevation: 6,
+                              elevation: 1,
+                              shadowColor: tabShadowColor,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10)),
                               child: Container(
@@ -183,7 +194,8 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                       Column(
                         children: [
                           Card(
-                            elevation: 6,
+                            elevation: 1,
+                            shadowColor: tabShadowColor,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10)),
                             child: Container(
@@ -211,7 +223,8 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                       Column(
                         children: [
                           Card(
-                            elevation: 4,
+                            elevation: 1,
+                            shadowColor: tabShadowColor,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10)),
                             child: Container(
@@ -240,7 +253,8 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Card(
-                            elevation: 4,
+                            elevation: 1,
+                            shadowColor: tabShadowColor,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10)),
                             child: Container(
@@ -291,6 +305,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                   ConstrainedBox(
                     constraints: BoxConstraints(
                       minHeight: Get.height * 0.15,
+                      maxHeight: Get.height * 0.30,
                     ),
                     child: Obx(
                       () => controller.projectsLoader.value == true
@@ -298,48 +313,49 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                               child: CircularProgressIndicator(),
                             )
                           : Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10),
-                              child: controller.projectList.value.isEmpty
-                                  ? Container(
-                                      height: Get.height * 0.15,
-                                      child: Center(
-                                          child: text(
-                                              'No projects are available for you.',
-                                              Colors.black,
-                                              18,
-                                              FontWeight.w600)),
-                                    )
-                                  : ListView.builder(
-                                      itemCount: controller.projectList.value
-                                          .take(3)
-                                          .length,
-                                      scrollDirection: Axis.vertical,
-                                      shrinkWrap: true,
-                                      physics: NeverScrollableScrollPhysics(),
-                                      itemBuilder: (context, index) {
-                                        return ProjectRowItem(
-                                          projectCreateModel: controller
+                            padding:
+                            const EdgeInsets.symmetric(horizontal: 10),
+                            child: controller.projectList.value.isEmpty
+                                ? Container(
+                              height: Get.height * 0.15,
+                              child: Center(
+                                  child: text(
+                                      'No projects are available for you.',
+                                      Colors.black,
+                                      18,
+                                      FontWeight.w600)),
+                            )
+                                : ListView.builder(
+                                itemCount: controller.projectList.value
+                                    .take(3)
+                                    .length,
+                                semanticChildCount: controller.projectList.value
+                                    .take(3)
+                                    .length,
+                                scrollDirection: Axis.vertical,
+                                itemBuilder: (context, index) {
+                                  return ProjectRowItem(
+                                    projectCreateModel: controller
+                                        .projectList.value[index],
+                                    onAddImageClick: () {
+                                      /*controller.imagesketer(controller.projectList.value[index], context);*/
+                                      controller.addImage(
+                                          controller
                                               .projectList.value[index],
-                                          onAddImageClick: () {
-                                            /*controller.imagesketer(controller.projectList.value[index], context);*/
-                                            controller.addImage(
-                                                controller
-                                                    .projectList.value[index],
-                                                context);
-                                          },
-                                          onProjectClick: () {
-                                            Get.toNamed(AppRoute.projectDetails,
-                                                    arguments: controller
-                                                        .projectList
-                                                        .value[index])
-                                                ?.then((value) {
-                                              controller.init();
-                                            });
-                                          },
-                                        );
-                                      }),
-                            ),
+                                          context);
+                                    },
+                                    onProjectClick: () {
+                                      Get.toNamed(AppRoute.projectDetails,
+                                          arguments: controller
+                                              .projectList
+                                              .value[index])
+                                          ?.then((value) {
+                                        controller.init();
+                                      });
+                                    },
+                                  );
+                                }),
+                          ),
                     ),
                   ),
                   Padding(
