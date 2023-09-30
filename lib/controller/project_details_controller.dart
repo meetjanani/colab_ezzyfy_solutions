@@ -75,14 +75,13 @@ class ProjectDetailsController extends GetxController {
   }
 
   Future<void> uploadProjectAttachment(BuildContext context) async {
-    showProgress();
-    projectResponseModel;
-    projectAttachmentsLoader.value = true;
     projectAttachmentsListSupabase.clear();
     selectedPhoto.clear();
     List<File> result = await CustomImagePicker().pickImage(context);
     selectedPhoto.value.addAll(result);
     if(selectedPhoto.value.isNotEmpty) {
+      showProgress();
+      projectAttachmentsLoader.value = true;
       int imageCount = selectedPhoto.value.length;
       for (int i = 0; i < imageCount; i++) {
         await uploadFileOverFirebase();

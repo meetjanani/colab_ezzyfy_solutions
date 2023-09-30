@@ -12,6 +12,7 @@ import '../model/create_project_response_model.dart';
 import '../model/project_attchments_request_model.dart';
 import '../model/user_model_supabase.dart';
 import '../shared/colab_shared_preference.dart';
+import '../ui/widget/custom_image_picker.dart';
 
 class ProjectListController extends GetxController {
   static ProjectListController get to => Get.find();
@@ -53,33 +54,19 @@ class ProjectListController extends GetxController {
 
   void addImage(CreateProjectResponseModel project, BuildContext context) async {
     projectAttachmentsListSupabase.clear();
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
-      allowMultiple: true,
-      type: FileType.custom,
-      allowedExtensions: [
-        'jpg',
-        'png',
-        'jpeg',
-      ],
-    );
+    selectedPhoto.clear();
+    List<File> result = await CustomImagePicker().pickImage(context);
+    selectedPhoto.value.addAll(result);
     if (result != null) {
-      selectedPhoto.clear();
-      List<File> fileTemp =
-      result.paths.map((path) => File(path ?? '')).toList();
-      showProgress();
-      for (int i = 0; i < fileTemp.length; i++) {
-        int sizeInBytes = fileTemp[i].lengthSync();
-        double sizeInMb = sizeInBytes / (1024 * 1024);
-        if (sizeInMb < 30) {
-          selectedPhoto.add(fileTemp[i]);
-          await uploadFileOverFirebase(project);
-        } else {
-          Get.showErrorSnackbar('File size is more then 30 MB');
-        }
+      projectLoader.value = true;
+      int imageCount = selectedPhoto.value.length;
+      for (int i = 0; i < imageCount; i++) {
+        await uploadFileOverFirebase(project);
       }
-      hideProgressBar();
+      projectLoader.value = false;
       // insert into supabase in one go
       projectControllerSupabase.createProjectAttachment(projectAttachmentsListSupabase.value);
+      await init();
     } else {
       // User canceled the picker
     }

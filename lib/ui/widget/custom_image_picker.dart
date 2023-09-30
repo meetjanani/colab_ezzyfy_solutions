@@ -10,6 +10,7 @@ import 'package:image_picker/image_picker.dart';
 
 class CustomImagePicker {
   late List<File> selectedImages;
+  late bool isCameraOrGallery = true;
 
   Future<List<File>> pickImage(BuildContext context,
       {bool allowMultipleImages = true}) {
@@ -23,6 +24,7 @@ class CustomImagePicker {
                   InkWell(child: const Icon(Icons.clear),
                   onTap: (){
                     Get.back();
+                    hideProgressBar();
                   },),
                 ],
               ),
@@ -32,25 +34,24 @@ class CustomImagePicker {
                     GestureDetector(
                       child: const Text("Gallery"),
                       onTap: () async {
-                        selectedImages = (await _pickImageFromGallery(context,
+                        isCameraOrGallery = false;
+                        Get.back();
+                        /*selectedImages = (await _pickImageFromGallery(context,
                             allowMultipleImages: true))!;
                         if (selectedImages.firstOrNull?.path != null) {
+                          Get.back();
                           await FlutterPhotoEditor()
                               .editImage(selectedImages.first!.path);
-                          Get.back();
-                        }
+                        }*/
                       },
                     ),
                     const Padding(padding: EdgeInsets.all(8.0)),
                     GestureDetector(
                       child: const Text("Camera"),
                       onTap: () async {
-                        selectedImages = (await _pickImageFromCamera(context))!;
-                        if (selectedImages.firstOrNull?.path != null) {
-                          await FlutterPhotoEditor()
-                              .editImage(selectedImages.first!.path);
-                          Get.back();
-                        }
+                        isCameraOrGallery = true;
+                        Get.back();
+
 
                         // print("camera---");
                         // print(file.toString());
@@ -60,6 +61,19 @@ class CustomImagePicker {
                 ),
               ));
         }).then((value) async {
+          if(isCameraOrGallery) {
+            selectedImages = (await _pickImageFromCamera(context))!;
+          } else {
+            selectedImages = (await _pickImageFromGallery(context,
+                allowMultipleImages: true))!;
+          }
+      if (selectedImages.firstOrNull?.path != null) {
+        var result = await FlutterPhotoEditor()
+            .editImage(selectedImages.first.path);
+        if(result == false) {
+          return [];
+        }
+      }
       return selectedImages;
     });
   }
