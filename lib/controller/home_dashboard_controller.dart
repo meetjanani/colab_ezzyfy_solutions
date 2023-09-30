@@ -47,6 +47,7 @@ class HomeDashboardController extends GetxController {
     if (showLoader){
       projectsLoader.value = true;
       projectFeedsLoader.value = true;
+      isProfilePictureUpload.value = true;
     }
     await fetchUserProfile();
     await fetchProject();
@@ -58,6 +59,7 @@ class HomeDashboardController extends GetxController {
   Future<void> fetchUserProfile() async {
     userModelSupabase = await getUserModel();
     userName.value = userModelSupabase?.name ?? '';
+    isProfilePictureUpload.value = false;
   }
 
   Future<void> fetchProject() async {
@@ -88,7 +90,6 @@ class HomeDashboardController extends GetxController {
 
   void addImage(CreateProjectResponseModel project, BuildContext context) async {
     showProgress();
-    projectsLoader.value = true;
     projectAttachmentsListSupabase.clear();
     selectedPhoto.clear();
     List<File> result = await CustomImagePicker().pickImage(context);
@@ -102,10 +103,7 @@ class HomeDashboardController extends GetxController {
       // insert into supabase in one go
       await projectControllerSupabase.createProjectAttachment(projectAttachmentsListSupabase.value);
       init();
-      projectsLoader.value = false;
     } else {
-      // User canceled the picker
-      projectsLoader.value = true;
       hideProgressBar();
     }
   }

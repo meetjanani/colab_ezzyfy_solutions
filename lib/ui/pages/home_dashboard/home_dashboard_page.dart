@@ -91,7 +91,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                                 ),
                                 InkWell(
                                   child: ColabLoaderWidget(
-                                    loading: controller.projectsLoader.value,
+                                    loading: controller.isProfilePictureUpload.value,
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(20),
                                       child: ColabCatchedImageWidget(
@@ -338,20 +338,10 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                                     projectCreateModel: controller
                                         .projectList.value[index],
                                     onAddImageClick: () {
-                                      /*controller.imagesketer(controller.projectList.value[index], context);*/
-                                      controller.addImage(
-                                          controller
-                                              .projectList.value[index],
-                                          context);
+                                      uploadAndEditNewPhoto(index, context);
                                     },
                                     onProjectClick: () {
-                                      Get.toNamed(AppRoute.projectDetails,
-                                          arguments: controller
-                                              .projectList
-                                              .value[index])
-                                          ?.then((value) {
-                                        controller.init();
-                                      });
+                                      navigateToProjectDetailScreen(index);
                                     },
                                   );
                                 }),
@@ -368,7 +358,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                           child: text(
                               'View all', textVioletColor, 16, FontWeight.w500),
                           onTap: () {
-                            controller.firebaseAuthController.signOutUser();
+                            // controller.firebaseAuthController.signOutUser();
                           },
                         ),
                       ],
@@ -459,5 +449,18 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
         ),
       ),
     );
+  }
+
+  void uploadAndEditNewPhoto(int index, BuildContext context) {
+    controller.addImage(controller
+        .projectList.value[index], context);
+  }
+
+  void navigateToProjectDetailScreen(int index) {
+    Get.toNamed(AppRoute.projectDetails,
+        arguments: controller
+            .projectList.value[index])?.then((value){
+      controller.init();
+    });
   }
 }

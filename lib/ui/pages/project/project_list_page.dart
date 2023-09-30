@@ -66,20 +66,16 @@ class _ProjectListPageState extends State<ProjectListPage> {
                               projectCreateModel:
                                   controller.projectList.value[index],
                               onAddImageClick: () async {
-                                if(getArgumentsFirstTimeOnly() is File){
-                                  await controller.addEditedPhotoDirectely(Get.arguments, controller.projectList.value[index]);
-                                  Get.back();
-                                } else {
-                                  controller.addImage(controller
-                                      .projectList.value[index], context);
-                                }
+                                uploadAndEditNewPhoto(index, context);
                               },
-                                onProjectClick: () {
-                                  Get.toNamed(AppRoute.projectDetails,
-                                      arguments: controller
-                                          .projectList.value[index])?.then((value){
-                                            controller.init();
-                                  });
+                                onProjectClick: () async {
+                                  if(getArgumentsFirstTimeOnly() is File){
+                                    await controller.addEditedPhotoDirectely(Get.arguments, controller.projectList.value[index]);
+                                    navigateToProjectDetailScreen(index);
+                                  }
+                                  else {
+                                    navigateToProjectDetailScreen(index);
+                                  }
                                 },
                             );
                           }),
@@ -127,6 +123,19 @@ class _ProjectListPageState extends State<ProjectListPage> {
         ),
       // ),
     );
+  }
+
+  void uploadAndEditNewPhoto(int index, BuildContext context) {
+    controller.addImage(controller
+        .projectList.value[index], context);
+  }
+
+  void navigateToProjectDetailScreen(int index) {
+    Get.toNamed(AppRoute.projectDetails,
+        arguments: controller
+            .projectList.value[index])?.then((value){
+      controller.init();
+    });
   }
 
   dynamic getArgumentsFirstTimeOnly() {
