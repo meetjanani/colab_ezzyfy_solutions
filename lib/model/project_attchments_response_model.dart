@@ -1,3 +1,4 @@
+import 'package:colab_ezzyfy_solutions/resource/extension.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'project_attchments_response_model.g.dart';
@@ -28,6 +29,8 @@ class ProjectAttachmentsResponseModel {
       attachment.userName = e['users']['name'];
       attachment.profilePictureUrl = e['users']['profilePictureUrl'];
       attachment.projectName = e['projects']['name'];
+      if (e['createAt'] != null)
+        attachment.createAt = e['createAt'].toString().getColabDateFormat();
       record.add(attachment);
     }
     return record;
@@ -46,4 +49,14 @@ class ProjectAttachmentsResponseModel {
     }
     return jsonList;
   }
+}
+
+class TimeLineAttachmentListModel{
+  String createAt;
+  List<ProjectAttachmentsResponseModel> imagesForDay;
+
+  TimeLineAttachmentListModel(
+      this.createAt,
+      this.imagesForDay,
+      );
 }

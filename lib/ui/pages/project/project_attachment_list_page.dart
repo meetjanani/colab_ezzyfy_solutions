@@ -22,12 +22,17 @@ class ProjectAttachmentListPage extends StatefulWidget {
 class _ProjectAttachmentListPageState extends State<ProjectAttachmentListPage> {
   ProjectDetailsController controller = ProjectDetailsController.to;
   List<ProjectAttachmentsResponseModel> projectAttachmentsList = [];
+  List<TimeLineAttachmentListModel> timeLineProjectAttachmentsList = [];
 
   @override
   void initState() {
     super.initState();
     projectAttachmentsList =
         Get.arguments as List<ProjectAttachmentsResponseModel>;
+    projectAttachmentsList.reversed.map((record) => record.createAt).toSet().toList().forEach((e){
+      timeLineProjectAttachmentsList.add(TimeLineAttachmentListModel(e, projectAttachmentsList.where((element) => element.createAt == e).toList()));
+      print(e);
+    });
   }
 
   @override
@@ -40,7 +45,9 @@ class _ProjectAttachmentListPageState extends State<ProjectAttachmentListPage> {
       child: Scaffold(
         backgroundColor: Colors.white,
         body: Column(
+          mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             CommonToolbar(
               toolbarTitle: 'Project Attachments',
@@ -48,19 +55,14 @@ class _ProjectAttachmentListPageState extends State<ProjectAttachmentListPage> {
             Expanded(
               child: Padding(
                 padding: EdgeInsets.all(4),
-                child: GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        crossAxisSpacing: 4.0,
-                        mainAxisSpacing: 4.0),
-                    itemCount: projectAttachmentsList.length,
+                child: ListView.builder(
+                    itemCount: timeLineProjectAttachmentsList.length,
+                    physics: BouncingScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
                     itemBuilder: (context, index) {
                       return ImageListGridRow(
-                        imageAttachment: projectAttachmentsList[index],
-                        onImageClick: () {
-                          Get.toNamed(AppRoute.projectFullScreenAttachment,
-                              arguments: projectAttachmentsList[index]);
-                        },
+                        timeLineAttachment: timeLineProjectAttachmentsList[index],
                       );
                     }),
               ),
