@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 extension VoidExtensions on void {
   showProgress() {
@@ -25,5 +26,15 @@ extension VoidExtensions on void {
   showSnackbar(String? title,String? message) {
     Get.snackbar(title!, message!,
         colorText: Colors.black, backgroundColor: Colors.white);
+  }
+}
+
+extension DateFormatExtensions on String {
+  String getColabDateFormat() {
+    String inputDateStr = this; // "2023-09-24T16:47:03.385503+00:00"
+    DateTime inputDate = DateTime.parse(inputDateStr);
+
+    String formattedDate = DateFormat.yMMMd().format(inputDate);
+    return formattedDate; // Output: Sep 24, 2023
   }
 }
