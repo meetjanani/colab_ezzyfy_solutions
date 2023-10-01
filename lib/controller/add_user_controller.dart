@@ -16,12 +16,21 @@ class AddUserController extends GetxController {
   RxList<UserModelSupabase> projectAssignedUserList = RxList();
   late CreateProjectResponseModel projectResponseModel;
   RxBool loader = false.obs;
+  bool isAdduserScreen = false;
 
   Future<void> getAssignedUserByProject() async {
-    projectAssignedUserList
-      ..clear()
-      ..addAll(await projectControllerSupabase
-          .getAssignedUserByProject(projectResponseModel.id));
+    if(isAdduserScreen) {
+      projectAssignedUserList
+        ..clear()
+        ..addAll(await projectControllerSupabase
+            .getAssignedUserByProject(projectResponseModel.id));
+    }
+    else {
+      projectAssignedUserList
+        ..clear()
+        ..addAll(await projectControllerSupabase
+            .getAssignedSiteVisitUserByProject(projectResponseModel.id));
+    }
   }
 
   void fetAllSystemUsers() async {
@@ -36,10 +45,24 @@ class AddUserController extends GetxController {
       ..addAll(allSystemUsers);
     loader.value = false;
   }
+  void addOrRemoveUser(int userId) async {
+    if(isAdduserScreen) {
+      addOrRemoveUserFromProject(userId);
+    }
+    else {
+      addOrRemoveSiteVisitUserFromProject(userId);
+    }
+  }
 
   void addOrRemoveUserFromProject(int userId) async {
     loader.value = true;
     await projectControllerSupabase.addOrRemoveUserFromProject(userId, projectResponseModel.id);
+    fetAllSystemUsers();
+  }
+
+  void addOrRemoveSiteVisitUserFromProject(int userId) async {
+    loader.value = true;
+    await projectControllerSupabase.addOrRemoveAssignedSiteVisitUserFromProject(userId, projectResponseModel.id);
     fetAllSystemUsers();
   }
 }

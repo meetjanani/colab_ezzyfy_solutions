@@ -12,6 +12,7 @@ class CreateProjectResponseModel {
   String createAt = DateTime.now().toString();
   String updatedAt = DateTime.now().toString();
   String assignedUser = "";
+  String assignedSiteVisitUser = "";
 
   CreateProjectResponseModel({
     required this.name,

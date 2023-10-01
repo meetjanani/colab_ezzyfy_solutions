@@ -75,6 +75,7 @@ class CreateProjectController extends GetxController {
           thumbnailImageUrl: thumbnailImageUrl,
           createdByUser: signInUser.id,
           assignedUser: signInUser.id.toString(),
+          assignedSiteVisitUser: signInUser.id.toString(),
         );
         supabaseSetupController.createNewProject(project);
         projectLoader.value = false;

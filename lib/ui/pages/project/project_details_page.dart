@@ -1,10 +1,8 @@
-import 'package:colab_ezzyfy_solutions/controller/home_dashboard_controller.dart';
 import 'package:colab_ezzyfy_solutions/model/create_project_response_model.dart';
 import 'package:colab_ezzyfy_solutions/resource/constant.dart';
 import 'package:colab_ezzyfy_solutions/resource/extension.dart';
 import 'package:colab_ezzyfy_solutions/route/route.dart';
 import 'package:colab_ezzyfy_solutions/ui/pages/home_dashboard/starred_people_row.dart';
-import 'package:colab_ezzyfy_solutions/ui/pages/project/image_list_grid_row.dart';
 import 'package:colab_ezzyfy_solutions/ui/widget/colab_catched_image_widget.dart';
 import 'package:colab_ezzyfy_solutions/ui/widget/colab_loader_widget.dart';
 import 'package:flutter/material.dart';
@@ -231,6 +229,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                               controller.uploadProjectAttachment(context);
                             },
                             child: Container(
+                              width: Get.size.width * 0.35,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
                                   border: Border.all(color: textVioletColor),
@@ -250,8 +249,12 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                                     SizedBox(
                                       width: 5,
                                     ),
-                                    text('Add Image', textVioletColor, 14,
-                                        FontWeight.w500),
+                                    Expanded(
+                                      child: Center(
+                                        child: text('Add Image', textVioletColor, 14,
+                                            FontWeight.w500),
+                                      ),
+                                    ),
                                     SizedBox(
                                       width: 5,
                                     ),
@@ -320,12 +323,13 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                           InkWell(
                             onTap: () {
                               Get.toNamed(AppRoute.addUser,
-                                  arguments: controller.projectResponseModel)
+                                  arguments: [controller.projectResponseModel, true])
                                   ?.then((value) {
                                 controller.init();
                               });
                             },
                             child: Container(
+                              width: Get.size.width * 0.35,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
                                   border: Border.all(color: textVioletColor),
@@ -345,8 +349,12 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                                     SizedBox(
                                       width: 5,
                                     ),
-                                    text('Add User', textVioletColor, 14,
-                                        FontWeight.w500),
+                                    Expanded(
+                                      child: Center(
+                                        child: text('Add User', textVioletColor, 14,
+                                            FontWeight.w500),
+                                      ),
+                                    ),
                                     SizedBox(
                                       width: 5,
                                     ),
@@ -368,6 +376,105 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                               itemBuilder: (context, index) {
                                 return StarredPeopleRow(starredPeople: controller
                                     .projectAssignedUserList.value[index]);
+                              }),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Get.toNamed(AppRoute.addUser,
+                                  arguments: [controller.projectResponseModel, false])
+                                  ?.then((value) {
+                                controller.init();
+                              });
+                            },
+                            child: Container(
+                              width: Get.size.width * 0.35,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(color: textVioletColor),
+                                  color: Colors.white),
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Icon(
+                                      Icons.add_circle_outline_sharp,
+                                      color: textVioletColor,
+                                      size: 20,
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Expanded(
+                                      child: Center(
+                                        child: text('Manage Site Visit', textVioletColor, 14,
+                                            FontWeight.w500),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Spacer(),
+                          InkWell(
+                            onTap: () {
+                              showErrorSnackbar('Comming soon');
+                            },
+                            child: Container(
+                              width: Get.size.width * 0.35,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(5),
+                                  border: Border.all(color: textVioletColor),
+                                  color: Colors.white),
+                              child: Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Icon(
+                                      Icons.add_circle_outline_sharp,
+                                      color: textVioletColor,
+                                      size: 20,
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Expanded(
+                                      child: Center(
+                                        child: text('Add Site Visit', textVioletColor, 14,
+                                            FontWeight.w500),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                      Container(
+                        height: 80,
+                        child: ColabLoaderWidget(
+                          loading: controller.projectSiteVisitUserLoader.value,
+                          child: ListView.builder(
+                              itemCount:
+                              controller.projectSiteVisitUserList.value.length,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return StarredPeopleRow(starredPeople: controller
+                                    .projectSiteVisitUserList.value[index]);
                               }),
                         ),
                       ),
