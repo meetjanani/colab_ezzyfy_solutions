@@ -30,9 +30,11 @@ class ProjectDetailsController extends GetxController {
       ProjectControllerSupabase.to;
   RxList<ProjectAttachmentsResponseModel> projectAttachmentsList = RxList();
   RxList<UserModelSupabase> projectAssignedUserList = RxList();
+  RxList<UserModelSupabase> projectSiteVisitUserList = RxList();
   late CreateProjectResponseModel projectResponseModel;
   RxBool projectAttachmentsLoader = false.obs;
   RxBool projectAssignedUserLoader = false.obs;
+  RxBool projectSiteVisitUserLoader = false.obs;
   RxList<File> selectedPhoto = RxList();
   RxList<ProjectAttachmentsRequestModel> projectAttachmentsListSupabase =
   RxList();
@@ -42,8 +44,10 @@ class ProjectDetailsController extends GetxController {
     await fetchUserProfile();
     projectAttachmentsLoader.value = true;
     projectAssignedUserLoader.value = true;
+    projectSiteVisitUserLoader.value = true;
     await fetchProjectAttachments();
     await getAssignedUserByProject();
+    await getAssignedSiteVisitUserByProject();
   }
 
   Future<void> fetchUserProfile() async {
@@ -72,6 +76,13 @@ class ProjectDetailsController extends GetxController {
       ..addAll(await projectControllerSupabase
           .getAssignedUserByProject(projectResponseModel.id));
     projectAssignedUserLoader.value = false;
+  }
+  Future<void> getAssignedSiteVisitUserByProject() async {
+    projectSiteVisitUserList.value
+      ..clear()
+      ..addAll(await projectControllerSupabase
+          .getAssignedSiteVisitUserByProject(projectResponseModel.id));
+    projectSiteVisitUserLoader.value = false;
   }
 
   Future<void> uploadProjectAttachment(BuildContext context) async {

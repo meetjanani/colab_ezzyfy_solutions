@@ -149,6 +149,23 @@ class ProjectControllerSupabase {
     return await getAssignedUserByProject(projectId);
   }
 
+  Future<List<UserModelSupabase>> addOrRemoveAssignedSiteVisitUserFromProject(int userId, int projectId) async {
+    var projectById = await getProjectById(projectId);
+    var assignedSiteVisitUserList = projectById.assignedSiteVisitUser.toString().split(',').where((element) => element.length > 0).toList();
+    if (!assignedSiteVisitUserList.contains(userId.toString())) {
+      assignedSiteVisitUserList.add(userId.toString());
+    } else {
+      assignedSiteVisitUserList.remove(userId.toString());
+    }
+    await Supabase.instance.client
+        .from(DatabaseSchema.projectTable)
+        .update(
+        {DatabaseSchema.projectAssignedSiteVisitUser: assignedSiteVisitUserList.join(',')})
+        .eq(DatabaseSchema.projectId, projectId)
+        .select();
+    return await getAssignedSiteVisitUserByProject(projectId);
+  }
+
   Future<List<UserModelSupabase>> fetAllSystemUsers() async {
     var userResponse = await Supabase.instance.client
         .from(DatabaseSchema.usersTable)
@@ -162,6 +179,15 @@ class ProjectControllerSupabase {
         .from(DatabaseSchema.usersTable)
         .select('*')
         .in_(DatabaseSchema.usersId, projectById.assignedUser.split(','));
+    return UserModelSupabase.fromJsonList(userResponse);
+  }
+
+  Future<List<UserModelSupabase>> getAssignedSiteVisitUserByProject(int projectId) async {
+    var projectById = await getProjectById(projectId);
+    var userResponse = await Supabase.instance.client
+        .from(DatabaseSchema.usersTable)
+        .select('*')
+        .in_(DatabaseSchema.usersId, projectById.assignedSiteVisitUser.split(','));
     return UserModelSupabase.fromJsonList(userResponse);
   }
 

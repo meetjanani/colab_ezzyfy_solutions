@@ -10,6 +10,7 @@ class CreateProjectRequestModel {
   int createdByUser = 0;
   String createAt = DateTime.now().toString();
   String assignedUser = "";
+  String assignedSiteVisitUser = "";
 
   CreateProjectRequestModel({
     required this.name,
@@ -17,6 +18,7 @@ class CreateProjectRequestModel {
     required this.thumbnailImageUrl,
     required this.createdByUser,
     required this.assignedUser,
+    required this.assignedSiteVisitUser,
   });
 
   static List<CreateProjectRequestModel> fromJsonList(List<dynamic> dataList) {

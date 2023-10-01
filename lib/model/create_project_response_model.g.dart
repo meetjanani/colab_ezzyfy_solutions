@@ -17,7 +17,8 @@ CreateProjectResponseModel _$CreateProjectResponseModelFromJson(
       ..id = json['id'] as int
       ..createAt = json['createAt'] as String
       ..updatedAt = json['updatedAt'] as String
-      ..assignedUser = json['assignedUser'] as String;
+      ..assignedUser = json['assignedUser'] as String
+      ..assignedSiteVisitUser = json['assignedSiteVisitUser'] as String;
 
 Map<String, dynamic> _$CreateProjectResponseModelToJson(
         CreateProjectResponseModel instance) =>
@@ -30,4 +31,5 @@ Map<String, dynamic> _$CreateProjectResponseModelToJson(
       'createAt': instance.createAt,
       'updatedAt': instance.updatedAt,
       'assignedUser': instance.assignedUser,
+      'assignedSiteVisitUser': instance.assignedSiteVisitUser,
     };

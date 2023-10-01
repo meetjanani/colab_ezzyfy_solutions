@@ -20,14 +20,15 @@ class AddUserPage extends StatefulWidget {
 
 class _AddUserPageState extends State<AddUserPage> {
   AddUserController controller = AddUserController.to;
-  ProjectDetailsController projectDetailsController = ProjectDetailsController.to;
+  ProjectDetailsController projectDetailsController =
+      ProjectDetailsController.to;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     controller.projectResponseModel =
-        Get.arguments as CreateProjectResponseModel;
+        Get.arguments[0] as CreateProjectResponseModel;
+    controller.isAdduserScreen = Get.arguments[1] as bool;
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       controller.fetAllSystemUsers();
     });
@@ -39,12 +40,11 @@ class _AddUserPageState extends State<AddUserPage> {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         physics: ScrollPhysics(),
-        child: Obx (
-            () => Column(
+        child: Obx(() => Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CommonToolbar(
-                  toolbarTitle: 'Add User',
+                  toolbarTitle: controller.isAdduserScreen == true ? 'Add User to project' : 'Add User for site visit',
                 ),
                 Padding(
                   padding: const EdgeInsets.all(20.0),
@@ -81,8 +81,14 @@ class _AddUserPageState extends State<AddUserPage> {
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
-                              var thisUser = controller.allSystemUsers.value[index];
-                              var isUserAdded = controller.projectAssignedUserList.value.where((element) => element.id == thisUser.id).length > 0;
+                              var thisUser =
+                                  controller.allSystemUsers.value[index];
+                              var isUserAdded = controller
+                                      .projectAssignedUserList.value
+                                      .where((element) =>
+                                          element.id == thisUser.id)
+                                      .length >
+                                  0;
                               return Padding(
                                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
                                 child: Row(
@@ -94,156 +100,130 @@ class _AddUserPageState extends State<AddUserPage> {
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(50),
                                         child: ColabCatchedImageWidget(
-                                            imageUrl: controller.allSystemUsers
-                                                .value[index].profilePictureUrl,
-                                            height: 50,
-                                            width: 50,
-                                            boxFit: BoxFit.cover,
+                                          imageUrl: controller.allSystemUsers
+                                              .value[index].profilePictureUrl,
+                                          height: 50,
+                                          width: 50,
+                                          boxFit: BoxFit.cover,
                                         ),
                                       ),
                                     ),
                                     SizedBox(
                                       width: 10,
                                     ),
-                                    text(controller.allSystemUsers.value[index].name,
-                                        Colors.black, 16, FontWeight.w500),
+                                    text(
+                                        controller
+                                            .allSystemUsers.value[index].name,
+                                        Colors.black,
+                                        16,
+                                        FontWeight.w500),
                                     Spacer(),
                                     InkWell(
                                       onTap: () {
-                                        if(isUserAdded) {
+                                        if (isUserAdded) {
                                           showDialog(
                                             context: Get.context!,
-
                                             builder: (BuildContext context) {
-
                                               return Dialog(
                                                 // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                                                backgroundColor: Colors.transparent,
-                                                surfaceTintColor: Colors.transparent,
+                                                backgroundColor:
+                                                    Colors.transparent,
+                                                surfaceTintColor:
+                                                    Colors.transparent,
                                                 shadowColor: Colors.transparent,
                                                 child: Column(
-                                                  mainAxisSize: MainAxisSize.min,
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
                                                   children: [
                                                     Stack(
                                                       children: [
-                                                        Image.asset(alertErrorShowRemoveUserBody),
+                                                        Image.asset(
+                                                            alertErrorShowRemoveUserBody),
                                                         Positioned(
                                                           bottom: 0,
                                                           left: 0,
                                                           right: 0,
                                                           child: Row(
-                                                            mainAxisSize: MainAxisSize.max,
-                                                            mainAxisAlignment: MainAxisAlignment.center,
-                                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
                                                             children: [
-                                                              InkWell(child: Image.asset(alertErrorShowRemoveUserCancleButton),
-                                                               onTap: (){
-                                                                 Get.back();
-                                                               },),
-                                                              InkWell(child: Image.asset(alertErrorShowRemoveUserRemoveButton),
-                                                                onTap: (){
+                                                              InkWell(
+                                                                child: Image.asset(
+                                                                    alertErrorShowRemoveUserCancleButton),
+                                                                onTap: () {
                                                                   Get.back();
-                                                                  controller.addOrRemoveUserFromProject(controller.allSystemUsers.value[index].id);
-                                                                },),
+                                                                },
+                                                              ),
+                                                              InkWell(
+                                                                child: Image.asset(
+                                                                    alertErrorShowRemoveUserRemoveButton),
+                                                                onTap: () {
+                                                                  Get.back();
+                                                                  controller.addOrRemoveUser(
+                                                                      controller
+                                                                          .allSystemUsers
+                                                                          .value[
+                                                                              index]
+                                                                          .id);
+                                                                },
+                                                              ),
                                                             ],
                                                           ),
                                                         ),
                                                       ],
                                                     ),
-                                                    /*text('Alert!', Colors.black, 28, FontWeight.w600),
-                                                    SizedBox(height: 5,),
-                                                    text('Are you sure you want to', Colors.grey, 16, FontWeight.w400),
-                                                    text('remove this user', Colors.grey, 16, FontWeight.w400),
-                                                    SizedBox(height: 10,),
-                                                    Row(
-                                                      children: [
-                                                        Flexible(child: whiteButton('Cancel', (){Get.back();},52,Get.width/2)),
-                                                        Flexible(child: InkWell(
-                                                          onTap: (){
-                                                            Get.back();
-                                                            controller.addOrRemoveUserFromProject(controller.allSystemUsers.value[index].id);
-                                                          },
-                                                          child: Container(
-                                                            height: 55,
-                                                            width: Get.width/2,
-                                                            decoration: BoxDecoration(
-                                                                borderRadius: BorderRadius.circular(10),
-                                                                color: pinkButtonColor
-                                                            ),
-                                                            child: const Center(
-                                                                child: Text('Remove',
-                                                                    style: TextStyle(fontSize: 22,color: Colors.white,fontFamily: 'futur',fontWeight: FontWeight.bold))),
-                                                          ),
-                                                        ),),
-                                                      ],
-                                                    ),*/
                                                   ],
                                                 ),
                                               );
                                             },
                                           );
+                                        } else {
+                                          controller.addOrRemoveUser(
+                                              controller.allSystemUsers
+                                                  .value[index].id);
                                         }
-                                        else {
-                                          controller.addOrRemoveUserFromProject(controller.allSystemUsers.value[index].id);
-                                        }
-                                        // showDialog(
-                                        //   context: Get.context!,
-                                        //
-                                        //   builder: (BuildContext context) {
-                                        //
-                                        //     return Dialog(
-                                        //       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                                        //       child: Column(
-                                        //         mainAxisSize: MainAxisSize.min,
-                                        //         children: [
-                                        //           Image.asset(alert2),
-                                        //           text('Alert!', Colors.black, 28, FontWeight.w600),
-                                        //           SizedBox(height: 5,),
-                                        //           text('Are you sure you want to', Colors.grey, 16, FontWeight.w400),
-                                        //           text('remove this user', Colors.grey, 16, FontWeight.w400),
-                                        //           SizedBox(height: 10,),
-                                        //           Row(
-                                        //             children: [
-                                        //               Flexible(child: whiteButton('Cancle', (){Get.back();},52,Get.width/2)),
-                                        //               Flexible(child: blueButton('Remove', (){Get.back();},52,Get.width/2)),
-                                        //             ],
-                                        //           ),
-                                        //
-                                        //           SizedBox(height: 10,),
-                                        //         ],
-                                        //       ),
-                                        //     );
-                                        //
-                                        //   },
-                                        // );
-
                                       },
                                       child: Container(
                                         width: 67,
                                         decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(5),
-                                            border:
-                                            Border.all(color: isUserAdded ? Colors.red : textVioletColor),
+                                            borderRadius:
+                                                BorderRadius.circular(5),
+                                            border: Border.all(
+                                                color: isUserAdded
+                                                    ? Colors.red
+                                                    : textVioletColor),
                                             color: Colors.white),
                                         child: Padding(
                                           padding: const EdgeInsets.all(4.0),
                                           child: Row(
-
                                             children: [
-
-                                              isUserAdded ?
-                                              SizedBox() :
-                                              Icon(
-                                                Icons.add_circle_outline_sharp,
-                                                color: textVioletColor,
-                                                size: 20,
-                                              ),
+                                              isUserAdded
+                                                  ? SizedBox()
+                                                  : Icon(
+                                                      Icons
+                                                          .add_circle_outline_sharp,
+                                                      color: textVioletColor,
+                                                      size: 20,
+                                                    ),
                                               SizedBox(
                                                 width: 1,
                                               ),
-                                              text(isUserAdded ? 'Remove': 'Add', isUserAdded ? Colors.red : textVioletColor, 14,
+                                              text(
+                                                  isUserAdded
+                                                      ? 'Remove'
+                                                      : 'Add',
+                                                  isUserAdded
+                                                      ? Colors.red
+                                                      : textVioletColor,
+                                                  14,
                                                   FontWeight.w500),
-
                                             ],
                                           ),
                                         ),
@@ -259,8 +239,7 @@ class _AddUserPageState extends State<AddUserPage> {
                   ),
                 ),
               ],
-            )
-        ),
+            )),
       ),
     );
   }
@@ -319,23 +298,28 @@ inputField2({
                     ),
                     filled: true,
                     focusedBorder: OutlineInputBorder(
-                      borderSide:  BorderSide(color: uploadImageDottedBorderColor),
+                      borderSide:
+                          BorderSide(color: uploadImageDottedBorderColor),
                       borderRadius: BorderRadius.circular(15.0),
                     ),
                     focusedErrorBorder: OutlineInputBorder(
-                      borderSide:  BorderSide(color: uploadImageDottedBorderColor),
+                      borderSide:
+                          BorderSide(color: uploadImageDottedBorderColor),
                       borderRadius: BorderRadius.circular(15.0),
                     ),
                     disabledBorder: OutlineInputBorder(
-                      borderSide:  BorderSide(color: uploadImageDottedBorderColor),
+                      borderSide:
+                          BorderSide(color: uploadImageDottedBorderColor),
                       borderRadius: BorderRadius.circular(15.0),
                     ),
-                    enabledBorder:OutlineInputBorder(
-                      borderSide:  BorderSide(color: uploadImageDottedBorderColor),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(color: uploadImageDottedBorderColor),
                       borderRadius: BorderRadius.circular(15.0),
                     ),
                     errorBorder: OutlineInputBorder(
-                      borderSide:  BorderSide(color: uploadImageDottedBorderColor),
+                      borderSide:
+                          BorderSide(color: uploadImageDottedBorderColor),
                       borderRadius: BorderRadius.circular(15.0),
                     ),
                     fillColor: Colors.white,
