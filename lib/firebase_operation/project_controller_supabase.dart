@@ -197,14 +197,18 @@ class ProjectControllerSupabase {
     await Supabase.instance.client
         .from(DatabaseSchema.projectAttachmentsTable)
         .insert(ProjectAttachmentsRequestModel.toJsonListProject(projectAttachment));
+    await updateModifiedTimeProjectById(projectAttachment.first.projectId);
+    hideProgressBar();
+    Get.showSuccessSnackbar('Image uploaded successfully.');
+  }
+
+  Future<void> updateModifiedTimeProjectById(int projectId) async {
     await Supabase.instance.client
         .from(DatabaseSchema.projectTable)
         .update(
         {DatabaseSchema.projectupdatedAt: DateTime.now().toString()})
-        .eq(DatabaseSchema.projectId, projectAttachment.first.projectId)
+        .eq(DatabaseSchema.projectId, projectId)
         .select();
-    hideProgressBar();
-    Get.showSuccessSnackbar('Image uploaded successfully.');
   }
 
   Future<List<ProjectAttachmentsResponseModel>> getProjectAttachments(int projectId) async {

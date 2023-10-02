@@ -120,6 +120,20 @@ extension ValiationExtensions on String {
     }
     return null;
   }
+
+  String? siteVisitTitleValidation() {
+    if (isEmpty) {
+      return 'Please enter Title';
+    }
+    return null;
+  }
+
+  String? siteVisitDescriptionValidation() {
+    if (isEmpty) {
+      return 'Please enter Description';
+    }
+    return null;
+  }
 }
 
 extension WidgetExtensions on Widget {
