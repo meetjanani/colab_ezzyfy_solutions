@@ -26,6 +26,7 @@ class DatabaseSchema extends GetxController {
   static const String projectAssignedSiteVisitUser = "assignedSiteVisitUser";
 
   static const String projectAttachmentsTable = "projectAttachments";
+  static const String projectSiteVisitsTable = "projectSiteVisits";
   static const String projectAttachmentsId = "id";
   static const String projectAttachmentsProjectId = "projectId";
   static const String projectAttachmentsCreatedByUser = "createdByUser";
