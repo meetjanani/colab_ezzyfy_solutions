@@ -13,6 +13,7 @@ class ProjectSiteVisitsResponseModel {
   String userName = "";
   String projectName = "";
   String? profilePictureUrl = "";
+  String attachmentsForSiteVisit = "";
   // response[0]['users']['name']
 
   String createAt = DateTime.now().toString();
@@ -52,14 +53,4 @@ class ProjectSiteVisitsResponseModel {
     }
     return jsonList;
   }
-}
-
-class TimeLineAttachmentListModel{
-  String createAt;
-  List<ProjectSiteVisitsResponseModel> imagesForDay;
-
-  TimeLineAttachmentListModel(
-      this.createAt,
-      this.imagesForDay,
-      );
 }

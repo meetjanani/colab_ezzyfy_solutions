@@ -10,10 +10,11 @@ ProjectSiteVisitsRequestModel _$ProjectSiteVisitsRequestModelFromJson(
         Map<String, dynamic> json) =>
     ProjectSiteVisitsRequestModel(
       projectId: json['projectId'] as int,
-      createdByUser: json['createdByUser'] ?? '' as int,
+      createdByUser: json['createdByUser'] as int,
       title: json['title'] as String,
-      description: json['description'] ?? ''  as String,
-    )..createAt = json['createAt'] ?? ''  as String;
+      description: json['description'] as String,
+      attachmentsForSiteVisit: json['attachmentsForSiteVisit'] as String,
+    )..createAt = json['createAt'] as String;
 
 Map<String, dynamic> _$ProjectSiteVisitsRequestModelToJson(
         ProjectSiteVisitsRequestModel instance) =>
@@ -22,5 +23,6 @@ Map<String, dynamic> _$ProjectSiteVisitsRequestModelToJson(
       'createdByUser': instance.createdByUser,
       'title': instance.title,
       'description': instance.description,
+      'attachmentsForSiteVisit': instance.attachmentsForSiteVisit,
       'createAt': instance.createAt,
     };

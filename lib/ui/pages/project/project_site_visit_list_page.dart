@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:colab_ezzyfy_solutions/model/project_site_visits_response_model.dart';
 import 'package:colab_ezzyfy_solutions/resource/extensions.dart';
 import 'package:colab_ezzyfy_solutions/ui/widget/colab_loader_widget.dart';
@@ -9,9 +11,10 @@ import '../../../controller/project_site_visit_controller.dart';
 import '../../../model/create_project_response_model.dart';
 import '../../../resource/constant.dart';
 import '../../widget/all_widget.dart';
-import '../../widget/colab_catched_image_widget.dart';
 import '../../widget/common_toolbar.dart';
+import '../../widget/custom_image_picker.dart';
 import 'add_user_page.dart';
+import 'image_list_grid_row.dart';
 
 class ProjectSiteVisitListPage extends StatefulWidget {
   const ProjectSiteVisitListPage({super.key});
@@ -80,72 +83,104 @@ class _ProjectSiteVisitListPageState extends State<ProjectSiteVisitListPage> {
                   toolbarTitle: 'Project Site Visits',
                 ),
                 Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.all(4),
-                    child: ColabLoaderWidget(
-                      loading: controller.projectSiteVisitsLoader.value,
-                      child: ListView.builder(
-                          itemCount:
-                              controller.projectSiteVisitsList.value.length,
-                          physics: BouncingScrollPhysics(),
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            var record =
-                                controller.projectSiteVisitsList.value[index];
-                            return siteVisitListRecord(record);
-                          }),
-                    ),
-                  ),
-                ),
+                    child: controller.projectSiteVisitsList.value.length > 0
+                        ? Padding(
+                            padding: EdgeInsets.all(4),
+                            child: ColabLoaderWidget(
+                              loading: controller.projectSiteVisitsLoader.value,
+                              child: ListView.builder(
+                                  itemCount: controller
+                                      .projectSiteVisitsList.value.length,
+                                  physics: BouncingScrollPhysics(),
+                                  scrollDirection: Axis.vertical,
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) {
+                                    var record = controller
+                                        .projectSiteVisitsList.value[index];
+                                    return InkWell(
+                                      child: siteVisitListRecord(record),
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                            isScrollControlled: true,
+                                            useRootNavigator: true,
+                                            shape: const RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.vertical(
+                                              top: Radius.circular(40),
+                                            )),
+                                            context: Get.context!,
+                                            builder: (context) {
+                                              return Padding(
+                                                padding: EdgeInsets.only(
+                                                    bottom:
+                                                        MediaQuery.of(context)
+                                                            .viewInsets
+                                                            .bottom),
+                                                child: ViewProjectSiteVisitPage(
+                                                    record),
+                                              );
+                                            }).then((value) {
+                                          controller
+                                              .timeLineProjectAttachmentsList
+                                              .value
+                                              .clear();
+                                        });
+                                      },
+                                    );
+                                  }),
+                            ),
+                          )
+                        : Center(
+                        child: text(
+                            'No site visits are available for you.',
+                            Colors.black,
+                            18,
+                            FontWeight.w600))),
               ],
             )),
       ),
     );
   }
+}
 
-  Widget siteVisitListRecord(ProjectSiteVisitsResponseModel record) {
-    return Card(
-      elevation: 2,
-      child: Container(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            textMore(record.title, Colors.grey, 16,
-                FontWeight.w600, 3),
-            SizedBox(
-              height: 4,
-            ),
-            textMore(record.description, Colors.black,
-                14, FontWeight.w400, 3),
-            SizedBox(
-              height: 8,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Expanded(
-                  child: textMore(record.createAt, Colors.black,
-                      16, FontWeight.w600, 3),
-                ),
-                textMore('Site visit done by: ', Colors.grey, 10,
-                    FontWeight.w400, 3),
-                textMore(record.userName, Colors.black, 16,
-                    FontWeight.w600, 3),
-              ],
-            ),
-            SizedBox(
-              height: 4,
-            ),
-          ],
-        ),
+Widget siteVisitListRecord(ProjectSiteVisitsResponseModel record) {
+  return Card(
+    elevation: 2,
+    child: Container(
+      padding: const EdgeInsets.all(10),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          textMore(record.title, Colors.grey, 16, FontWeight.w600, 3),
+          SizedBox(
+            height: 4,
+          ),
+          textMore(record.description, Colors.black, 14, FontWeight.w400, 3),
+          SizedBox(
+            height: 8,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Expanded(
+                child: textMore(
+                    record.createAt, Colors.black, 16, FontWeight.w600, 3),
+              ),
+              textMore(
+                  'Site visit done by: ', Colors.grey, 10, FontWeight.w400, 3),
+              textMore(record.userName, Colors.black, 16, FontWeight.w600, 3),
+            ],
+          ),
+          SizedBox(
+            height: 4,
+          ),
+        ],
       ),
-    );
-  }
+    ),
+  );
 }
 
 class AddProjectSiteVisitPage extends StatefulWidget {
@@ -153,6 +188,7 @@ class AddProjectSiteVisitPage extends StatefulWidget {
 
   final String project;
   final String user;
+
   final Function(String, String) callback;
 
   @override
@@ -164,7 +200,7 @@ class _AddProjectSiteVisitPageState extends State<AddProjectSiteVisitPage> {
   TextEditingController titleController = TextEditingController();
 
   TextEditingController descController = TextEditingController();
-
+  ProjectSiteVisitController controller = ProjectSiteVisitController.to;
   var formKey = GlobalKey<FormState>();
 
   @override
@@ -207,10 +243,80 @@ class _AddProjectSiteVisitPageState extends State<AddProjectSiteVisitPage> {
                   inputField2(
                       hintText: 'Enter Description',
                       controller: descController,
+                      maxLines: 5,
                       keyboardType: TextInputType.name,
                       validation: (value) {
                         return value?.siteVisitDescriptionValidation();
                       }),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    height: Get.width * 0.25,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        InkWell(
+                          child: Container(
+                            height: Get.width * .25,
+                            width: Get.width * .25,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: ClipRRect(
+                              child: Icon(
+                                Icons.attachment,
+                                size: Get.width * 0.20,
+                              ),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          onTap: () async {
+                            List<File> result =
+                                await CustomImagePicker().pickImage(context);
+                            controller.localAttachment.addAll(result);
+                            setState(() {});
+                          },
+                        ),
+                        Expanded(
+                          child: Visibility(
+                            visible: controller.localAttachment.isNotEmpty,
+                            child: ListView.builder(
+                                itemCount: controller.localAttachment.length,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  return Container(
+                                    margin: EdgeInsets.symmetric(horizontal: 2),
+                                    height: Get.width * .25,
+                                    width: Get.width * .25,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: ClipRRect(
+                                      child: Stack(
+                                        children: [
+                                          Image.file(
+                                              controller.localAttachment[index]),
+                                          Positioned(child: InkWell(
+                                            onTap: (){
+                                              setState(() {
+                                                controller.localAttachment.removeAt(index);
+                                              });
+                                            },
+                                              child: Icon(Icons.delete, size: 22, color: Colors.red,)),right: 0, bottom: 0,)
+                                        ],
+                                      ),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                  );
+                                }),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   SizedBox(
                     height: 20,
                   ),
@@ -231,3 +337,69 @@ class _AddProjectSiteVisitPageState extends State<AddProjectSiteVisitPage> {
     );
   }
 }
+
+class ViewProjectSiteVisitPage extends StatefulWidget {
+  final ProjectSiteVisitsResponseModel record;
+
+  ViewProjectSiteVisitPage(this.record, {super.key});
+
+  @override
+  State<ViewProjectSiteVisitPage> createState() => _ViewProjectSiteVisitPageState();
+}
+
+class _ViewProjectSiteVisitPageState extends State<ViewProjectSiteVisitPage> {
+  ProjectSiteVisitController controller = ProjectSiteVisitController.to;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.getAttachmentFromSiteVisit(widget.record.attachmentsForSiteVisit).then((value){
+        setState(() {});
+      });
+    });
+
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() => Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: Get.width,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25), topRight: Radius.circular(25)),
+            color: Colors.white,
+          ),
+          padding: const EdgeInsets.all(20.0),
+          child: siteVisitListRecord(widget.record),
+        ),
+        Container(
+          height: Get.height * 0.5,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.all(4),
+              child: ListView.builder(
+                  itemCount: controller.timeLineProjectAttachmentsList.value.length,
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.vertical,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return ImageListGridRow(
+                      timeLineAttachment: controller.timeLineProjectAttachmentsList.value[index],
+                    );
+                  }),
+            ),
+          ),
+        )
+      ],
+    ));
+  }
+}
+
+// Empty screen for site visit: Done
+// show only project users into Manage site visit user: Done
+// Comming soon lable for rest other tab: Done
+// Improve project detail screen UI Design: Pending

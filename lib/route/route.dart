@@ -15,6 +15,7 @@ abstract class AppRoute {
   static const projectFullScreenAttachment = '/projectFullScreenAttachment';
   static const projectDetails = '/projectDetails';
   static const addUser = '/addUser';
+  static const comingSoonPage = '/commingSoonPage';
 
   //More
   static const profile = '/profile';

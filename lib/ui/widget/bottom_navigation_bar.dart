@@ -1,4 +1,5 @@
 import 'package:colab_ezzyfy_solutions/resource/image.dart';
+import 'package:colab_ezzyfy_solutions/ui/pages/coming_soon_page.dart';
 import 'package:colab_ezzyfy_solutions/ui/pages/home_dashboard/home_dashboard_page.dart';
 import 'package:colab_ezzyfy_solutions/ui/widget/all_widget.dart';
 import 'package:flutter/material.dart';
@@ -33,10 +34,10 @@ class _BottomNavigationPageState extends State<BottomNavigationPage> {
 
     List<Widget> _buildScreens = [
       HomeDashboardPage(),
-      SizedBox(),
-      SizedBox(),
-      SizedBox(),
-      SizedBox()
+      ComingSoonPageForTab(),
+      ComingSoonPageForTab(),
+      ComingSoonPageForTab(),
+      ComingSoonPageForTab(),
     ];
 
     void onTapped(int index) {
