@@ -18,6 +18,7 @@ ProjectSiteVisitsResponseModel _$ProjectSiteVisitsResponseModelFromJson(
       ..userName = json['userName'] ?? '' as String
       ..projectName = json['projectName'] ?? '' as String
       ..profilePictureUrl = json['profilePictureUrl'] ?? '' as String?
+      ..attachmentsForSiteVisit = json['attachmentsForSiteVisit'] ?? '' as String
       ..createAt = json['createAt'] as String;
 
 Map<String, dynamic> _$ProjectSiteVisitsResponseModelToJson(
@@ -31,5 +32,6 @@ Map<String, dynamic> _$ProjectSiteVisitsResponseModelToJson(
       'userName': instance.userName,
       'projectName': instance.projectName,
       'profilePictureUrl': instance.profilePictureUrl,
+      'attachmentsForSiteVisit': instance.attachmentsForSiteVisit,
       'createAt': instance.createAt,
     };

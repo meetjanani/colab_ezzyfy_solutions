@@ -30,7 +30,7 @@ class _ProjectAttachmentListPageState extends State<ProjectAttachmentListPage> {
     projectAttachmentsList =
         Get.arguments as List<ProjectAttachmentsResponseModel>;
     projectAttachmentsList.reversed.map((record) => record.createAt).toSet().toList().forEach((e){
-      timeLineProjectAttachmentsList.add(TimeLineAttachmentListModel(e, projectAttachmentsList.where((element) => element.createAt == e).toList()));
+      timeLineProjectAttachmentsList.add(TimeLineAttachmentListModel(e, projectAttachmentsList.where((element) => element.createAt == e).toList().reversed.toList()));
       print(e);
     });
   }

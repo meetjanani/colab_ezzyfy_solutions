@@ -36,15 +36,25 @@ class AddUserController extends GetxController {
   void fetAllSystemUsers() async {
     loader.value = true;
     await getAssignedUserByProject();
-    allSystemUsers
-      ..clear()
-      ..addAll(await projectControllerSupabase
-          .fetAllSystemUsers());
+    if(isAdduserScreen){
+      allSystemUsers
+        ..clear()
+        ..addAll(await projectControllerSupabase
+            .fetAllSystemUsers());
+    } else {
+      allSystemUsers
+        ..clear()
+        ..addAll(await projectControllerSupabase
+            .getAssignedUserByProject(projectResponseModel.id));
+    }
+
     searchSystemUser
       ..clear()
       ..addAll(allSystemUsers);
     loader.value = false;
   }
+
+
   void addOrRemoveUser(int userId) async {
     if(isAdduserScreen) {
       addOrRemoveUserFromProject(userId);

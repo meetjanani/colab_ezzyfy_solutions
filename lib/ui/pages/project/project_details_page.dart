@@ -30,7 +30,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
     // TODO: implement initState
     super.initState();
     controller.projectResponseModel =
-    Get.arguments as CreateProjectResponseModel;
+        Get.arguments as CreateProjectResponseModel;
   }
 
   @override
@@ -45,8 +45,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
             CommonToolbar(
               toolbarTitle: 'Project Details',
             ),
-            Obx(
-                () => Padding(
+            Obx(() => Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,8 +55,8 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                           child: InkWell(
                             onTap: () {
                               Get.toNamed(AppRoute.projectAttachmentList,
-                                  arguments: controller.projectAttachmentsList
-                                      .value);
+                                  arguments:
+                                      controller.projectAttachmentsList.value);
                             },
                             child: Column(
                               children: [
@@ -66,14 +65,14 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(10),
                                       child: (controller.getImageFromIndex(0) !=
-                                          null)
+                                              null)
                                           ? ColabCatchedImageWidget(
-                                        imageUrl:
-                                        controller.getImageFromIndex(0),
-                                        boxFit: BoxFit.cover,
-                                        width: Get.width,
-                                        height: Get.width * 0.50,
-                                      )
+                                              imageUrl: controller
+                                                  .getImageFromIndex(0),
+                                              boxFit: BoxFit.cover,
+                                              width: Get.width,
+                                              height: Get.width * 0.50,
+                                            )
                                           : SizedBox(),
                                     ),
                                     Visibility(
@@ -84,7 +83,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                                           width: 32,
                                           decoration: BoxDecoration(
                                               borderRadius:
-                                              BorderRadius.circular(50),
+                                                  BorderRadius.circular(50),
                                               color: Colors.white),
                                           child: Padding(
                                             padding: const EdgeInsets.all(5.0),
@@ -106,86 +105,98 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                                   height: 10,
                                 ),
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment
-                                      .spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
-                                      height: (controller.getImageFromIndex(1) !=
-                                          null) ? Get.width * .25 : 0,
+                                      height:
+                                          (controller.getImageFromIndex(1) !=
+                                                  null)
+                                              ? Get.width * .25
+                                              : 0,
                                       width: Get.width * .25,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                       child: ClipRRect(
-                                        child: (controller.getImageFromIndex(1) !=
-                                            null)
-                                            ? ColabCatchedImageWidget(
-                                          imageUrl:
-                                          controller.getImageFromIndex(1),
-                                          boxFit: BoxFit.cover,
-                                          width: Get.width,
-                                          height: Get.width * 0.50,
-                                        )
-                                            : SizedBox(),
+                                        child:
+                                            (controller.getImageFromIndex(1) !=
+                                                    null)
+                                                ? ColabCatchedImageWidget(
+                                                    imageUrl: controller
+                                                        .getImageFromIndex(1),
+                                                    boxFit: BoxFit.cover,
+                                                    width: Get.width,
+                                                    height: Get.width * 0.50,
+                                                  )
+                                                : SizedBox(),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
                                     Container(
-                                      height: (controller.getImageFromIndex(1) !=
-                                          null) ? Get.width * .25 : 0,
+                                      height:
+                                          (controller.getImageFromIndex(1) !=
+                                                  null)
+                                              ? Get.width * .25
+                                              : 0,
                                       width: Get.width * .25,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                       child: ClipRRect(
-                                        child: (controller.getImageFromIndex(2) !=
-                                            null)
-                                            ? ColabCatchedImageWidget(
-                                          imageUrl:
-                                          controller.getImageFromIndex(2),
-                                          boxFit: BoxFit.cover,
-                                          width: Get.width,
-                                          height: Get.width * 0.50,
-                                        )
-                                            : SizedBox(),
+                                        child:
+                                            (controller.getImageFromIndex(2) !=
+                                                    null)
+                                                ? ColabCatchedImageWidget(
+                                                    imageUrl: controller
+                                                        .getImageFromIndex(2),
+                                                    boxFit: BoxFit.cover,
+                                                    width: Get.width,
+                                                    height: Get.width * 0.50,
+                                                  )
+                                                : SizedBox(),
                                         borderRadius: BorderRadius.circular(10),
                                       ),
                                     ),
                                     Stack(
                                       children: [
                                         Container(
-                                          height: (controller.getImageFromIndex(
-                                              1) !=
-                                              null) ? Get.width * .25 : 0,
+                                          height: (controller
+                                                      .getImageFromIndex(1) !=
+                                                  null)
+                                              ? Get.width * .25
+                                              : 0,
                                           width: Get.width * .25,
                                           decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(
-                                                10),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
                                           ),
                                           child: ClipRRect(
-                                            child:
-                                            (controller.getImageFromIndex(3) !=
-                                                null)
+                                            child: (controller
+                                                        .getImageFromIndex(3) !=
+                                                    null)
                                                 ? ColabCatchedImageWidget(
-                                              imageUrl: controller
-                                                  .getImageFromIndex(3),
-                                              boxFit: BoxFit.cover,
-                                              width: Get.width,
-                                              height: Get.width * 0.50,
-                                            )
+                                                    imageUrl: controller
+                                                        .getImageFromIndex(3),
+                                                    boxFit: BoxFit.cover,
+                                                    width: Get.width,
+                                                    height: Get.width * 0.50,
+                                                  )
                                                 : SizedBox(),
-                                            borderRadius: BorderRadius.circular(
-                                                10),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
                                           ),
                                         ),
                                         Positioned.fill(
                                           child: Align(
                                               alignment: Alignment.center,
-                                              child: text(controller
-                                                  .projectAttachmentsList.value
-                                                  .length - 3 < 0 ? '' :
-                                              '${controller.projectAttachmentsList
-                                                  .value.length - 3}+',
+                                              child: text(
+                                                  controller.projectAttachmentsList
+                                                                  .value.length -
+                                                              3 <
+                                                          0
+                                                      ? ''
+                                                      : '${controller.projectAttachmentsList.value.length - 3}+',
                                                   Colors.white,
                                                   24,
                                                   FontWeight.w600)),
@@ -204,11 +215,13 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           InkWell(
-                            onTap: (){
-                              if(controller.userModelSupabase?.isAdmin == true) {
+                            onTap: () {
+                              if (controller.userModelSupabase?.isAdmin ==
+                                  true) {
                                 controller.updateProjectThumbnail(context);
                               } else {
-                                Get.showErrorSnackbar("Only Admin user can access this feature");
+                                Get.showErrorSnackbar(
+                                    "Only Admin user can access this feature");
                               }
                             },
                             child: text('Project Thumbnail', Colors.black, 18,
@@ -222,8 +235,8 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          text(controller.projectResponseModel.name, Colors.black, 18,
-                              FontWeight.w700),
+                          text(controller.projectResponseModel.name,
+                              Colors.black, 18, FontWeight.w700),
                           InkWell(
                             onTap: () {
                               controller.uploadProjectAttachment(context);
@@ -251,7 +264,10 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                                     ),
                                     Expanded(
                                       child: Center(
-                                        child: text('Add Image', textVioletColor, 14,
+                                        child: text(
+                                            'Add Image',
+                                            textVioletColor,
+                                            14,
                                             FontWeight.w500),
                                       ),
                                     ),
@@ -318,13 +334,15 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          text('Assign User', Colors.black, 18, FontWeight.w600),
+                          text(
+                              'Assign User', Colors.black, 18, FontWeight.w600),
                           Spacer(),
                           InkWell(
                             onTap: () {
-                              Get.toNamed(AppRoute.addUser,
-                                  arguments: [controller.projectResponseModel, true])
-                                  ?.then((value) {
+                              Get.toNamed(AppRoute.addUser, arguments: [
+                                controller.projectResponseModel,
+                                true
+                              ])?.then((value) {
                                 controller.init();
                               });
                             },
@@ -351,8 +369,8 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                                     ),
                                     Expanded(
                                       child: Center(
-                                        child: text('Add User', textVioletColor, 14,
-                                            FontWeight.w500),
+                                        child: text('Add User', textVioletColor,
+                                            14, FontWeight.w500),
                                       ),
                                     ),
                                     SizedBox(
@@ -370,12 +388,13 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                         child: ColabLoaderWidget(
                           loading: controller.projectAssignedUserLoader.value,
                           child: ListView.builder(
-                              itemCount:
-                              controller.projectAssignedUserList.value.length,
+                              itemCount: controller
+                                  .projectAssignedUserList.value.length,
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) {
-                                return StarredPeopleRow(starredPeople: controller
-                                    .projectAssignedUserList.value[index]);
+                                return StarredPeopleRow(
+                                    starredPeople: controller
+                                        .projectAssignedUserList.value[index]);
                               }),
                         ),
                       ),
@@ -426,8 +445,11 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                                       ),
                                       Expanded(
                                         child: Center(
-                                          child: text('Add User', textVioletColor,
-                                              14, FontWeight.w500),
+                                          child: text(
+                                              'Add User',
+                                              textVioletColor,
+                                              14,
+                                              FontWeight.w500),
                                         ),
                                       ),
                                     ],
@@ -438,8 +460,14 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                           Spacer(),
                           InkWell(
                             onTap: () {
-                              if(controller.userModelSupabase?.isAdmin == true) {
-                                Get.toNamed(AppRoute.projectSiteVisitList, arguments: controller.projectResponseModel);
+                              if (controller.userModelSupabase?.isAdmin ==
+                                  true) {
+                                Get.toNamed(AppRoute.projectSiteVisitList,
+                                        arguments:
+                                            controller.projectResponseModel)
+                                    ?.then((value) {
+                                  controller.init();
+                                });
                               } else {
                                 Get.showErrorSnackbar(
                                     "Only Admin user can access this feature");
@@ -468,7 +496,10 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                                     ),
                                     Expanded(
                                       child: Center(
-                                        child: text('Site Visit', textVioletColor, 14,
+                                        child: text(
+                                            'Site Visit',
+                                            textVioletColor,
+                                            14,
                                             FontWeight.w500),
                                       ),
                                     ),
@@ -484,19 +515,19 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                         child: ColabLoaderWidget(
                           loading: controller.projectSiteVisitUserLoader.value,
                           child: ListView.builder(
-                              itemCount:
-                              controller.projectSiteVisitUserList.value.length,
+                              itemCount: controller
+                                  .projectSiteVisitUserList.value.length,
                               scrollDirection: Axis.horizontal,
                               itemBuilder: (context, index) {
-                                return StarredPeopleRow(starredPeople: controller
-                                    .projectSiteVisitUserList.value[index]);
+                                return StarredPeopleRow(
+                                    starredPeople: controller
+                                        .projectSiteVisitUserList.value[index]);
                               }),
                         ),
                       ),
                     ],
                   ),
-                )
-            )
+                ))
           ],
         ),
       ),

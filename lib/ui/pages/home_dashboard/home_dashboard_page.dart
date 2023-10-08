@@ -191,93 +191,108 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                           }
                         },
                       ),
-                      Column(
-                        children: [
-                          Card(
-                            elevation: 1,
-                            shadowColor: tabShadowColor,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Container(
-                              height: 50,
-                              width: 55,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
+                      InkWell(
+                        onTap: (){
+                          Get.toNamed(AppRoute.comingSoonPage);
+                        },
+                        child: Column(
+                          children: [
+                            Card(
+                              elevation: 1,
+                              shadowColor: tabShadowColor,
+                              shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10)),
-                              child: Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: SvgPicture.asset(
-                                  team,
-                                  color: Colors.blue,
+                              child: Container(
+                                height: 50,
+                                width: 55,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: SvgPicture.asset(
+                                    team,
+                                    color: Colors.blue,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 6,
-                          ),
-                          text('Create', Colors.black, 12, FontWeight.w500),
-                          text('Team', Colors.black, 12, FontWeight.w500)
-                        ],
+                            SizedBox(
+                              height: 6,
+                            ),
+                            text('Create', Colors.black, 12, FontWeight.w500),
+                            text('Team', Colors.black, 12, FontWeight.w500)
+                          ],
+                        ),
                       ),
-                      Column(
-                        children: [
-                          Card(
-                            elevation: 1,
-                            shadowColor: tabShadowColor,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Container(
-                              height: 50,
-                              width: 55,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
+                      InkWell(
+                        onTap: (){
+                          Get.toNamed(AppRoute.comingSoonPage);
+                        },
+                        child: Column(
+                          children: [
+                            Card(
+                              elevation: 1,
+                              shadowColor: tabShadowColor,
+                              shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10)),
-                              child: Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: SvgPicture.asset(
-                                  up,
-                                  color: Colors.blue,
+                              child: Container(
+                                height: 50,
+                                width: 55,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: SvgPicture.asset(
+                                    up,
+                                    color: Colors.blue,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 6,
-                          ),
-                          text('Upload', Colors.black, 12, FontWeight.w500),
-                          text('Documents', Colors.black, 12, FontWeight.w500)
-                        ],
+                            SizedBox(
+                              height: 6,
+                            ),
+                            text('Upload', Colors.black, 12, FontWeight.w500),
+                            text('Documents', Colors.black, 12, FontWeight.w500)
+                          ],
+                        ),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Card(
-                            elevation: 1,
-                            shadowColor: tabShadowColor,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)),
-                            child: Container(
-                              height: 50,
-                              width: 55,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
+                      InkWell(
+                        onTap: (){
+                          Get.toNamed(AppRoute.comingSoonPage);
+                        },
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Card(
+                              elevation: 1,
+                              shadowColor: tabShadowColor,
+                              shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10)),
-                              child: Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: SvgPicture.asset(
-                                  scan,
-                                  color: Colors.blue,
+                              child: Container(
+                                height: 50,
+                                width: 55,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: SvgPicture.asset(
+                                    scan,
+                                    color: Colors.blue,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 6,
-                          ),
-                          text('Scan', Colors.black, 12, FontWeight.w500),
-                          text('Documents', Colors.black, 12, FontWeight.w500)
-                        ],
+                            SizedBox(
+                              height: 6,
+                            ),
+                            text('Scan', Colors.black, 12, FontWeight.w500),
+                            text('Documents', Colors.black, 12, FontWeight.w500)
+                          ],
+                        ),
                       ),
                     ],
                   ),
@@ -358,7 +373,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                           child: text(
                               'View all', textVioletColor, 16, FontWeight.w500),
                           onTap: () {
-                            // controller.firebaseAuthController.signOutUser();
+                            Get.toNamed(AppRoute.comingSoonPage);
                           },
                         ),
                       ],

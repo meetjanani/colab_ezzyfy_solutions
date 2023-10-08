@@ -7,12 +7,17 @@ import '../../../route/route.dart';
 import '../../widget/all_widget.dart';
 import '../../widget/colab_catched_image_widget.dart';
 
-class ImageListGridRow extends StatelessWidget {
+class ImageListGridRow extends StatefulWidget {
   final TimeLineAttachmentListModel timeLineAttachment;
 
   const ImageListGridRow(
       {super.key, required this.timeLineAttachment});
 
+  @override
+  State<ImageListGridRow> createState() => _ImageListGridRowState();
+}
+
+class _ImageListGridRowState extends State<ImageListGridRow> {
   @override
   Widget build(BuildContext context) {
     return dateWileImage();
@@ -27,7 +32,7 @@ class ImageListGridRow extends StatelessWidget {
         Container(
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
           width: Get.size.width,
-          child: text(timeLineAttachment.createAt, Colors.black, 14, FontWeight.w600),
+          child: text(widget.timeLineAttachment.createAt, Colors.black, 14, FontWeight.w600),
         ),
         Padding(
           padding: EdgeInsets.all(4),
@@ -38,9 +43,9 @@ class ImageListGridRow extends StatelessWidget {
                   mainAxisSpacing: 4.0),
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: timeLineAttachment.imagesForDay.length,
+              itemCount: widget.timeLineAttachment.imagesForDay.length,
               itemBuilder: (context, index) {
-                return imageTile(timeLineAttachment.imagesForDay[index]);
+                return imageTile(widget.timeLineAttachment.imagesForDay[index]);
               }),
         ),
         SizedBox(height: 10,),

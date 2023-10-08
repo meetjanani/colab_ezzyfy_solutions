@@ -8,6 +8,7 @@ class ProjectSiteVisitsRequestModel {
   int createdByUser = 0;
   String title = "";
   String description = "";
+  String attachmentsForSiteVisit = "";
 
   String createAt = DateTime.now().toString();
 
@@ -16,6 +17,7 @@ class ProjectSiteVisitsRequestModel {
     required this.createdByUser,
     required this.title,
     required this.description,
+    required this.attachmentsForSiteVisit,
   });
 
   static List<ProjectSiteVisitsRequestModel> fromJsonList(List<dynamic> dataList) {

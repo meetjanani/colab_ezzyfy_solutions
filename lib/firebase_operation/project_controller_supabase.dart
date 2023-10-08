@@ -194,9 +194,9 @@ class ProjectControllerSupabase {
   Future<void> createProjectAttachment(
       List<ProjectAttachmentsRequestModel> projectAttachment) async {
     showProgress();
-    await Supabase.instance.client
+    var response = await Supabase.instance.client
         .from(DatabaseSchema.projectAttachmentsTable)
-        .insert(ProjectAttachmentsRequestModel.toJsonListProject(projectAttachment));
+        .insert(ProjectAttachmentsRequestModel.toJsonListProject(projectAttachment)).select();
     await updateModifiedTimeProjectById(projectAttachment.first.projectId);
     hideProgressBar();
     Get.showSuccessSnackbar('Image uploaded successfully.');
@@ -241,5 +241,13 @@ class ProjectControllerSupabase {
         .order(DatabaseSchema.projectAttachmentsCreateAt, ascending: false);
     var projectList = ProjectAttachmentsResponseModel.fromJsonList(response);
     return projectList;
+  }
+
+  Future<List<ProjectAttachmentsResponseModel>> getAssignedProjectAttachmentBySiteId(String attachmentIds) async {
+    var userResponse = await Supabase.instance.client
+        .from(DatabaseSchema.projectAttachmentsTable)
+        .select('*, users:createdByUser ( name, profilePictureUrl ), projects:projectId ( name )')
+        .in_(DatabaseSchema.usersId, attachmentIds.split(','));
+    return ProjectAttachmentsResponseModel.fromJsonList(userResponse);
   }
 }
