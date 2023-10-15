@@ -217,7 +217,7 @@ class ProjectControllerSupabase {
         .select('*, users:createdByUser ( name, profilePictureUrl ), projects:projectId ( name )')
         .eq(DatabaseSchema.projectAttachmentsProjectId, projectId);
     var projectList = ProjectAttachmentsResponseModel.fromJsonList(response);
-    return projectList;
+    return projectList.reversed.toList();
   }
 
   Future<List<ProjectAttachmentsResponseModel>> getRecentOwnProjectAttachments(int currentUserId) async {

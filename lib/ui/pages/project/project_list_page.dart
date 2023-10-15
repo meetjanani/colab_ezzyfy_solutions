@@ -57,6 +57,7 @@ class _ProjectListPageState extends State<ProjectListPage> {
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(20,0,20,0),
                       child: ListView.builder(
+                          padding: EdgeInsets.zero,
                           itemCount: controller.projectList.value.length,
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,

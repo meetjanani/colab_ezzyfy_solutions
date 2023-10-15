@@ -29,8 +29,8 @@ class _ProjectAttachmentListPageState extends State<ProjectAttachmentListPage> {
     super.initState();
     projectAttachmentsList =
         Get.arguments as List<ProjectAttachmentsResponseModel>;
-    projectAttachmentsList.reversed.map((record) => record.createAt).toSet().toList().forEach((e){
-      timeLineProjectAttachmentsList.add(TimeLineAttachmentListModel(e, projectAttachmentsList.where((element) => element.createAt == e).toList().reversed.toList()));
+    projectAttachmentsList.map((record) => record.createAt).toSet().toList().forEach((e){
+      timeLineProjectAttachmentsList.add(TimeLineAttachmentListModel(e, projectAttachmentsList.where((element) => element.createAt == e).toList()));
       print(e);
     });
   }
@@ -56,6 +56,7 @@ class _ProjectAttachmentListPageState extends State<ProjectAttachmentListPage> {
               child: Padding(
                 padding: EdgeInsets.all(4),
                 child: ListView.builder(
+                    padding: EdgeInsets.zero,
                     itemCount: timeLineProjectAttachmentsList.length,
                     physics: BouncingScrollPhysics(),
                     scrollDirection: Axis.vertical,

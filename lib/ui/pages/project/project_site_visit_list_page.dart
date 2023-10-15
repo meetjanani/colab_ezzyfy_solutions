@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:colab_ezzyfy_solutions/model/project_site_visits_response_model.dart';
+import 'package:colab_ezzyfy_solutions/resource/extension.dart';
 import 'package:colab_ezzyfy_solutions/resource/extensions.dart';
 import 'package:colab_ezzyfy_solutions/ui/widget/colab_loader_widget.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,11 @@ class _ProjectSiteVisitListPageState extends State<ProjectSiteVisitListPage> {
     controller.projectResponseModel =
         Get.arguments as CreateProjectResponseModel;
     controller.fetchUserProfile();
-    controller.fetchProjectSiteVisits();
+    controller.getProjectSiteVisits().then((value){
+      setState(() {
+
+      });
+    });
   }
 
   @override
@@ -64,12 +69,16 @@ class _ProjectSiteVisitListPageState extends State<ProjectSiteVisitListPage> {
                         controller.projectResponseModel.name.toString(),
                         controller.userModelSupabase?.name ?? '',
                         (title, desc) {
-                      controller.addSiteVisit(title, desc);
+                      controller.addSiteVisit(title, desc).then((value){
+                        setState(() {
+
+                        });
+                      });
                     }),
                   );
                 });
           },
-          backgroundColor: colabColorPrimary,
+          backgroundColor: Colors.blue,
           child: Icon(
             Icons.add,
           ),
@@ -83,53 +92,51 @@ class _ProjectSiteVisitListPageState extends State<ProjectSiteVisitListPage> {
                   toolbarTitle: 'Project Site Visits',
                 ),
                 Expanded(
-                    child: controller.projectSiteVisitsList.value.length > 0
+                    child: controller.projectSiteVisitsList.value.isNotEmpty
                         ? Padding(
-                            padding: EdgeInsets.all(4),
-                            child: ColabLoaderWidget(
-                              loading: controller.projectSiteVisitsLoader.value,
-                              child: ListView.builder(
-                                  itemCount: controller
-                                      .projectSiteVisitsList.value.length,
-                                  physics: BouncingScrollPhysics(),
-                                  scrollDirection: Axis.vertical,
-                                  shrinkWrap: true,
-                                  itemBuilder: (context, index) {
-                                    var record = controller
-                                        .projectSiteVisitsList.value[index];
-                                    return InkWell(
-                                      child: siteVisitListRecord(record),
-                                      onTap: () {
-                                        showModalBottomSheet(
-                                            isScrollControlled: true,
-                                            useRootNavigator: true,
-                                            shape: const RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.vertical(
-                                              top: Radius.circular(40),
-                                            )),
-                                            context: Get.context!,
-                                            builder: (context) {
-                                              return Padding(
-                                                padding: EdgeInsets.only(
-                                                    bottom:
-                                                        MediaQuery.of(context)
-                                                            .viewInsets
-                                                            .bottom),
-                                                child: ViewProjectSiteVisitPage(
-                                                    record),
-                                              );
-                                            }).then((value) {
-                                          controller
-                                              .timeLineProjectAttachmentsList
-                                              .value
-                                              .clear();
-                                        });
-                                      },
-                                    );
-                                  }),
-                            ),
-                          )
+                      padding: EdgeInsets.all(4),
+                      child: ListView.builder(
+                          padding: EdgeInsets.zero,
+                          itemCount: controller
+                              .projectSiteVisitsList.value.length,
+                          physics: BouncingScrollPhysics(),
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            var record = controller
+                                .projectSiteVisitsList.value[index];
+                            return InkWell(
+                              child: siteVisitListRecord(record),
+                              onTap: () {
+                                showModalBottomSheet(
+                                    isScrollControlled: true,
+                                    useRootNavigator: true,
+                                    shape: const RoundedRectangleBorder(
+                                        borderRadius:
+                                        BorderRadius.vertical(
+                                          top: Radius.circular(40),
+                                        )),
+                                    context: Get.context!,
+                                    builder: (context) {
+                                      return Padding(
+                                        padding: EdgeInsets.only(
+                                            bottom:
+                                            MediaQuery.of(context)
+                                                .viewInsets
+                                                .bottom),
+                                        child: ViewProjectSiteVisitPage(
+                                            record),
+                                      );
+                                    }).then((value) {
+                                  controller
+                                      .timeLineProjectAttachmentsList
+                                      .value
+                                      .clear();
+                                });
+                              },
+                            );
+                          }),
+                    )
                         : Center(
                         child: text(
                             'No site visits are available for you.',
@@ -244,7 +251,7 @@ class _AddProjectSiteVisitPageState extends State<AddProjectSiteVisitPage> {
                       hintText: 'Enter Description',
                       controller: descController,
                       maxLines: 5,
-                      keyboardType: TextInputType.name,
+                      keyboardType: TextInputType.multiline,
                       validation: (value) {
                         return value?.siteVisitDescriptionValidation();
                       }),
@@ -267,8 +274,9 @@ class _AddProjectSiteVisitPageState extends State<AddProjectSiteVisitPage> {
                             ),
                             child: ClipRRect(
                               child: Icon(
-                                Icons.attachment,
-                                size: Get.width * 0.20,
+                                Icons.camera_alt,
+                                color: Colors.blue,
+                                size: Get.width * 0.16,
                               ),
                               borderRadius: BorderRadius.circular(10),
                             ),
@@ -284,6 +292,7 @@ class _AddProjectSiteVisitPageState extends State<AddProjectSiteVisitPage> {
                           child: Visibility(
                             visible: controller.localAttachment.isNotEmpty,
                             child: ListView.builder(
+                                padding: EdgeInsets.zero,
                                 itemCount: controller.localAttachment.length,
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (context, index) {
@@ -382,6 +391,7 @@ class _ViewProjectSiteVisitPageState extends State<ViewProjectSiteVisitPage> {
             child: Padding(
               padding: EdgeInsets.all(4),
               child: ListView.builder(
+                  padding: EdgeInsets.zero,
                   itemCount: controller.timeLineProjectAttachmentsList.value.length,
                   physics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.vertical,

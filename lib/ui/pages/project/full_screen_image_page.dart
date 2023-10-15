@@ -21,9 +21,9 @@ class FullScreenImagePage extends StatelessWidget {
               child: ColabCatchedImageWidget(
                 imageUrl: (Get.arguments as ProjectAttachmentsResponseModel)
                     .projectAttachmentUrl,
-                height: Get.width.dynamicWidth(),
+                height: Get.width.dynamicWidth() / 2,
                 width: Get.width.dynamicWidth(),
-                boxFit: BoxFit.contain,
+                boxFit: BoxFit.cover  ,
               ),
             ),
           ),

@@ -38,20 +38,12 @@ class ProjectSiteVisitController extends GetxController {
   RxList<ProjectAttachmentsResponseModel> projectAttachmentsList = RxList();
   RxList<TimeLineAttachmentListModel> timeLineProjectAttachmentsList = RxList();
 
-  // TODO: SITE VISITS
-  Future<void> fetchProjectSiteVisits() async {
-    projectSiteVisitsLoader.value = true;
-    projectSiteVisitsList.value
-      ..clear()
-      ..addAll(await getProjectSiteVisits());
-    projectSiteVisitsLoader.value = false;
-  }
-
   Future<void> fetchUserProfile() async {
     userModelSupabase = await getUserModel();
   }
 
   Future<List<ProjectSiteVisitsResponseModel>> getProjectSiteVisits() async {
+    projectSiteVisitsLoader.value = true;
     final response = await Supabase.instance.client
         .from(DatabaseSchema.projectSiteVisitsTable)
         .select(
@@ -59,6 +51,10 @@ class ProjectSiteVisitController extends GetxController {
         .eq(DatabaseSchema.projectAttachmentsProjectId, projectResponseModel.id)
         .order(DatabaseSchema.projectAttachmentsCreateAt, ascending: false);
     var projectList = ProjectSiteVisitsResponseModel.fromJsonList(response);
+    projectSiteVisitsList.value
+      ..clear()
+      ..addAll(projectList);
+    projectSiteVisitsLoader.value = false;
     return projectList;
   }
 
@@ -105,9 +101,11 @@ class ProjectSiteVisitController extends GetxController {
   Future<String> uploadAttachment() async {
     String userId = "";
     projectAttachmentsListSupabase.value.clear();
-    await uploadFileOverFirebase();
-    var listOfAttachmentId = await createProjectAttachment(projectAttachmentsListSupabase.value);
-    userId = listOfAttachmentId.join(',');
+    if(localAttachment.isNotEmpty) {
+      await uploadFileOverFirebase();
+      var listOfAttachmentId = await createProjectAttachment(projectAttachmentsListSupabase.value);
+      userId = listOfAttachmentId.join(',');
+    }
     return userId;
   }
 
@@ -127,7 +125,7 @@ class ProjectSiteVisitController extends GetxController {
             ProjectSiteVisitsRequestModel.toJsonListProject(projectSiteVisit));
     await projectControllerSupabase.updateModifiedTimeProjectById(projectResponseModel.id);
     Get.showSuccessSnackbar('Site visit are updated successfully.');
-    await fetchProjectSiteVisits();
+    await getProjectSiteVisits();
   }
 
   Future<void> getAttachmentFromSiteVisit(String attachmentIds) async {
