@@ -341,12 +341,14 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                                       FontWeight.w600)),
                             )
                                 : ListView.builder(
-                                itemCount: controller.projectList.value
+                                padding: EdgeInsets.zero,
+                                      itemCount: controller.projectList.value
                                     .take(3)
                                     .length,
                                 semanticChildCount: controller.projectList.value
                                     .take(3)
                                     .length,
+                                shrinkWrap: true,
                                 scrollDirection: Axis.vertical,
                                 itemBuilder: (context, index) {
                                   return ProjectRowItem(
@@ -408,6 +410,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                                                 FontWeight.w600)),
                                       )
                                     : ListView.builder(
+                                    padding: EdgeInsets.zero,
                                         itemCount: controller
                                             .projectAttachmentsList
                                             .value
@@ -442,6 +445,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                           : Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 20),
                               child: ListView.builder(
+                                  padding: EdgeInsets.zero,
                                   itemCount:
                                       controller.starredPeople.value.length,
                                   shrinkWrap: true,

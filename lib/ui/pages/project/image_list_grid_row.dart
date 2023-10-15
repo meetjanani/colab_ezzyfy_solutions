@@ -37,6 +37,7 @@ class _ImageListGridRowState extends State<ImageListGridRow> {
         Padding(
           padding: EdgeInsets.all(4),
           child: GridView.builder(
+              padding: EdgeInsets.zero,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   crossAxisSpacing: 4.0,

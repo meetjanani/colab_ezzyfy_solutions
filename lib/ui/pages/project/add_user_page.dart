@@ -76,6 +76,7 @@ class _AddUserPageState extends State<AddUserPage> {
                       ColabLoaderWidget(
                         loading: controller.loader.value,
                         child: ListView.builder(
+                            padding: EdgeInsets.zero,
                             itemCount: controller.allSystemUsers.value.length,
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,

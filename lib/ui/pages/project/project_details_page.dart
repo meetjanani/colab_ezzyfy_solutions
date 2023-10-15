@@ -388,6 +388,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                         child: ColabLoaderWidget(
                           loading: controller.projectAssignedUserLoader.value,
                           child: ListView.builder(
+                              padding: EdgeInsets.zero,
                               itemCount: controller
                                   .projectAssignedUserList.value.length,
                               scrollDirection: Axis.horizontal,
@@ -515,6 +516,7 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                         child: ColabLoaderWidget(
                           loading: controller.projectSiteVisitUserLoader.value,
                           child: ListView.builder(
+                              padding: EdgeInsets.zero,
                               itemCount: controller
                                   .projectSiteVisitUserList.value.length,
                               scrollDirection: Axis.horizontal,
