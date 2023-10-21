@@ -17,6 +17,7 @@ class ProjectSiteVisitsResponseModel {
   // response[0]['users']['name']
 
   String createAt = DateTime.now().toString();
+  String visitDate = "";
 
   ProjectSiteVisitsResponseModel({
     required this.projectId,
@@ -34,9 +35,9 @@ class ProjectSiteVisitsResponseModel {
     List<ProjectSiteVisitsResponseModel> record = [];
     for (var e in dataList) {
       var attachment = _$ProjectSiteVisitsResponseModelFromJson(e);
-      attachment.userName = e['users']['name'];
-      attachment.profilePictureUrl = e['users']['profilePictureUrl'];
-      attachment.projectName = e['projects']['name'];
+      attachment.userName = e['users']['name'] ?? '';
+      attachment.profilePictureUrl = e['users']['profilePictureUrl'] ?? '';
+      attachment.projectName = e['projects']['name'] ?? '';
       if (e['createAt'] != null)
         attachment.createAt = e['createAt'].toString().getColabDateFormat();
       record.add(attachment);

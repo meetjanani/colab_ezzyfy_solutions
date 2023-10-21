@@ -254,6 +254,7 @@ inputField2({
   int? maxLength,
   TextInputType? keyboardType,
   String? hintText,
+  Color? hintColor,
   String? labelText,
   int maxLines = 1,
   bool obscureText = false,
@@ -295,7 +296,7 @@ inputField2({
                     counterText: "",
                     border: InputBorder.none,
                     hintStyle: TextStyle(
-                      color: hintTextColor,
+                      color: hintColor ?? hintTextColor,
                     ),
                     filled: true,
                     focusedBorder: OutlineInputBorder(
@@ -325,6 +326,9 @@ inputField2({
                     ),
                     fillColor: Colors.white,
                     hintText: hintText,
+                    labelStyle: TextStyle(
+                      color: Colors.black,
+                    ),
                     suffixIcon: Padding(
                       padding: const EdgeInsets.all(7.0),
                       child: inkWell,

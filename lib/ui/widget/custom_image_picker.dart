@@ -10,7 +10,8 @@ import 'package:image_picker/image_picker.dart';
 
 class CustomImagePicker {
   late List<File> selectedImages;
-  late bool isCameraOrGallery = true;
+  late bool isCamera = false;
+  late bool isGallery = false;
 
   Future<List<File>> pickImage(BuildContext context,
       {bool allowMultipleImages = true}) {
@@ -21,11 +22,12 @@ class CustomImagePicker {
               title: Row(
                 children: [
                   const Expanded(child: Text("Select Attachment")),
-                  InkWell(child: const Icon(Icons.clear),
-                  onTap: (){
-                    Get.back();
-                    hideProgressBar();
-                  },),
+                  InkWell(
+                    child: const Icon(Icons.clear),
+                    onTap: () {
+                      Get.back();
+                    },
+                  ),
                 ],
               ),
               content: SingleChildScrollView(
@@ -34,7 +36,7 @@ class CustomImagePicker {
                     GestureDetector(
                       child: const Text("Gallery"),
                       onTap: () async {
-                        isCameraOrGallery = false;
+                        isGallery = true;
                         Get.back();
                         /*selectedImages = (await _pickImageFromGallery(context,
                             allowMultipleImages: true))!;
@@ -49,9 +51,8 @@ class CustomImagePicker {
                     GestureDetector(
                       child: const Text("Camera"),
                       onTap: () async {
-                        isCameraOrGallery = true;
+                        isCamera = true;
                         Get.back();
-
 
                         // print("camera---");
                         // print(file.toString());
@@ -61,16 +62,18 @@ class CustomImagePicker {
                 ),
               ));
         }).then((value) async {
-          if(isCameraOrGallery) {
-            selectedImages = (await _pickImageFromCamera(context))!;
-          } else {
-            selectedImages = (await _pickImageFromGallery(context,
-                allowMultipleImages: true))!;
-          }
+      if (isCamera) {
+        selectedImages = (await _pickImageFromCamera(context));
+      } else if (isGallery) {
+        selectedImages =
+            (await _pickImageFromGallery(context, allowMultipleImages: true));
+      } else {
+        // click on Close icon to dismiss dialog
+      }
       if (selectedImages.firstOrNull?.path != null) {
-        var result = await FlutterPhotoEditor()
-            .editImage(selectedImages.first.path);
-        if(result == false) {
+        var result =
+            await FlutterPhotoEditor().editImage(selectedImages.first.path);
+        if (result == false) {
           return [];
         }
       }

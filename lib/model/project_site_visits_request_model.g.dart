@@ -14,6 +14,7 @@ ProjectSiteVisitsRequestModel _$ProjectSiteVisitsRequestModelFromJson(
       title: json['title'] as String,
       description: json['description'] as String,
       attachmentsForSiteVisit: json['attachmentsForSiteVisit'] as String,
+      visitDate: json['visitDate'] as String,
     )..createAt = json['createAt'] as String;
 
 Map<String, dynamic> _$ProjectSiteVisitsRequestModelToJson(
@@ -25,4 +26,5 @@ Map<String, dynamic> _$ProjectSiteVisitsRequestModelToJson(
       'description': instance.description,
       'attachmentsForSiteVisit': instance.attachmentsForSiteVisit,
       'createAt': instance.createAt,
+      'visitDate': instance.visitDate,
     };

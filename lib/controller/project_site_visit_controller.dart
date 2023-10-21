@@ -109,7 +109,7 @@ class ProjectSiteVisitController extends GetxController {
     return userId;
   }
 
-  Future<void> addSiteVisit(String title, String desc) async {
+  Future<void> addSiteVisit(String title, String desc, String visitDate) async {
     var siteVisitAttachmentId = await uploadAttachment();
     List<ProjectSiteVisitsRequestModel> projectSiteVisit = [];
     projectSiteVisitsLoader.value = true;
@@ -118,7 +118,8 @@ class ProjectSiteVisitController extends GetxController {
         createdByUser: userModelSupabase?.id ?? 0,
         description: desc,
         title: title,
-    attachmentsForSiteVisit: siteVisitAttachmentId));
+    attachmentsForSiteVisit: siteVisitAttachmentId,
+    visitDate: visitDate));
     await Supabase.instance.client
         .from(DatabaseSchema.projectSiteVisitsTable)
         .insert(
