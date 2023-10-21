@@ -24,7 +24,7 @@ Widget text(String text,Color color,double fontsize,FontWeight fontWeight,){
   );
 }
 
-Widget textMore(String text,Color color,double fontsize,FontWeight fontWeight,int maxLines){
+Widget textMore(String text,Color color,double fontsize,FontWeight fontWeight,int? maxLines){
   return Text(text,
     style: GoogleFonts.inter(
       textStyle: TextStyle(

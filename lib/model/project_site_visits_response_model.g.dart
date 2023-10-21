@@ -19,7 +19,8 @@ ProjectSiteVisitsResponseModel _$ProjectSiteVisitsResponseModelFromJson(
       ..projectName = json['projectName'] ?? '' as String
       ..profilePictureUrl = json['profilePictureUrl'] ?? '' as String?
       ..attachmentsForSiteVisit = json['attachmentsForSiteVisit'] ?? '' as String
-      ..createAt = json['createAt'] as String;
+      ..createAt = json['createAt'] ?? ''as String
+      ..visitDate = json['visitDate'] ?? '' as String;
 
 Map<String, dynamic> _$ProjectSiteVisitsResponseModelToJson(
         ProjectSiteVisitsResponseModel instance) =>
@@ -34,4 +35,5 @@ Map<String, dynamic> _$ProjectSiteVisitsResponseModelToJson(
       'profilePictureUrl': instance.profilePictureUrl,
       'attachmentsForSiteVisit': instance.attachmentsForSiteVisit,
       'createAt': instance.createAt,
+      'visitDate': instance.visitDate,
     };

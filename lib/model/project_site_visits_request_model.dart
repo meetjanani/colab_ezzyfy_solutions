@@ -11,6 +11,7 @@ class ProjectSiteVisitsRequestModel {
   String attachmentsForSiteVisit = "";
 
   String createAt = DateTime.now().toString();
+  String visitDate = DateTime.now().toString();
 
   ProjectSiteVisitsRequestModel({
     required this.projectId,
@@ -18,6 +19,7 @@ class ProjectSiteVisitsRequestModel {
     required this.title,
     required this.description,
     required this.attachmentsForSiteVisit,
+    required this.visitDate,
   });
 
   static List<ProjectSiteVisitsRequestModel> fromJsonList(List<dynamic> dataList) {
