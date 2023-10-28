@@ -1,3 +1,4 @@
+import 'package:colab_ezzyfy_solutions/resource/database_schema.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -10,7 +11,7 @@ class CommonToolbar extends StatefulWidget {
 
   const CommonToolbar({
     super.key,
-    this.toolbarTitle = 'Colab',
+    this.toolbarTitle = DatabaseSchema.projectCollabName,
   });
 
   @override

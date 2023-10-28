@@ -101,7 +101,7 @@ class _ProjectListPageState extends State<ProjectListPage> {
                   width: Get.width,
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: pinkButtonColor
+                      color: bluePrimaryButtonColor
                   ),
                   child: Center(
                       child: Row(

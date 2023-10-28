@@ -38,6 +38,11 @@ class DatabaseSchema extends GetxController {
   static Reference firebaseStorageRef = firebaseStorage.ref();
   static Reference projectRef = firebaseStorage.ref().child('projects');
   static Reference userProfileRef = firebaseStorage.ref().child('userProfiles');
+
+
+
+  // common string
+  static const String projectCollabName = "Collab";
 }
 
 

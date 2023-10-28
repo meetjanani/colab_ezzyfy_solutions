@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../../resource/database_schema.dart';
+
 class LoginPage extends GetView<LoginController> {
   const LoginPage({Key? key}) : super(key: key);
 
@@ -36,7 +38,7 @@ class LoginPage extends GetView<LoginController> {
                     SizedBox(
                       height: Get.width / 10,
                     ),
-                    Text('Colab',
+                    Text(DatabaseSchema.projectCollabName,
                       style: GoogleFonts.ibmPlexMono(
                         textStyle: TextStyle(
                           color: Colors.white,
@@ -111,7 +113,7 @@ class LoginPage extends GetView<LoginController> {
                             onTap: () {
                               Get.offNamed(AppRoute.register);
                             },
-                            child: text('Register Now', pinkButtonColor, 15,
+                            child: text('Register Now', bluePrimaryButtonColor, 15,
                                 FontWeight.bold)),
                       ],
                     )
