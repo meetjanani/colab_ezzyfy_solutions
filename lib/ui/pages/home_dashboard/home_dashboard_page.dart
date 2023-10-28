@@ -14,6 +14,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../resource/constant.dart';
+import '../../../resource/database_schema.dart';
 import '../../../resource/image.dart';
 import '../../../route/route.dart';
 import '../../widget/all_widget.dart';
@@ -72,7 +73,7 @@ class _HomeDashboardPageState extends State<HomeDashboardPage> {
                             SizedBox(
                               height: 12,
                             ),
-                            Text('Colab',
+                            Text(DatabaseSchema.projectCollabName,
                               style: GoogleFonts.ibmPlexMono(
                                 textStyle: TextStyle(
                                   color: Colors.white,

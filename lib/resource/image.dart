@@ -1,3 +1,6 @@
+const logo_solid = 'assets/logo_solid.jpg';
+const logo_transparent = 'assets/logo_transparent.png';
+const sampleImage = 'assets/sample_image.jpg';
 const bg = 'assets/Background.png';
 const upload = 'assets/up.png';
 const ex = 'assets/ex.png';

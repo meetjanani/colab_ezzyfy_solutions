@@ -49,7 +49,7 @@ Widget greenButton(String text, Function fun,){
       width: Get.width/1.1,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: pinkButtonColor,
+        color: bluePrimaryButtonColor,
         boxShadow: [
           BoxShadow(
             color: buttonShadowColor.withOpacity(0.4), // Shadow color
@@ -82,7 +82,7 @@ Widget blueButton(String text, Function fun,double height, double width){
       width: width,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: pinkButtonColor
+          color: bluePrimaryButtonColor
       ),
       child: Center(
           child: Text(text,
@@ -122,7 +122,7 @@ Widget normalButton(String text, Function fun){
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
        color: Colors.white,
-        border: Border.all(color: pinkButtonColor)
+        border: Border.all(color: bluePrimaryButtonColor)
       ),
       child: Center(
           child: Text(text,
@@ -145,7 +145,7 @@ Widget kPrimaryButton(String text, Function fun) {
         gradient: LinearGradient(
             begin: Alignment.centerLeft,
             end: Alignment.centerRight,
-            colors: [pinkButtonColor, pinkButtonColor]),
+            colors: [bluePrimaryButtonColor, bluePrimaryButtonColor]),
       ),
       child: Center(
           child: Text(text,

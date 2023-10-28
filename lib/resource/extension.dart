@@ -34,7 +34,7 @@ extension DateFormatExtensions on String {
     String inputDateStr = this; // "2023-09-24T16:47:03.385503+00:00"
     DateTime inputDate = DateTime.parse(inputDateStr);
 
-    String formattedDate = DateFormat.yMMMd().format(inputDate);
+    String formattedDate = DateFormat('dd-MM-yyyy').format(inputDate);
     return formattedDate; // Output: Sep 24, 2023
   }
 }

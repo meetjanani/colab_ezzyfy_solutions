@@ -168,7 +168,7 @@ Widget siteVisitListRecord(ProjectSiteVisitsResponseModel record) {
             children: [
               Expanded(
                 child: textMore(
-                    record.visitDate, Colors.black, 16, FontWeight.w600, 3),
+                    record.visitDate.getColabDateFormat(), Colors.black, 16, FontWeight.w600, 3),
               ),
               textMore(
                   'Site visit done by: ', Colors.grey, 10, FontWeight.w400, 3),
@@ -198,6 +198,7 @@ class AddProjectSiteVisitPage extends StatefulWidget {
 }
 
 class _AddProjectSiteVisitPageState extends State<AddProjectSiteVisitPage> {
+  DateTime selectedDate = DateTime.now();
   TextEditingController dateController = TextEditingController();
   TextEditingController titleController = TextEditingController();
   TextEditingController descController = TextEditingController();
@@ -206,6 +207,7 @@ class _AddProjectSiteVisitPageState extends State<AddProjectSiteVisitPage> {
 
   @override
   Widget build(BuildContext context) {
+    String formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate);
     return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.max,
@@ -261,13 +263,10 @@ class _AddProjectSiteVisitPageState extends State<AddProjectSiteVisitPage> {
                       if (pickedDate != null) {
                         print(
                             pickedDate); //pickedDate output format => 2021-03-10 00:00:00.000
-                        String formattedDate =
-                        DateFormat('yyyy-MM-dd').format(pickedDate);
-                        print(
-                            formattedDate); //f
+                        selectedDate = pickedDate;
                         setState(() {
                           dateController.text =
-                              formattedDate; //set output date to TextField value.
+                              DateFormat('dd-MM-yyyy').format(pickedDate); //set output date to TextField value.
                         });
                       } else {
                         dateController.text = "";
@@ -364,7 +363,7 @@ class _AddProjectSiteVisitPageState extends State<AddProjectSiteVisitPage> {
                   greenButton('Submit', () {
                     if (formKey.currentState?.validate() == true) {
                       widget.callback(titleController.text.toString(),
-                          descController.text.toString(), dateController.text.toString());
+                          descController.text.toString(), DateFormat('yyyy-MM-dd').format(selectedDate).toString());
                       Get.back();
                     }
                   }),

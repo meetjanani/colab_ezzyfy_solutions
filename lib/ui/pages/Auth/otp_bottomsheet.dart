@@ -142,7 +142,7 @@ class _OtpPageState extends State<OtpPage> {
                               verifyOtp();
                                 },
                             child: text(
-                                'Resend', pinkButtonColor, 14, FontWeight.w500)) :
+                                'Resend', bluePrimaryButtonColor, 14, FontWeight.w500)) :
                         Text('Resend OTP in ${controller.seconds} secs.'),
                       ),
                     ],
