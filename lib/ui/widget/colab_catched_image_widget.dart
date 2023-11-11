@@ -27,6 +27,7 @@ class _ColabCatchedImageWidgetState extends State<ColabCatchedImageWidget> {
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
+      color: Colors.black,
       width: widget.width,
       height: widget.height,
       fit: boxfit,

@@ -97,6 +97,7 @@ class _AddUserPageState extends State<AddUserPage> {
                                     Container(
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(50),
+                                        color: Colors.black
                                       ),
                                       child: ClipRRect(
                                         borderRadius: BorderRadius.circular(50),

@@ -56,7 +56,17 @@ class _ProjectListPageState extends State<ProjectListPage> {
                   : Expanded(
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(20,0,20,0),
-                      child: ListView.builder(
+                      child: controller.projectList.value.isEmpty
+                          ? Container(
+                        height: Get.height * 0.15,
+                        child: Center(
+                            child: text(
+                                'No projects are available for you.',
+                                Colors.black,
+                                18,
+                                FontWeight.w600)),
+                      )
+                          :ListView.builder(
                           padding: EdgeInsets.zero,
                           itemCount: controller.projectList.value.length,
                           scrollDirection: Axis.vertical,

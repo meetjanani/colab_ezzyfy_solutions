@@ -23,7 +23,7 @@ class RegisterPage extends GetView<RegisterController> {
           child: Column(
             children: [
               Container(
-                height: 246.dynamicHeight(),
+                height: 276.dynamicHeight(),
                 width: Get.width,
                 decoration: BoxDecoration(
                     image: DecorationImage(
@@ -33,6 +33,8 @@ class RegisterPage extends GetView<RegisterController> {
                         bottomRight: Radius.circular(20)),
                     color: Colors.blue),
                 child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(
@@ -48,18 +50,18 @@ class RegisterPage extends GetView<RegisterController> {
                       ),
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 20.dynamicHeight(),
                     ),
                     text('Welcome', Colors.white, 24, FontWeight.w800),
                     SizedBox(
-                      height: 20,
+                      height: 20.dynamicHeight(),
                     ),
                     text(
                         'Glad to see yoy !', Colors.white, 14, FontWeight.w500),
                     text('Create your account and join us', Colors.white, 18,
                         FontWeight.w500),
                     SizedBox(
-                      height: 20,
+                      height: 20.dynamicHeight(),
                     ),
                   ],
                 ),
@@ -86,28 +88,24 @@ class RegisterPage extends GetView<RegisterController> {
                         children: [
                           SizedBox(
                             width:Get.width * 0.25,
-                            child: Flexible(child:   inputField(
+                            child: inputField(
                               editable: false,
-                                hintText: '+91',
-                                labelText: '+91',
-                                controller: controller.mobileNumberController,
-                                keyboardType: TextInputType.number,
-                                validation: (value) {
-                                  return value?.validateMobile();
-                                }), ),
+                            hintText: '+91',
+                            labelText: '+91',
+                            controller: controller.countryCodeController,
+                            keyboardType: TextInputType.number,),
                           ),
                           SizedBox(
                             width: 10,
                           ),
-                          Flexible(child:   inputField(
+                          Expanded(
+                            child:   inputField(
                               hintText: 'Enter Mobile Number',
                               controller: controller.mobileNumberController,
                               keyboardType: TextInputType.number,
                               validation: (value) {
                                 return value?.validateMobile();
                               }), ),
-
-
                         ],
                       ),
                       SizedBox(

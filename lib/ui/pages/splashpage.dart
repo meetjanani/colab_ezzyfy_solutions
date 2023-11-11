@@ -27,11 +27,6 @@ class SplashPage extends GetView<SplashController> {
                         ),
                       ),
                     ),
-                    //     finalRecord.quantity
-                    text('Collab Ezzyfy Solutions', Colors.black, 20, FontWeight.w700),
-                    SizedBox(
-                      height: 60,
-                    ),
                   ],
                 ),
               )

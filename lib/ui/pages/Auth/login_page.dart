@@ -23,7 +23,7 @@ class LoginPage extends GetView<LoginController> {
           child: Column(
             children: [
               Container(
-                height: 246.dynamicHeight(),
+                height: 276.dynamicHeight(),
                 width: Get.width,
                 decoration: BoxDecoration(
                     image: DecorationImage(
@@ -48,16 +48,16 @@ class LoginPage extends GetView<LoginController> {
                       ),
                     ),
                     SizedBox(
-                      height: 20,
+                      height: 20.dynamicHeight(),
                     ),
                     text('Welcome Back', Colors.white, 24, FontWeight.w800),
                     SizedBox(
-                      height: 20,
+                      height: 20.dynamicHeight(),
                     ),
                     text('Sign in to get exclusive updates',
                         Colors.white, 14, FontWeight.w500),
                     SizedBox(
-                      height: Get.width / 10,
+                      height: 20.dynamicHeight(),
                     ),
                   ],
                 ),

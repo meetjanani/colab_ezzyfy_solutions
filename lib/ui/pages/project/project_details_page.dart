@@ -1,6 +1,7 @@
 import 'package:colab_ezzyfy_solutions/model/create_project_response_model.dart';
 import 'package:colab_ezzyfy_solutions/resource/constant.dart';
 import 'package:colab_ezzyfy_solutions/resource/extension.dart';
+import 'package:colab_ezzyfy_solutions/resource/extensions.dart';
 import 'package:colab_ezzyfy_solutions/route/route.dart';
 import 'package:colab_ezzyfy_solutions/ui/pages/home_dashboard/starred_people_row.dart';
 import 'package:colab_ezzyfy_solutions/ui/widget/colab_catched_image_widget.dart';
@@ -11,6 +12,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 import '../../../controller/project_details_controller.dart';
+import '../../../resource/image.dart';
 import '../../../resource/image.dart';
 import '../../widget/all_widget.dart';
 import '../../widget/common_toolbar.dart';
@@ -209,76 +211,43 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                             ),
                           )),
                       SizedBox(
-                        height: Get.width * 0.08,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              if (controller.userModelSupabase?.isAdmin ==
-                                  true) {
-                                controller.updateProjectThumbnail(context);
-                              } else {
-                                Get.showErrorSnackbar(
-                                    "Only Admin user can access this feature");
-                              }
-                            },
-                            child: text('Project Thumbnail', Colors.black, 18,
-                                FontWeight.w700),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: Get.width * 0.08,
+                        height: Get.width * 0.04,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           text(controller.projectResponseModel.name,
                               Colors.black, 18, FontWeight.w700),
-                          InkWell(
-                            onTap: () {
-                              controller.uploadProjectAttachment(context);
-                            },
-                            child: Container(
-                              width: Get.size.width * 0.30,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(color: textVioletColor),
-                                  color: Colors.white),
-                              child: Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Row(
+                          Row(
+                            children: [
+                              if (controller.userModelSupabase?.isAdmin == true)
+                                Row(
                                   children: [
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Icon(
-                                      Icons.add_circle_outline_sharp,
-                                      color: textVioletColor,
-                                      size: 20,
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Expanded(
-                                      child: Center(
-                                        child: text(
-                                            'Add Image',
-                                            textVioletColor,
-                                            14,
-                                            FontWeight.w500),
-                                      ),
+                                    InkWell(
+                                      onTap: () {
+                                        if (controller.userModelSupabase?.isAdmin ==
+                                            true) {
+                                          controller.updateProjectThumbnail(context);
+                                        } else {
+                                          Get.showErrorSnackbar(
+                                              "Only Admin user can access this feature");
+                                        }
+                                      },
+                                      child: SvgPicture.asset(siteVisitIcon,),
                                     ),
                                     SizedBox(
-                                      width: 5,
+                                      width: 10.dynamicHeight(),
                                     ),
                                   ],
                                 ),
-                              ),
-                            ),
-                          )
+                              InkWell(
+                                onTap: () {
+                                  controller.uploadProjectAttachment(context);
+                                },
+                                child: SvgPicture.asset(projectThumbnailUpload,),
+                              )
+                            ],
+                          ),
                         ],
                       ),
                       SizedBox(
@@ -337,50 +306,18 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                           text(
                               'Assign User', Colors.black, 18, FontWeight.w600),
                           Spacer(),
-                          InkWell(
-                            onTap: () {
-                              Get.toNamed(AppRoute.addUser, arguments: [
-                                controller.projectResponseModel,
-                                true
-                              ])?.then((value) {
-                                controller.init();
-                              });
-                            },
-                            child: Container(
-                              width: Get.size.width * 0.30,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(color: textVioletColor),
-                                  color: Colors.white),
-                              child: Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Icon(
-                                      Icons.add_circle_outline_sharp,
-                                      color: textVioletColor,
-                                      size: 20,
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Expanded(
-                                      child: Center(
-                                        child: text('Add User', textVioletColor,
-                                            14, FontWeight.w500),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          )
+                          if (controller.userModelSupabase?.isAdmin == true)
+                            InkWell(
+                              onTap: () {
+                                Get.toNamed(AppRoute.addUser, arguments: [
+                                  controller.projectResponseModel,
+                                  true
+                                ])?.then((value) {
+                                  controller.init();
+                                });
+                              },
+                              child: SvgPicture.asset(addUserIcon),
+                            )
                         ],
                       ),
                       Container(
@@ -407,6 +344,27 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                         children: [
                           text('Site Visit', Colors.black, 18, FontWeight.w600),
                           Spacer(),
+                          InkWell(
+                            onTap: () {
+                              if (controller.projectSiteVisitUserList.value.where((element) => element.id == controller.userModelSupabase?.id).length > 0==
+                                  true) {
+                                Get.toNamed(AppRoute.projectSiteVisitList,
+                                    arguments:
+                                    controller.projectResponseModel)
+                                    ?.then((value) {
+                                  controller.init();
+                                });
+                              } else {
+                                Get.showErrorSnackbar(
+                                    "Request admin to add you.");
+                              }
+                            },
+                            child: SvgPicture.asset(siteVisitIcon),
+                          ),
+                          if (controller.userModelSupabase?.isAdmin == true)
+                            SizedBox(
+                              width: 10.dynamicHeight(),
+                            ),
                           if (controller.userModelSupabase?.isAdmin == true)
                             InkWell(
                               onTap: () {
@@ -423,92 +381,8 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                                       "Only Admin user can access this feature");
                                 }
                               },
-                              child: Container(
-                                width: Get.size.width * 0.30,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    border: Border.all(color: textVioletColor),
-                                    color: Colors.white),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(4.0),
-                                  child: Row(
-                                    children: [
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Icon(
-                                        Icons.add_circle_outline_sharp,
-                                        color: textVioletColor,
-                                        size: 20,
-                                      ),
-                                      SizedBox(
-                                        width: 5,
-                                      ),
-                                      Expanded(
-                                        child: Center(
-                                          child: text(
-                                              'Add User',
-                                              textVioletColor,
-                                              14,
-                                              FontWeight.w500),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
+                              child: SvgPicture.asset(addUserIcon),
                             ),
-                          Spacer(),
-                          InkWell(
-                            onTap: () {
-                              if (controller.userModelSupabase?.isAdmin ==
-                                  true) {
-                                Get.toNamed(AppRoute.projectSiteVisitList,
-                                        arguments:
-                                            controller.projectResponseModel)
-                                    ?.then((value) {
-                                  controller.init();
-                                });
-                              } else {
-                                Get.showErrorSnackbar(
-                                    "Only Admin user can access this feature");
-                              }
-                            },
-                            child: Container(
-                              width: Get.size.width * 0.30,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(color: textVioletColor),
-                                  color: Colors.white),
-                              child: Padding(
-                                padding: const EdgeInsets.all(4.0),
-                                child: Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Icon(
-                                      Icons.add_circle_outline_sharp,
-                                      color: textVioletColor,
-                                      size: 20,
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Expanded(
-                                      child: Center(
-                                        child: text(
-                                            'Site Visit',
-                                            textVioletColor,
-                                            14,
-                                            FontWeight.w500),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          )
                         ],
                       ),
                       Container(

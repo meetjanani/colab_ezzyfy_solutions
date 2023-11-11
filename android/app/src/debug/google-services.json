@@ -14,6 +14,43 @@
       },
       "oauth_client": [
         {
+          "client_id": "977819868777-ilk3gb8gkaqcl152nkcne8mfeo2plp1n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ezzyfy_solutions.colab",
+            "certificate_hash": "1bddd0c5e37283985aba7b3ca18bfee9d2ee0127"
+          }
+        },
+        {
+          "client_id": "977819868777-esru2c9v5k16kpdir7sqrtf7shosg3g2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDuF-bSWoW7MjYgLwLgZXpnEhtVsIz6fKo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "977819868777-esru2c9v5k16kpdir7sqrtf7shosg3g2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:977819868777:android:dabeecbdba2871ca120cf8",
+        "android_client_info": {
+          "package_name": "com.ezzyfy_solutions.collab"
+        }
+      },
+      "oauth_client": [
+        {
           "client_id": "977819868777-esru2c9v5k16kpdir7sqrtf7shosg3g2.apps.googleusercontent.com",
           "client_type": 3
         }

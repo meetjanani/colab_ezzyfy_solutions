@@ -80,7 +80,20 @@ dev_dependencies:
   json_serializable:
   build_runner:
   flutter_launcher_icons: "^0.9.0"
+  flutter_native_splash:
 
+# flutter pub run flutter_native_splash:create
+flutter_native_splash:
+  color: "#ffffff"
+  image: "assets/logo_solid.jpg"
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/logo_solid.jpg"
+  min_sdk_android: 21
+
+# flutter pub run flutter_launcher_icons:main : COMMAND TO RUN WHEN ICON CHANGE
 flutter_icons:
   image_path: "assets/logo_solid.jpg"
   android: true

@@ -18,6 +18,7 @@ class _StarredPeopleRowState extends State<StarredPeopleRow> {
     return Row(
       children: [
         Card(
+          color: Colors.black,
           elevation: 2,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
