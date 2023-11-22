@@ -74,6 +74,7 @@ class FirebaseAuthController extends GetxController {
     showModalBottomSheet(
         isScrollControlled: true,
         useRootNavigator: true,
+        isDismissible: false,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(
           top: Radius.circular(40),
