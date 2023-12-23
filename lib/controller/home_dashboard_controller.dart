@@ -89,12 +89,12 @@ class HomeDashboardController extends GetxController {
   }
 
   void addImage(CreateProjectResponseModel project, BuildContext context) async {
-    showProgress();
     projectAttachmentsListSupabase.clear();
     selectedPhoto.clear();
     List<File> result = await CustomImagePicker().pickImage(context);
     selectedPhoto.value.addAll(result);
     if (selectedPhoto.value.isNotEmpty) {
+      showProgress();
       int imageCount = selectedPhoto.value.length;
       for (int i = 0; i < imageCount; i++) {
         await uploadFileOverFirebase(project);

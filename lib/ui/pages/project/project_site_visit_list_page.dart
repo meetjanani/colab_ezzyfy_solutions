@@ -154,11 +154,11 @@ Widget siteVisitListRecord(ProjectSiteVisitsResponseModel record) {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          textMore(record.title, Colors.grey, 16, FontWeight.w600, null),
+          textMore(record.title, Colors.grey, 16, FontWeight.w600, 3),
           SizedBox(
             height: 4,
           ),
-          textMore(record.description, Colors.black, 14, FontWeight.w400, null),
+          textMore(record.description, Colors.black, 14, FontWeight.w400, 50),
           SizedBox(
             height: 8,
           ),

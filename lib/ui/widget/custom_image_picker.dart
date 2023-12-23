@@ -14,7 +14,7 @@ class CustomImagePicker {
   late bool isGallery = false;
 
   Future<List<File>> pickImage(BuildContext context,
-      {bool allowMultipleImages = true}) {
+      {bool allowMultipleImages = false}) {
     return showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -57,7 +57,23 @@ class CustomImagePicker {
                         // print("camera---");
                         // print(file.toString());
                       },
-                    )
+                    ),
+                    const Padding(padding: EdgeInsets.all(8.0)),
+                    GestureDetector(
+                      child: const Text("Pick multiple photos"),
+                      onTap: () async {
+                        isGallery = true;
+                        allowMultipleImages = true;
+                        Get.back();
+                        /*selectedImages = (await _pickImageFromGallery(context,
+                            allowMultipleImages: true))!;
+                        if (selectedImages.firstOrNull?.path != null) {
+                          Get.back();
+                          await FlutterPhotoEditor()
+                              .editImage(selectedImages.first!.path);
+                        }*/
+                      },
+                    ),
                   ],
                 ),
               ));
@@ -66,11 +82,11 @@ class CustomImagePicker {
         selectedImages = (await _pickImageFromCamera(context));
       } else if (isGallery) {
         selectedImages =
-            (await _pickImageFromGallery(context, allowMultipleImages: true));
+            (await _pickImageFromGallery(context, allowMultipleImages: allowMultipleImages));
       } else {
         // click on Close icon to dismiss dialog
       }
-      if (selectedImages.firstOrNull?.path != null) {
+      if (selectedImages.firstOrNull?.path != null && allowMultipleImages == false) {
         var result =
             await FlutterPhotoEditor().editImage(selectedImages.first.path);
         if (result == false) {
@@ -82,10 +98,10 @@ class CustomImagePicker {
   }
 
   Future<List<File>> _pickImageFromGallery(BuildContext context,
-      {bool allowMultipleImages = true}) async {
+      {bool allowMultipleImages = false}) async {
     List<File> fileTemp = [];
     FilePickerResult? result = await FilePicker.platform.pickFiles(
-      allowMultiple: false, // allowMultipleImages
+      allowMultiple: allowMultipleImages, // allowMultipleImages
       type: FileType.custom,
       allowedExtensions: [
         'jpg',
@@ -96,13 +112,15 @@ class CustomImagePicker {
     if (result != null) {
       fileTemp = result.paths.map((path) => File(path ?? '')).toList();
 
-      for (int i = 0; i < fileTemp.length; i++) {
-        int sizeInBytes = fileTemp[i].lengthSync();
-        double sizeInMb = sizeInBytes / (1024 * 1024);
-        if (sizeInMb < 30) {
-        } else {
-          Get.showErrorSnackbar('File size is more then 30 MB');
-          fileTemp.removeAt(i);
+      if(allowMultipleImages == false) {
+        for (int i = 0; i < fileTemp.length; i++) {
+          int sizeInBytes = fileTemp[i].lengthSync();
+          double sizeInMb = sizeInBytes / (1024 * 1024);
+          if (sizeInMb < 30) {
+          } else {
+            Get.showErrorSnackbar('File size is more then 30 MB');
+            fileTemp.removeAt(i);
+          }
         }
       }
       return fileTemp;
