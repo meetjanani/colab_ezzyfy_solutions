@@ -80,7 +80,7 @@ class ProjectListController extends GetxController {
     projectAttachmentsListSupabase.add(ProjectAttachmentsRequestModel(
         projectId: project.id,
         createdByUser: userModelSupabase?.id ?? project.createdByUser,
-        projectAttachmentUrl: projectAttachmentUrl));
+        projectAttachmentUrl: projectAttachmentUrl, videoUrl: null));
   }
 
   Future<void> addEditedPhotoDirectely(File file, CreateProjectResponseModel project) async{

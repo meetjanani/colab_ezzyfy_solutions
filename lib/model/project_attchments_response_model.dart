@@ -9,6 +9,7 @@ class ProjectAttachmentsResponseModel {
   int projectId = 0;
   int createdByUser = 0;
   String projectAttachmentUrl = "";
+  String? videoUrl = "";
   String userName = "";
   String projectName = "";
   String? profilePictureUrl = "";
@@ -20,6 +21,7 @@ class ProjectAttachmentsResponseModel {
     required this.projectId,
     required this.createdByUser,
     required this.projectAttachmentUrl,
+    required this.videoUrl,
   });
 
   static List<ProjectAttachmentsResponseModel> fromJsonList(List<dynamic> dataList) {

@@ -75,7 +75,7 @@ class ProjectSiteVisitController extends GetxController {
     projectAttachmentsListSupabase.add(ProjectAttachmentsRequestModel(
         projectId: projectResponseModel.id,
         createdByUser: userModelSupabase?.id ?? projectResponseModel.createdByUser,
-        projectAttachmentUrl: projectAttachmentUrl));
+        projectAttachmentUrl: projectAttachmentUrl, videoUrl: null));
     if(localAttachment.isNotEmpty) {
       await uploadFileOverFirebase();
     }

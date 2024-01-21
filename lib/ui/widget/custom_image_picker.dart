@@ -10,8 +10,10 @@ import 'package:image_picker/image_picker.dart';
 
 class CustomImagePicker {
   late List<File> selectedImages;
+  late List<XFile> selectedVideos;
   late bool isCamera = false;
   late bool isGallery = false;
+  late bool isVideo = false;
 
   Future<List<File>> pickImage(BuildContext context,
       {bool allowMultipleImages = false}) {
@@ -97,6 +99,46 @@ class CustomImagePicker {
     });
   }
 
+  Future<List<XFile>> pickVideo(BuildContext context,
+      {bool allowMultipleImages = false}) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+              title: Row(
+                children: [
+                  const Expanded(child: Text("Select Video Attachment")),
+                  InkWell(
+                    child: const Icon(Icons.clear),
+                    onTap: () {
+                      Get.back();
+                    },
+                  ),
+                ],
+              ),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[
+                    GestureDetector(
+                      child: const Text("Video from gallery"),
+                      onTap: () async {
+                        isVideo = true;
+                        Get.back();
+                      },
+                    ),
+                  ],
+                ),
+              ));
+        }).then((value) async {
+      if (isVideo) {
+        selectedVideos = (await _pickVideoFromGallery(context));
+      } else {
+        // click on Close icon to dismiss dialog
+      }
+      return selectedVideos;
+    });
+  }
+
   Future<List<File>> _pickImageFromGallery(BuildContext context,
       {bool allowMultipleImages = false}) async {
     List<File> fileTemp = [];
@@ -139,4 +181,18 @@ class CustomImagePicker {
     file.add(File(picture!.path));
     return file;
   }
+
+  Future<List<XFile>> _pickVideoFromGallery(BuildContext context) async {
+    List<XFile> file = [];
+    var picture = await ImagePicker().pickVideo(
+      source: ImageSource.gallery,
+      preferredCameraDevice: CameraDevice.rear,
+      maxDuration: Duration(minutes: 3)
+    );
+    file.add(XFile(picture!.path, mimeType: picture!.mimeType, name: picture!.name,
+    length: await picture!.length(), bytes: await picture!.readAsBytes(),
+    lastModified: await picture!.lastModified()));
+    return file;
+  }
+
 }

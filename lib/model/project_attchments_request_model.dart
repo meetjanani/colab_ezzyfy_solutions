@@ -7,6 +7,7 @@ class ProjectAttachmentsRequestModel {
   int projectId = 0;
   int createdByUser = 0;
   String projectAttachmentUrl = "";
+  String? videoUrl = null;
 
   String createAt = DateTime.now().toString();
 
@@ -14,6 +15,7 @@ class ProjectAttachmentsRequestModel {
     required this.projectId,
     required this.createdByUser,
     required this.projectAttachmentUrl,
+    required this.videoUrl,
   });
 
   static List<ProjectAttachmentsRequestModel> fromJsonList(List<dynamic> dataList) {

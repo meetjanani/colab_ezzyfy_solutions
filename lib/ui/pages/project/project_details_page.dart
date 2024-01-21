@@ -245,6 +245,18 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                                   controller.uploadProjectAttachment(context);
                                 },
                                 child: SvgPicture.asset(projectThumbnailUpload,),
+                              ),
+                              SizedBox(
+                                width: 10.dynamicHeight(),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  controller.videoUploadProjectAttachment(context);
+                                },
+                                /*onLongPress: (){
+                                  controller.deleteAttachment();
+                                },*/
+                                child: Icon(Icons.video_call, color: colabColorPrimary,),
                               )
                             ],
                           ),

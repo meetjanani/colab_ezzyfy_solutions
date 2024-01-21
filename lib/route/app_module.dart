@@ -70,7 +70,7 @@ class AppPage {
 
     GetPage(
         name: AppRoute.projectFullScreenAttachment,
-        page: () => const FullScreenImagePage(),
+        page: () => FullScreenImagePage(),
         binding: ProjectDetailsBinding()),
 
     GetPage(

@@ -15,12 +15,12 @@ ProjectSiteVisitsResponseModel _$ProjectSiteVisitsResponseModelFromJson(
       description: json['description'] as String,
     )
       ..id = json['id'] as int
-      ..userName = json['userName'] ?? '' as String
-      ..projectName = json['projectName'] ?? '' as String
-      ..profilePictureUrl = json['profilePictureUrl'] ?? '' as String?
-      ..attachmentsForSiteVisit = json['attachmentsForSiteVisit'] ?? '' as String
-      ..createAt = json['createAt'] ?? ''as String
-      ..visitDate = json['visitDate'] ?? '' as String;
+      ..userName = json['userName'] as String
+      ..projectName = json['projectName'] as String
+      ..profilePictureUrl = json['profilePictureUrl'] as String?
+      ..attachmentsForSiteVisit = json['attachmentsForSiteVisit'] as String
+      ..createAt = json['createAt'] as String
+      ..visitDate = json['visitDate'] as String;
 
 Map<String, dynamic> _$ProjectSiteVisitsResponseModelToJson(
         ProjectSiteVisitsResponseModel instance) =>

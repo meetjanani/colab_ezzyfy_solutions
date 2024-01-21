@@ -12,6 +12,7 @@ ProjectAttachmentsRequestModel _$ProjectAttachmentsRequestModelFromJson(
       projectId: json['projectId'] as int,
       createdByUser: json['createdByUser'] as int,
       projectAttachmentUrl: json['projectAttachmentUrl'] as String,
+      videoUrl: json['videoUrl'] as String?,
     )..createAt = json['createAt'] as String;
 
 Map<String, dynamic> _$ProjectAttachmentsRequestModelToJson(
@@ -20,5 +21,6 @@ Map<String, dynamic> _$ProjectAttachmentsRequestModelToJson(
       'projectId': instance.projectId,
       'createdByUser': instance.createdByUser,
       'projectAttachmentUrl': instance.projectAttachmentUrl,
+      'videoUrl': instance.videoUrl,
       'createAt': instance.createAt,
     };

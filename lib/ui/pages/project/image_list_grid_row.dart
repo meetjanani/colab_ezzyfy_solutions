@@ -61,17 +61,25 @@ class _ImageListGridRowState extends State<ImageListGridRow> {
             arguments: imageAttachment);
       },
       child: Center(
-        child: Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20)),),
-          child: ColabCatchedImageWidget(
-            imageUrl: imageAttachment.projectAttachmentUrl,
-            boxFit: BoxFit.contain,
-            width: Get.width,
-            height: Get.height,
-          ),
+        child: Stack(
+          children: [
+            ColabCatchedImageWidget(
+              imageUrl: imageAttachment.projectAttachmentUrl,
+              boxFit: BoxFit.contain,
+              width: Get.width,
+              height: Get.height,
+            ),
+            if (imageAttachment.videoUrl?.isNotEmpty == true)
+              Positioned(
+                child: Icon(
+                  Icons.video_camera_back,
+                  size: 16,
+                  color: Colors.yellow,
+                ),
+                bottom: 4,
+                right: 4,
+              )
+          ],
         ),
       ),
     );

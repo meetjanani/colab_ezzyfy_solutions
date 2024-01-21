@@ -43,6 +43,8 @@ dependencies:
   intl:
   flutter_svg:
   image_picker:
+  video_player:
+  video_thumbnail: ^0.5.3
   http:
   file_picker:
   connectivity_plus:
